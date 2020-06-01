@@ -1,0 +1,70 @@
+:root {
+  --background: black;
+  --text: white;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+.icon {
+  display: inline-block;
+  font-size: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.main-wrapper {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: auto;
+  display: flex;
+}
+
+.equations-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-wrapper {
+  display: flex;
+  padding: 10px;
+}
+.logo {
+  height: 36px;
+}
+
+.equations {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: auto;
+  overflow: hidden;
+  height: 0;
+}
+
+.preview {
+  display: flex;
+}
+.colour-strip {
+  width: 5px;
+  background-color: red;
+}
+
+.grapheme-wrapper {
+  flex: auto;
+  position: relative;
+}
+.settings-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
