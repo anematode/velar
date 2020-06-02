@@ -81,6 +81,7 @@ body {
 }
 .menu-btn {
   padding: 10px;
+  font-size: 0;
 }
 .logo {
   height: 24px;
@@ -220,4 +221,46 @@ body {
   height: 3px;
   position: absolute;
   background-color: var(--theme);
+}
+
+@media (max-width: 600px) {
+  .main {
+    flex-direction: column-reverse;
+  }
+
+  .equations-wrapper {
+    height: 50%;
+    border-top: 1px solid var(--separator);
+  }
+
+  .logo-wrapper {
+    position: fixed;
+    top: 100%;
+    z-index: 5;
+  }
+  .menu-btn {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    border-radius: 50%;
+  }
+  .menu-btn:hover {
+    background-color: var(--button-hover);
+  }
+
+  .add-equation-label {
+    padding: 10px 20px;
+  }
+  .add-equation-wrapper {
+    padding: 0;
+  }
+  .add-equation-dialog {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .tabs {
+    display: none;
+  }
 }
