@@ -13,10 +13,12 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --equation-background: #101017;
   --graph-background: #13141D;
   --tabs-background: #0c0d10;
+  --dialog: #3C3F59;
   --text: rgba(255, 255, 255, 0.8);
   --text-opaque: white;
   --separator: rgba(255, 255, 255, 0.1);
   --selected: rgba(255, 255, 255, 0.05);
+  --button-hover: rgba(255, 255, 255, 0.1);
 }
 
 body {
@@ -33,6 +35,22 @@ body {
   font-size: 0;
   vertical-align: middle;
   fill: currentColor;
+}
+
+.flex {
+  flex: auto;
+}
+
+/* https://a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus),
+.add-equation:not(:hover) .add-equation-wrapper:not(:focus-within) {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
 }
 
 .main-wrapper {
@@ -55,10 +73,16 @@ body {
 
 .logo-wrapper {
   display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--separator);
+}
+.menu-btn {
   padding: 10px;
 }
 .logo {
-  height: 36px;
+  height: 24px;
+  margin-left: 10px;
 }
 
 .equations {
@@ -70,21 +94,63 @@ body {
   height: 0;
 }
 
+.equation {
+  border-bottom: 1px solid var(--separator);
+}
 .preview {
   display: flex;
   position: relative;
 }
 .colour-strip {
   width: 3px;
-  background-color: red;
+  background-color: var(--colour);
 }
 .katex-preview {
   color: var(--text-opaque);
   opacity: 0.9;
   padding: 10px;
+  padding-bottom: 30px;
 }
 .expand-icon {
   position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+}
+
+.add-equation {
+  border-top: 1px solid var(--separator);
+  position: relative;
+}
+.add-equation-label {
+  display: flex;
+  padding: 20px;
+  cursor: pointer;
+}
+.add-equation-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  padding: 20px;
+}
+.add-equation-dialog {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dialog);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.add-type {
+  display: block;
+  padding: 10px 20px;
+  text-align: left;
+}
+.add-type:hover {
+  background-color: var(--button-hover);
+}
+.add-type .icon {
+  margin-right: 10px;
 }
 
 .grapheme-wrapper {
@@ -101,18 +167,32 @@ body {
   right: 0;
   z-index: 5;
   padding: 10px;
+  margin: 10px;
 }
 
 .tabs {
+  display: flex;
   background-color: var(--tabs-background);
   border-top: 1px solid var(--separator);
 }
 .tab {
   padding: 5px 15px;
-  border-top: 5px solid transparent;
   border-right: 1px solid var(--separator);
+  position: relative;
+  padding-top: 8px;
+}
+.add-tab {
+  padding: 5px 10px;
 }
 .active {
-  border-top-color: var(--theme);
   background-color: var(--selected);
+}
+.active::before {
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  position: absolute;
+  background-color: var(--theme);
 }

@@ -23,10 +23,17 @@
             <img src="./logos/draft-2.svg" alt="Velar logo" class="logo">
           </div>
           <ul class="equations">
-            <li class="equation">
+            <li class="equation" style="--colour: rgba(255, 100, 100);">
               <div class="preview">
                 <div class="colour-strip"></div>
-                <div class="katex-preview" id="_temp-katex-preview"></div>
+                <button class="katex-preview" id="_temp-katex-preview"></button>
+                <span class="icon expand-icon" data-octicon="chevron-down"></span>
+              </div>
+            </li>
+            <li class="equation" style="--colour: rgba(100, 150, 255);">
+              <div class="preview">
+                <div class="colour-strip"></div>
+                <button class="katex-preview" id="_temp-katex-preview2"></button>
                 <span class="icon expand-icon" data-octicon="chevron-down"></span>
               </div>
             </li>
@@ -34,17 +41,20 @@
           <div class="add-equation">
             <span class="add-equation-label">
               Add...
+              <span class="flex"></span>
               <span class="icon" data-octicon="plus"></span>
             </span>
             <div class="add-equation-wrapper">
-              <button class="add-type">
-                <span class="icon" data-octicon="graph"></span>
-                Graph
-              </button>
-              <button class="add-type">
-                <span class="icon" data-octicon="note"></span>
-                Note
-              </button>
+              <div class="add-equation-dialog" role="group">
+                <button class="add-type">
+                  <span class="icon" data-octicon="graph"></span>
+                  Graph
+                </button>
+                <button class="add-type">
+                  <span class="icon" data-octicon="note"></span>
+                  Note
+                </button>
+              </div>
             </div>
           </div>
         </div>

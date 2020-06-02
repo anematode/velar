@@ -18,17 +18,31 @@ for (const side of Object.keys(plot.padding)) {
 const gridlines = new Gridlines()
 plot.add(gridlines)
 
+// Derivative not interactive because not selected; in reality it should select the function on click but whatever
+const dplot = new Grapheme.FunctionPlot2D()
+dplot.pen.color = rgba(100, 150, 255)
+plot.add(dplot)
+
+// Function plot thicker and on top because "selected"
 const fplot = new InteractiveFunctionPlot2D()
+fplot.pen.color = rgba(255, 100, 100)
+fplot.pen.thickness = 4
 plot.add(fplot)
 
-function setFunction (value) {
-  const node = Grapheme.parse_string(value)
-  const compiled = node.compile()
+function setFunction (input) {
+  const fn = Grapheme.parse_string(input)
 
-  fplot.setFunction(x => compiled.func(x))
+  fplot.setFunction(fn.compile().func)
   fplot.update()
 
-  katex.render(node.latex(false), document.getElementById('_temp-katex-preview'), { throwOnError: false })
+  katex.render(fn.latex(false), document.getElementById('_temp-katex-preview'), { throwOnError: false })
+
+  const derivative = fn.derivative('x')
+
+  dplot.setFunction(derivative.compile().func)
+  dplot.update()
+
+  katex.render(derivative.latex(false), document.getElementById('_temp-katex-preview2'), { throwOnError: false })
 }
 
 function render () {
@@ -40,7 +54,6 @@ function setTheme ({
   text,
   background,
   gridColour,
-  graphColour,
   font
 }) {
   gridlines.label_style.color = text
@@ -58,8 +71,6 @@ function setTheme ({
       pen.color = gridColour
     }
   }
-
-  fplot.pen.color = graphColour
 }
 function darkTheme () {
   // Would like to use the computed CSS properties for these values, I think
@@ -68,7 +79,6 @@ function darkTheme () {
     text: rgba(255, 255, 255, 0.8 * 255),
     background: rgba(19, 20, 29),
     gridColour: rgba(255, 255, 255, 0.5 * 255),
-    graphColour: rgba(255, 100, 100),
     font: '"Source Sans Pro", sans-serif'
   }
 }
@@ -77,15 +87,20 @@ setTheme(darkTheme())
 render()
 setFunction('piecewise(0<x<2,piecewise(abs(x)<1/2,x),2<=x<4,x^2/2)')
 
-window.requestAnimationFrame(() => {
+function resize () {
   const { width, height } = wrapper.getBoundingClientRect()
   plot.setSize(width, height)
+}
+window.requestAnimationFrame(() => {
+  resize()
   wrapper.appendChild(plot.domElement)
+  window.addEventListener('resize', resize)
 })
 
 export {
   plot,
   gridlines,
   fplot,
+  dplot,
   setFunction
 }
