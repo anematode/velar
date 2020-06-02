@@ -1,6 +1,21 @@
+/* https://fonts.google.com/specimen/Source+Sans+Pro?selection.family=Source+Sans+Pro&sidebar.open */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
 :root {
   --background: black;
   --text: white;
+  --theme: #a229e0;
+}
+/* Are colours copyrighted?
+https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.png */
+.dark {
+  --background: #13141D;
+  --equation-background: #101017;
+  --graph-background: #13141D;
+  --tabs-background: #0c0d10;
+  --text: rgba(255, 255, 255, 0.8);
+  --separator: rgba(255, 255, 255, 0.1);
+  --selected: rgba(255, 255, 255, 0.05);
 }
 
 body {
@@ -8,6 +23,7 @@ body {
   flex-direction: column;
   background-color: var(--background);
   color: var(--text);
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .icon {
@@ -15,6 +31,7 @@ body {
   font-size: 0;
   width: 24px;
   height: 24px;
+  vertical-align: middle;
 }
 
 .main-wrapper {
@@ -31,6 +48,8 @@ body {
 .equations-wrapper {
   display: flex;
   flex-direction: column;
+  border-right: 1px solid var(--separator);
+  background-color: var(--equation-background);
 }
 
 .logo-wrapper {
@@ -61,6 +80,7 @@ body {
 .grapheme-wrapper {
   flex: auto;
   position: relative;
+  background-color: var(--graph-background);
 }
 .settings-btn {
   position: absolute;
@@ -68,3 +88,15 @@ body {
   right: 0;
 }
 
+.tabs {
+  background-color: var(--tabs-background);
+  border-top: 1px solid var(--separator);
+}
+.tab {
+  padding: 5px 15px;
+  border-top: 5px solid transparent;
+}
+.active {
+  border-top-color: var(--theme);
+  background-color: var(--selected);
+}
