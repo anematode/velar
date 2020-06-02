@@ -18,7 +18,7 @@
         <div class="equations-wrapper">
           <div class="logo-wrapper">
             <button class="menu-btn">
-              <span class="icon menu-icon">Open menu</span>
+              <span class="icon" data-octicon="three-bars">Open menu</span>
             </button>
             <img src="./logos/draft-2.svg" alt="Velar logo" class="logo">
           </div>
@@ -27,22 +27,22 @@
               <div class="preview">
                 <div class="colour-strip"></div>
                 <div class="katex-preview" id="_temp-katex-preview"></div>
-                <span class="icon expand-icon"></span>
+                <span class="icon expand-icon" data-octicon="chevron-down"></span>
               </div>
             </li>
           </ul>
           <div class="add-equation">
             <span class="add-equation-label">
               Add...
-              <span class="icon"></span>
+              <span class="icon" data-octicon="plus"></span>
             </span>
             <div class="add-equation-wrapper">
               <button class="add-type">
-                <span class="icon graph-icon"></span>
+                <span class="icon" data-octicon="graph"></span>
                 Graph
               </button>
               <button class="add-type">
-                <span class="icon note-icon"></span>
+                <span class="icon" data-octicon="note"></span>
                 Note
               </button>
             </div>
@@ -50,7 +50,7 @@
         </div>
         <div class="grapheme-wrapper" id="_temp-grapheme-wrapper">
           <button class="settings-btn">
-            <span class="icon settings-icon">Graphing settings</span>
+            <span class="icon" data-octicon="gear">Graphing settings</span>
           </button>
         </div>
       </div>
@@ -58,11 +58,12 @@
         <button class="tab active">Graph</button>
         <button class="tab">Data</button>
         <button class="add-tab">
-          <span class="icon add-icon">Add tab</span>
+          <span class="icon" data-octicon="plus">Add tab</span>
         </button>
       </nav>
     </div>
     <script type="module">
+      import './octicons/load-icons-built.js'
       import * as exports from './demo.js'
       Object.assign(window, exports)
     </script>

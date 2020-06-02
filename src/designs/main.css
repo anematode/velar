@@ -25,14 +25,14 @@ body {
   background-color: var(--background);
   color: var(--text);
   font-family: 'Source Sans Pro', sans-serif;
+  line-height: 1;
 }
 
 .icon {
   display: inline-block;
   font-size: 0;
-  width: 24px;
-  height: 24px;
   vertical-align: middle;
+  fill: currentColor;
 }
 
 .main-wrapper {
@@ -99,6 +99,8 @@ body {
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 5;
+  padding: 10px;
 }
 
 .tabs {

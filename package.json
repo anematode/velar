@@ -1,0 +1,28 @@
+{
+  "name": "velar",
+  "version": "1.0.0",
+  "description": "A skin on top of Grapheme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anematode/velar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/anematode/velar/issues"
+  },
+  "homepage": "https://github.com/anematode/velar#readme",
+  "dependencies": {
+    "@primer/octicons-v2": "0.0.0-2820449"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^12.0.0",
+    "@rollup/plugin-json": "^4.0.3",
+    "@rollup/plugin-node-resolve": "^8.0.0"
+  }
+}
