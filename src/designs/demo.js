@@ -1,56 +1,34 @@
-import 'https://anematode.github.io/grapheme/build/grapheme.js'
+const plot = new Grapheme.Plot2D()
+plot.setSize(window.innerWidth, window.innerHeight)
+document.body.appendChild(plot.domElement)
 
-let plot = new Grapheme.Plot2D()
-
-plot.setSize(window.innerWidth, window.innerHeight);
-
-document.body.appendChild(plot.domElement);
-
-let gridlines = new Grapheme.Gridlines()
+const gridlines = new Grapheme.Gridlines()
 plot.add(gridlines)
 
-let fplot = new Grapheme.InteractiveFunctionPlot2D()
+const fplot = new Grapheme.InteractiveFunctionPlot2D()
 plot.add(fplot)
 
-let dplot = new Grapheme.InteractiveFunctionPlot2D()
-plot.add(dplot)
+function setFunction (value) {
+  const node = Grapheme.parse_string(value)
+  const compiled = node.compile()
 
-dplot.pen.color = Grapheme.Colors.BLACK
-
-function setFunction(value) {
-  let node = Grapheme.parse_string(value)
-  let compile = node.compile()
-  let index = compile.variableNames.indexOf('x')
-
-  let func
-
-  if (index === -1) {
-    func = (x) => compile.func()
-  } else {
-    // as you can see, highly WIP
-    func = (x) => compile.func(x)
-  }
-
-  fplot.setFunction(func)
+  fplot.setFunction(x => compiled.func(x))
   fplot.update()
 
-  cow = node
-
-  egg = node.derivative('x')
-
-  dplot.setFunction(egg.compile().func)
-  dplot.update()
-
-  katex.render(node.latex(false), document.getElementById("katex-stuff"), { throwOnError: false })
+  katex.render(node.latex(false), document.getElementById('_temp-katex-preview'), { throwOnError: false })
 }
 
-let ia = 0;
-function render() {
-  ia += 0.1;
-
+function render () {
   plot.render();
   requestAnimationFrame(render);
 }
 
-window.onload = () => setFunction("piecewise(0<x<2,piecewise(abs(x)<1/2,x),2<=x<4,x^2/2)")
 render()
+setFunction('piecewise(0<x<2,piecewise(abs(x)<1/2,x),2<=x<4,x^2/2)')
+
+export {
+  plot,
+  gridlines,
+  fplot,
+  setFunction
+}

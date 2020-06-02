@@ -6,6 +6,11 @@
     <meta name="description" content="Doo diddly doo I have no internet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="./you-better-rename-this-later-tim.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.css" integrity="sha384-bsHo4/LA+lkZv61JspMDQB9QP1TtO4IgOf2yYS+J6VdAYLVyx1c3XKcsHh0Vy8Ws" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.js" integrity="sha384-4z8mjH4yIpuK9dIQGR1JwbrfYsStrNK6MP+2Enhue4eyo0XlBDXOIPc8b6ZU0ajz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://anematode.github.io/grapheme/build/grapheme.css">
+    <script src="https://anematode.github.io/grapheme/build/grapheme.js" charset="utf-8"></script>
   </head>
   <body class="dark">
     <div class="main-wrapper">
@@ -21,7 +26,7 @@
             <li class="equation">
               <div class="preview">
                 <div class="colour-strip"></div>
-                <div class="katex-preview"></div>
+                <div class="katex-preview" id="_temp-katex-preview"></div>
                 <span class="icon expand-icon"></span>
               </div>
             </li>
@@ -57,6 +62,9 @@
         </button>
       </nav>
     </div>
-    <!-- <script src="./demo.js" type="module" charset="utf-8"></script> -->
+    <script type="module">
+      import * as exports from './demo.js'
+      Object.assign(window, exports)
+    </script>
   </body>
 </html>
