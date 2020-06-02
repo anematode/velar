@@ -78,7 +78,7 @@ function darkTheme () {
   return {
     text: rgba(255, 255, 255, 0.8 * 255),
     background: rgba(19, 20, 29),
-    gridColour: rgba(255, 255, 255, 0.5 * 255),
+    gridColour: rgba(255, 255, 255, 0.3 * 255),
     font: '"Source Sans Pro", sans-serif'
   }
 }
