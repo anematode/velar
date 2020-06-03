@@ -15,18 +15,33 @@
   <body class="dark">
     <div class="main-wrapper">
       <nav class="tabs">
-        <button class="tab active">Graph</button>
-        <button class="tab">Data</button>
+        <div class="tab active">
+          <button class="tab-button">Graph</button>
+          <button class="tab-close-btn">
+            <span class="icon" data-octicon="x">Close tab</span>
+          </button>
+        </div>
+        <div class="tab">
+          <button class="tab-button">Data</button>
+          <button class="tab-close-btn">
+            <span class="icon" data-octicon="x">Close tab</span>
+          </button>
+        </div>
         <button class="add-tab">
           <span class="icon" data-octicon="plus">Add tab</span>
         </button>
       </nav>
-      <main class="main">
+      <main class="main menu-showing">
         <section class="equations-wrapper">
           <div class="logo-wrapper">
             <button class="menu-btn icon-btn">
               <span class="icon" data-octicon="three-bars">Open menu</span>
             </button>
+            <aside class="menu">
+              <button class="menu-btn icon-btn">
+                <span class="icon" data-octicon="x">Close menu</span>
+              </button>
+            </aside>
             <img src="./logos/draft-2.svg" alt="Velar logo" class="logo">
           </div>
           <ul class="equations">

@@ -278,6 +278,7 @@ body {
   flex: auto;
   position: relative;
   background-color: var(--graph-background);
+  overflow: hidden;
 }
 .grapheme-window {
   position: absolute;
@@ -296,13 +297,20 @@ body {
   border-top: 1px solid var(--separator);
 }
 .tab {
-  padding: 10px 20px;
+  display: flex;
   border-right: 1px solid var(--separator);
-  position: relative;
-  padding-top: 13px;
 }
-.add-tab {
-  padding: 0 10px;
+.tab-button {
+  border-top: 3px solid transparent;
+  padding: 10px 20px;
+  padding-right: 5px;
+}
+.tab-close-btn {
+  border-top: 3px solid transparent;
+  padding-right: 15px;
+}
+.tab-close-btn:hover {
+  color: var(--danger);
 }
 .tab:not(.active):hover,
 .add-tab:hover {
@@ -311,14 +319,13 @@ body {
 .active {
   background-color: var(--selected);
 }
-.active::before {
-  content: '';
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  position: absolute;
-  background-color: var(--theme);
+.active .tab-button,
+.active .tab-close-btn {
+  border-top-color: var(--theme);
+}
+.add-tab {
+  padding: 0 10px;
+  padding-top: 3px;
 }
 
 @media (max-width: 600px) {
