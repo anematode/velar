@@ -29,7 +29,9 @@ export default function load () {
       getCustomIcon(icon.dataset.src)
         .then(svg => {
           icon.innerHTML = svg
-          icon.querySelector('svg').setAttributeNS(null, 'aria-label', label)
+          const elem = icon.querySelector('svg')
+          elem.setAttributeNS(null, 'aria-label', label)
+          elem.classList.add('custom-icon')
         })
     }
   }

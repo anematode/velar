@@ -45,6 +45,12 @@ body {
   vertical-align: middle;
   fill: currentColor;
 }
+.custom-icon {
+  width: 16px;
+  height: 16px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
 
 .icon-btn {
   padding: 10px;
