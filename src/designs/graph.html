@@ -9,8 +9,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.css" integrity="sha384-bsHo4/LA+lkZv61JspMDQB9QP1TtO4IgOf2yYS+J6VdAYLVyx1c3XKcsHh0Vy8Ws" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.js" integrity="sha384-4z8mjH4yIpuK9dIQGR1JwbrfYsStrNK6MP+2Enhue4eyo0XlBDXOIPc8b6ZU0ajz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://anematode.github.io/grapheme/build/grapheme.css">
-    <script src="https://anematode.github.io/grapheme/build/grapheme.js" charset="utf-8"></script>
+    <!-- <link rel="stylesheet" href="https://anematode.github.io/grapheme/build/grapheme.css">
+    <script src="https://anematode.github.io/grapheme/build/grapheme.js" charset="utf-8"></script> -->
   </head>
   <body class="dark">
     <div class="main-wrapper">
@@ -54,9 +54,9 @@
                 <div class="info-select">
                   <label class="select-label">Line style</label>
                   <div class="select-group">
-                    <button class="select-option plot-line selected"><span class="icon icon-solid">Solid</span></button>
-                    <button class="select-option plot-line"><span class="icon icon-dashed">Dashed</span></button>
-                    <button class="select-option plot-line"><span class="icon icon-dotted">Dotted</span></button>
+                    <button class="select-option plot-line selected"><span class="icon" data-icon-src="./icons/icon-solid.svg">Solid</span></button>
+                    <button class="select-option plot-line"><span class="icon" data-icon-src="./icons/icon-dashed.svg">Dashed</span></button>
+                    <button class="select-option plot-line"><span class="icon" data-icon-src="./icons/icon-dotted.svg">Dotted</span></button>
                     <button class="select-option"><span class="icon" data-octicon="pencil">Custom line style</span></button>
                   </div>
                 </div>
@@ -115,9 +115,10 @@
       </main>
     </div>
     <script type="module">
-      import './octicons/load-icons-built.js'
-      import * as exports from './demo.js'
-      Object.assign(window, exports)
+      import loadIcons from './octicons/load-icons-built.js'
+      loadIcons()
+      // import * as exports from './demo.js'
+      // Object.assign(window, exports)
     </script>
   </body>
 </html>

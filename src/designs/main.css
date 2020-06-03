@@ -26,6 +26,8 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --raised-button: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.1);
   --danger: #e82f6d;
+  --danger-hover: rgba(232, 47, 109, 0.1);
+  --danger-outline: rgba(232, 47, 109, 0.2);
 }
 
 body {
@@ -200,6 +202,10 @@ body {
 }
 .danger {
   color: var(--danger);
+  border-color: var(--danger-outline);
+}
+.danger:hover {
+  background-color: var(--danger-hover);
 }
 .close-info-btn {
   position: absolute;

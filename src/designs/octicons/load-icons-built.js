@@ -3832,15 +3832,19 @@ var octicons = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.assign(/*#__PURE__
 
 // rollup -c src/designs/octicons/rollup.config.js
 
-for (const icon of document.getElementsByClassName('icon')) {
-  const iconType = icon.dataset.octicon;
-  if (!iconType) continue
-  const label = icon.textContent;
-  if (octicons[iconType]) {
-    icon.innerHTML = octicons[iconType].toSVG({
-      'aria-label': label
-    });
-  } else {
-    console.warn(`${iconType} is not an octicon.`, icon);
+function load () {
+  for (const icon of document.getElementsByClassName('icon')) {
+    const iconType = icon.dataset.octicon;
+    if (!iconType) continue
+    const label = icon.textContent;
+    if (octicons[iconType]) {
+      icon.innerHTML = octicons[iconType].toSVG({
+        'aria-label': label
+      });
+    } else {
+      console.warn(`${iconType} is not an octicon.`, icon);
+    }
   }
 }
+
+export default load;
