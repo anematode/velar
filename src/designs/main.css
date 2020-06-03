@@ -17,10 +17,15 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --text: rgba(255, 255, 255, 0.8);
   --text-opaque: white;
   --text-opacity: 0.8;
+  --label: rgba(255, 255, 255, 0.5);
   --separator: rgba(255, 255, 255, 0.1);
   --selected: rgba(255, 255, 255, 0.05);
+  --selected-outline: white;
   --button-hover: rgba(255, 255, 255, 0.1);
   --button-big-hover: rgba(255, 255, 255, 0.05);
+  --raised-button: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --danger: #e82f6d;
 }
 
 body {
@@ -37,6 +42,15 @@ body {
   font-size: 0;
   vertical-align: middle;
   fill: currentColor;
+}
+
+.icon-btn {
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 0;
+}
+.icon-btn:hover {
+  background-color: var(--button-hover);
 }
 
 .flex {
@@ -58,7 +72,7 @@ body {
 .main-wrapper {
   flex: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
 }
 
 .main {
@@ -79,10 +93,6 @@ body {
   padding: 10px;
   border-bottom: 1px solid var(--separator);
 }
-.menu-btn {
-  padding: 10px;
-  font-size: 0;
-}
 .logo {
   height: 24px;
   margin-left: 10px;
@@ -100,9 +110,9 @@ body {
 .equation {
   border-bottom: 1px solid var(--separator);
 }
+
 .preview {
   display: flex;
-  position: relative;
 }
 .colour-strip {
   width: 3px;
@@ -112,13 +122,90 @@ body {
   color: var(--text-opaque);
   opacity: var(--text-opacity);
   padding: 10px;
-  padding-bottom: 30px;
 }
-.expand-icon {
+
+.info {
+  position: relative;
+  padding: 10px 0;
+}
+.raw-equation-wrapper {
+  padding: 0 10px;
+}
+.raw-equation {
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 30px;
+  resize: vertical;
+  background-color: var(--input);
+  border-radius: 5px;
+}
+.info-select {
+  margin: 10px 5px;
+}
+.select-label {
+  color: var(--label);
+  margin: 0 5px;
+}
+.select-group {
+  display: flex;
+}
+.select-option {
+  flex: 1 0 0;
+  background-color: var(--raised-button);
+  padding: 5px;
+  border-radius: 2px;
+  border: 1px solid var(--separator);
+  margin: 5px;
+}
+.select-option:hover {
+  background-image: linear-gradient(var(--button-hover), var(--button-hover));
+}
+.selected {
+  border-color: var(--selected-outline);
+}
+.plot-colour {
+  font-size: 0;
+  background-color: var(--value);
+}
+.plot-colour-light:not(.selected) {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+.plot-colour-light:hover {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+}
+.plot-colour-dark:not(.selected) {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.plot-colour-dark:hover {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+}
+.actions {
+  display: flex;
+  margin: 0 5px;
+}
+.action {
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid var(--separator);
+  border-radius: 2px;
+}
+.action .icon {
+  margin-right: 5px;
+}
+.action:hover {
+  background-color: var(--button-hover);
+}
+.danger {
+  color: var(--danger);
+}
+.close-info-btn {
   position: absolute;
   bottom: 0;
   right: 0;
-  margin: 10px;
+  margin: 5px;
 }
 
 .add-equation-line {
@@ -144,6 +231,10 @@ body {
   padding: 20px;
   cursor: pointer;
 }
+.add-equation:hover,
+.add-equation:focus-within {
+  background-color: var(--button-big-hover);
+}
 .add-equation-wrapper {
   position: absolute;
   left: 0;
@@ -157,10 +248,11 @@ body {
   background-color: var(--dialog);
   border-radius: 5px;
   overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 .add-type {
   display: block;
-  padding: 10px 20px;
+  padding: 15px 20px;
   text-align: left;
 }
 .add-type:hover {
@@ -183,13 +275,7 @@ body {
   top: 0;
   right: 0;
   z-index: 5;
-  padding: 10px;
   margin: 10px;
-  border-radius: 50%;
-  font-size: 0;
-}
-.settings-btn:hover {
-  background-color: var(--button-hover);
 }
 
 .tabs {
@@ -198,13 +284,13 @@ body {
   border-top: 1px solid var(--separator);
 }
 .tab {
-  padding: 5px 15px;
+  padding: 10px 20px;
   border-right: 1px solid var(--separator);
   position: relative;
-  padding-top: 8px;
+  padding-top: 13px;
 }
 .add-tab {
-  padding: 5px 10px;
+  padding: 0 10px;
 }
 .tab:not(.active):hover,
 .add-tab:hover {
@@ -243,10 +329,6 @@ body {
     top: 0;
     left: 0;
     margin: 10px;
-    border-radius: 50%;
-  }
-  .menu-btn:hover {
-    background-color: var(--button-hover);
   }
 
   .add-equation-label {

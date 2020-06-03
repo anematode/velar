@@ -14,27 +14,71 @@
   </head>
   <body class="dark">
     <div class="main-wrapper">
-      <div class="main">
-        <div class="equations-wrapper">
+      <nav class="tabs">
+        <button class="tab active">Graph</button>
+        <button class="tab">Data</button>
+        <button class="add-tab">
+          <span class="icon" data-octicon="plus">Add tab</span>
+        </button>
+      </nav>
+      <main class="main">
+        <section class="equations-wrapper">
           <div class="logo-wrapper">
-            <button class="menu-btn">
+            <button class="menu-btn icon-btn">
               <span class="icon" data-octicon="three-bars">Open menu</span>
             </button>
             <img src="./logos/draft-2.svg" alt="Velar logo" class="logo">
           </div>
           <ul class="equations">
-            <li class="equation" style="--colour: rgba(255, 100, 100);">
+            <li class="equation expanded" style="--colour: rgba(255, 100, 100);">
               <div class="preview">
                 <div class="colour-strip"></div>
                 <button class="katex-preview" id="_temp-katex-preview"></button>
-                <span class="icon expand-icon" data-octicon="chevron-down"></span>
+              </div>
+              <div class="info">
+                <div class="raw-equation-wrapper">
+                  <textarea class="raw-equation" id="_temp-equation-input"></textarea>
+                </div>
+                <div class="info-select">
+                  <label class="select-label">Color</label>
+                  <div class="select-group">
+                    <button class="select-option plot-colour plot-colour-light" style="--value: rgba(100, 150, 255);">Blue</button>
+                    <button class="select-option plot-colour plot-colour-light selected" style="--value: rgba(255, 100, 100);">Red</button>
+                    <button class="select-option plot-colour plot-colour-dark" style="--value: rgba(100, 100, 100);">Black</button>
+                    <button class="select-option plot-colour plot-colour-light" style="--value: rgba(255, 100, 255);">Magenta</button>
+                    <button class="select-option plot-colour plot-colour-light" style="--value: rgba(150, 230, 100);">Green</button>
+                    <button class="select-option plot-colour plot-colour-light" style="--value: rgba(255, 150, 100);">Orange</button>
+                    <button class="select-option"><span class="icon" data-octicon="pencil">Custom color</span></button>
+                  </div>
+                </div>
+                <div class="info-select">
+                  <label class="select-label">Line style</label>
+                  <div class="select-group">
+                    <button class="select-option plot-line selected"><span class="icon icon-solid">Solid</span></button>
+                    <button class="select-option plot-line"><span class="icon icon-dashed">Dashed</span></button>
+                    <button class="select-option plot-line"><span class="icon icon-dotted">Dotted</span></button>
+                    <button class="select-option"><span class="icon" data-octicon="pencil">Custom line style</span></button>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="action"><span class="icon" data-octicon="clippy"></span>Duplicate</button>
+                  <button class="action danger"><span class="icon" data-octicon="trashcan"></span>Delete</button>
+                </div>
+                <button class="close-info-btn icon-btn">
+                  <span class="icon expand-icon" data-octicon="chevron-up">Collapse</span>
+                </button>
               </div>
             </li>
             <li class="equation" style="--colour: rgba(100, 150, 255);">
               <div class="preview">
                 <div class="colour-strip"></div>
                 <button class="katex-preview" id="_temp-katex-preview2"></button>
-                <span class="icon expand-icon" data-octicon="chevron-down"></span>
+              </div>
+            </li>
+            <li class="equation" style="--colour: rgba(150, 255, 100);">
+              <div class="preview">
+                <div class="colour-strip"></div>
+                <button class="katex-preview" id="_temp-katex-preview3"></button>
               </div>
             </li>
             <li class="add-equation-line">
@@ -62,20 +106,13 @@
               </div>
             </div>
           </div>
-        </div>
+        </section>
         <div class="grapheme-wrapper" id="_temp-grapheme-wrapper">
-          <button class="settings-btn">
+          <button class="settings-btn icon-btn">
             <span class="icon" data-octicon="gear">Graphing settings</span>
           </button>
         </div>
-      </div>
-      <nav class="tabs">
-        <button class="tab active">Graph</button>
-        <button class="tab">Data</button>
-        <button class="add-tab">
-          <span class="icon" data-octicon="plus">Add tab</span>
-        </button>
-      </nav>
+      </main>
     </div>
     <script type="module">
       import './octicons/load-icons-built.js'
