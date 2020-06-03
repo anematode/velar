@@ -1,0 +1,266 @@
+/* https://fonts.google.com/specimen/Source+Sans+Pro?selection.family=Source+Sans+Pro&sidebar.open */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+:root {
+  --background: black;
+  --text: white;
+  --theme: #a229e0;
+}
+/* Are colours copyrighted?
+https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.png */
+.dark {
+  --background: #13141D;
+  --equation-background: #101017;
+  --graph-background: #13141D;
+  --tabs-background: #0c0d10;
+  --dialog: #3C3F59;
+  --text: rgba(255, 255, 255, 0.8);
+  --text-opaque: white;
+  --text-opacity: 0.8;
+  --separator: rgba(255, 255, 255, 0.1);
+  --selected: rgba(255, 255, 255, 0.05);
+  --button-hover: rgba(255, 255, 255, 0.1);
+  --button-big-hover: rgba(255, 255, 255, 0.05);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height: 1;
+}
+
+.icon {
+  display: inline-block;
+  font-size: 0;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+.flex {
+  flex: auto;
+}
+
+/* https://a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus),
+.add-equation:not(:hover) .add-equation-wrapper:not(:focus-within) {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+.main-wrapper {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: auto;
+  display: flex;
+}
+
+.equations-wrapper {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--separator);
+  background-color: var(--equation-background);
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--separator);
+}
+.menu-btn {
+  padding: 10px;
+  font-size: 0;
+}
+.logo {
+  height: 24px;
+  margin-left: 10px;
+}
+
+.equations {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: auto;
+  overflow: auto;
+  height: 0;
+}
+
+.equation {
+  border-bottom: 1px solid var(--separator);
+}
+.preview {
+  display: flex;
+  position: relative;
+}
+.colour-strip {
+  width: 3px;
+  background-color: var(--colour);
+}
+.katex-preview {
+  color: var(--text-opaque);
+  opacity: var(--text-opacity);
+  padding: 10px;
+  padding-bottom: 30px;
+}
+.expand-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+}
+
+.add-equation-line {
+  /* border-bottom: 1px solid var(--separator); */
+}
+.add-equation-line-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+.add-equation-line-btn:hover {
+  background-color: var(--button-big-hover);
+}
+
+.add-equation {
+  border-top: 1px solid var(--separator);
+  position: relative;
+}
+.add-equation-label {
+  display: flex;
+  padding: 20px;
+  cursor: pointer;
+}
+.add-equation-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  padding: 20px;
+}
+.add-equation-dialog {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dialog);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.add-type {
+  display: block;
+  padding: 10px 20px;
+  text-align: left;
+}
+.add-type:hover {
+  background-color: var(--button-hover);
+}
+.add-type .icon {
+  margin-right: 10px;
+}
+
+.grapheme-wrapper {
+  flex: auto;
+  position: relative;
+  background-color: var(--graph-background);
+}
+.grapheme-window {
+  position: absolute;
+}
+.settings-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 50%;
+  font-size: 0;
+}
+.settings-btn:hover {
+  background-color: var(--button-hover);
+}
+
+.tabs {
+  display: flex;
+  background-color: var(--tabs-background);
+  border-top: 1px solid var(--separator);
+}
+.tab {
+  padding: 5px 15px;
+  border-right: 1px solid var(--separator);
+  position: relative;
+  padding-top: 8px;
+}
+.add-tab {
+  padding: 5px 10px;
+}
+.tab:not(.active):hover,
+.add-tab:hover {
+  background-color: var(--button-hover);
+}
+.active {
+  background-color: var(--selected);
+}
+.active::before {
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  position: absolute;
+  background-color: var(--theme);
+}
+
+@media (max-width: 600px) {
+  .main {
+    flex-direction: column-reverse;
+  }
+
+  .equations-wrapper {
+    height: 50%;
+    border-top: 1px solid var(--separator);
+  }
+
+  .logo-wrapper {
+    position: fixed;
+    top: 100%;
+    z-index: 5;
+  }
+  .menu-btn {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    border-radius: 50%;
+  }
+  .menu-btn:hover {
+    background-color: var(--button-hover);
+  }
+
+  .add-equation-label {
+    padding: 10px 20px;
+  }
+  .add-equation-wrapper {
+    padding: 0;
+  }
+  .add-equation-dialog {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .tabs {
+    display: none;
+  }
+}
