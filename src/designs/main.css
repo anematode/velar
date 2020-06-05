@@ -84,8 +84,8 @@ body {
   font-size: 0;
 }
 .logo {
-  height: 24px;
-  margin-left: 10px;
+  height: 48px;
+  margin: 0 10px;
 }
 
 .equations {
