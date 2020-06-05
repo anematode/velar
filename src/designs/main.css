@@ -39,6 +39,17 @@ body {
   line-height: 1;
 }
 
+/* HACK: This is really hard and annoying to explain, but the MathML thing gets
+/* position absoluted and sent to the bottom of the scrolling equations element,
+/* and this for some reason extends so far as to make the page able to scroll
+/* up/down, despite that it's supposed to be cut off by the overflow: auto in
+/* the scrolling equations element. Anyways, this worked, so yay? However, it's
+/* position absoluted to be visually hidden while still accessible to screen
+/* readers. I'm not sure if doing position fixed breaks anything. */
+.katex .katex-mathml {
+  position: fixed;
+}
+
 .icon {
   display: inline-block;
   font-size: 0;
@@ -333,7 +344,7 @@ body {
 
   .logo-wrapper {
     position: fixed;
-    top: 100%;
+    bottom: 100%;
     z-index: 5;
   }
   .menu-btn {
