@@ -28,6 +28,7 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --danger: #e82f6d;
   --danger-hover: rgba(232, 47, 109, 0.1);
   --danger-outline: rgba(232, 47, 109, 0.2);
+  --shade: rgba(0, 0, 0, 0.5);
 }
 
 body {
@@ -79,13 +80,17 @@ body {
 /* https://a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus),
 .add-equation:not(:hover) .add-equation-wrapper:not(:focus-within) {
-  position: absolute !important;
+  position: absolute;
   height: 1px;
   width: 1px;
   overflow: hidden;
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap;
+}
+
+.darken-screen {
+  display: none;
 }
 
 .main-wrapper {
@@ -109,8 +114,10 @@ body {
 .logo-wrapper {
   display: flex;
   align-items: center;
-  padding: 10px;
   border-bottom: 1px solid var(--separator);
+}
+.menu-btn {
+  margin: 10px;
 }
 .logo {
   height: 24px;
@@ -301,6 +308,12 @@ body {
   margin: 10px;
 }
 
+.mobile-menu-top,
+.mobile-menu-top .logo,
+.menu {
+  display: none;
+}
+
 .tabs {
   display: flex;
   background-color: var(--tabs-background);
@@ -333,6 +346,21 @@ body {
 }
 
 @media (max-width: 600px) {
+  .menu-showing .darken-screen {
+    display: block;
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--shade);
+  }
+
+  .close-menu-btn {
+    display: inline-block;
+  }
+
   .main {
     flex-direction: column-reverse;
   }
@@ -353,6 +381,9 @@ body {
     left: 0;
     margin: 10px;
   }
+  .menu-showing .menu-btn {
+    display: none;
+  }
 
   .add-equation-label {
     padding: 10px 20px;
@@ -364,8 +395,32 @@ body {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-
-  .tabs {
+  .mobile-menu-wrapper {
     display: none;
+  }
+  .menu-showing .mobile-menu-wrapper {
+    position: fixed;
+    z-index: 15;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .mobile-menu-top {
+    display: flex;
+    align-items: center;
+  }
+  .close-menu-btn {
+    margin: 10px;
+  }
+  .tabs {
+    border-top: none;
+  }
+
+  .menu {
+    display: block;
+    flex: auto;
   }
 }
