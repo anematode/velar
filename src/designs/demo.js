@@ -120,6 +120,13 @@ window.requestAnimationFrame(() => {
   window.addEventListener('resize', resize)
 })
 
+document.getElementById('_temp-open-menu-btn').addEventListener('click', e => {
+  document.body.classList.add('menu-showing')
+})
+document.getElementById('_temp-close-menu-btn').addEventListener('click', e => {
+  document.body.classList.remove('menu-showing')
+})
+
 export {
   plot,
   gridlines,

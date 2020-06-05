@@ -28,7 +28,7 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --danger: #e82f6d;
   --danger-hover: rgba(232, 47, 109, 0.1);
   --danger-outline: rgba(232, 47, 109, 0.2);
-  --shade: rgba(0, 0, 0, 0.5);
+  --shade: rgba(0, 0, 0, 0.8);
 }
 
 body {
@@ -92,6 +92,16 @@ body {
 .darken-screen {
   display: none;
 }
+.menu-showing .darken-screen {
+  display: block;
+  position: fixed;
+  z-index: 11;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--shade);
+}
 
 .main-wrapper {
   flex: auto;
@@ -111,17 +121,9 @@ body {
   background-color: var(--equation-background);
 }
 
-.logo-wrapper {
-  display: flex;
-  align-items: center;
+.logo-space {
+  height: 56px;
   border-bottom: 1px solid var(--separator);
-}
-.menu-btn {
-  margin: 10px;
-}
-.logo {
-  height: 24px;
-  margin-left: 10px;
 }
 
 .equations {
@@ -308,10 +310,47 @@ body {
   margin: 10px;
 }
 
-.mobile-menu-top,
-.mobile-menu-top .logo,
+.logo-wrapper {
+  position: fixed;
+  z-index: 15;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+}
+.menu-btn {
+  margin: 10px;
+}
+.menu-showing .menu-btn {
+  display: none;
+}
+.close-menu-btn {
+  display: none;
+}
+.menu-showing .close-menu-btn {
+  display: inline-block;
+  margin: 10px;
+}
+.logo {
+  height: 24px;
+  margin-left: 10px;
+}
+
 .menu {
   display: none;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  bottom: 0;
+  z-index: 15;
+  background-color: var(--dialog);
+  padding: 20px;
+  margin: 20px;
+  margin-top: 0;
+  border-radius: 10px;
+}
+.menu-showing .menu {
+  display: flex;
 }
 
 .tabs {
@@ -346,21 +385,6 @@ body {
 }
 
 @media (max-width: 600px) {
-  .menu-showing .darken-screen {
-    display: block;
-    position: fixed;
-    z-index: 11;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--shade);
-  }
-
-  .close-menu-btn {
-    display: inline-block;
-  }
-
   .main {
     flex-direction: column-reverse;
   }
@@ -370,19 +394,11 @@ body {
     border-top: 1px solid var(--separator);
   }
 
-  .logo-wrapper {
-    position: fixed;
-    bottom: 100%;
-    z-index: 5;
-  }
   .menu-btn {
     position: fixed;
     top: 0;
     left: 0;
     margin: 10px;
-  }
-  .menu-showing .menu-btn {
-    display: none;
   }
 
   .add-equation-label {
@@ -395,9 +411,6 @@ body {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .mobile-menu-wrapper {
-    display: none;
-  }
   .menu-showing .mobile-menu-wrapper {
     position: fixed;
     z-index: 15;
@@ -408,19 +421,36 @@ body {
     display: flex;
     flex-direction: column;
   }
-  .mobile-menu-top {
+  .menu-showing .logo-wrapper {
+    position: static;
     display: flex;
     align-items: center;
   }
   .close-menu-btn {
     margin: 10px;
   }
+  .logo {
+    display: none;
+  }
+  .menu-showing .logo {
+    display: inline-block;
+  }
+
+  .tabs {
+    display: none;
+  }
+  .menu-showing .tabs {
+    display: flex;
+  }
+
   .tabs {
     border-top: none;
   }
 
   .menu {
-    display: block;
     flex: auto;
+    position: static;
+    background: none;
+    margin: 0;
   }
 }
