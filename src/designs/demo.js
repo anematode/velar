@@ -142,6 +142,10 @@ for (const strip of document.getElementsByClassName('colour-strip')) {
   })
 }
 
+document.getElementById('_temp-settings-btn').addEventListener('click', e => {
+  document.body.classList.toggle('settings-open')
+})
+
 export {
   plot,
   gridlines,

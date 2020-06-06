@@ -97,14 +97,14 @@
                 </button>
               </div>
             </li>
-            <li class="equation" style="--colour: rgba(221, 68, 101);">
+            <li class="equation graph-hidden" style="--colour: rgba(221, 68, 101);">
               <div class="preview">
                 <div class="quick-actions-wrapper">
                   <div class="quick-actions">
                     <button class="icon-btn quick-action danger">
                       <span class="icon" data-octicon="trashcan">Remove</span>
                     </button>
-                    <button class="icon-btn quick-action quick-active">
+                    <button class="icon-btn quick-action hide-equation">
                       <span class="icon" data-octicon="eye-closed">Hide</span>
                     </button>
                   </div>
@@ -188,9 +188,14 @@
           </div>
         </section>
         <div class="grapheme-wrapper" id="_temp-grapheme-wrapper">
-          <button class="settings-btn icon-btn">
+          <button class="settings-btn icon-btn" id="_temp-settings-btn">
             <span class="icon" data-octicon="gear">Graphing settings</span>
           </button>
+          <div class="settings-wrapper">
+            What settings should Grapheme have here? Can't have too many, or it'll be overwhelming.<br>
+            Actually, what'd be cool is if there could be a demo for each option, so students can learn what each option does and is meant for.<br>
+            Not sure how helpful that'd be.
+          </div>
         </div>
       </main>
     </div>

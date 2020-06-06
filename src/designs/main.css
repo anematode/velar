@@ -17,6 +17,7 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --text: rgba(255, 255, 255, 0.8);
   --text-opaque: white;
   --text-opacity: 0.8;
+  --text-hover: white;
   --label: rgba(255, 255, 255, 0.5);
   --separator: rgba(255, 255, 255, 0.1);
   --selected: rgba(255, 255, 255, 0.05);
@@ -174,11 +175,12 @@ body {
 .quick-action.danger:hover {
   background-color: var(--danger-hover);
 }
-.quick-active:not(:hover) {
-  background-color: currentColor;
-}
-.quick-active:not(:hover) .icon {
+.graph-hidden .hide-equation {
+  background-color: var(--text);
   color: var(--equation-background);
+}
+.graph-hidden .hide-equation:hover {
+  background-color: var(--text-hover);
 }
 .quick-action .octicon {
   width: 24px;
@@ -191,7 +193,6 @@ body {
   flex: none;
   cursor: pointer;
 }
-
 .katex-preview {
   color: var(--text-opaque);
   opacity: var(--text-opacity);
@@ -199,6 +200,10 @@ body {
   flex: auto;
   text-align: left;
   overflow-y: auto;
+}
+.graph-hidden .colour-strip,
+.graph-hidden .katex-preview {
+  opacity: 0.5;
 }
 
 .info {
@@ -356,12 +361,39 @@ body {
 .grapheme-window {
   position: absolute;
 }
+
 .settings-btn {
   position: absolute;
   top: 0;
   right: 0;
   z-index: 5;
   margin: 10px;
+}
+.settings-open .settings-btn {
+  background-color: var(--text);
+  color: var(--equation-background);
+}
+.settings-open .settings-btn:hover {
+  background-color: var(--text-hover);
+}
+.settings-wrapper {
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding: 20px;
+  margin: 20px;
+  margin-top: 56px;
+  border-radius: 10px;
+  background-color: var(--dialog);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  max-width: 300px;
+  max-height: 50%;
+  z-index: 6;
+  overflow: auto;
+  display: none;
+}
+.settings-open .settings-wrapper {
+  display: block;
 }
 
 .logo-wrapper {
@@ -402,6 +434,7 @@ body {
   margin: 20px;
   margin-top: 0;
   border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 .menu-showing .menu {
   display: flex;
@@ -511,5 +544,6 @@ body {
     position: static;
     background: none;
     margin: 0;
+    box-shadow: none;
   }
 }
