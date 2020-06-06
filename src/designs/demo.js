@@ -9,6 +9,14 @@ const {
   parse_string
 } = Grapheme
 
+let theme = 'dark'
+
+const params = new URL(window.location).searchParams
+if (params.get('light')) {
+  document.body.classList.replace('dark', 'light')
+  theme = 'light'
+}
+
 const wrapper = document.getElementById('_temp-grapheme-wrapper')
 
 const plot = new Plot2D()
@@ -23,40 +31,55 @@ plot.add(gridlines)
 
 // Function plot thicker and on top because "selected"
 let ps = []
-const colors = [
-  [85, 136, 204],
-  [221, 68, 101],
-  [187, 187, 204],
-  [170, 102, 170],
-  [0, 170, 85],
-  [238, 119, 51],
-  [187, 85, 34],
-  [119, 136, 204],
-  [34, 187, 204],
-  [238, 187, 17]
-]
+const darkColours = {
+  blue: [85, 136, 204],
+  red: [221, 68, 101],
+  black: [187, 187, 204],
+  magenta: [170, 102, 170],
+  green: [0, 170, 85],
+  orange: [238, 119, 51],
+  brown: [187, 85, 34],
+  navy: [119, 136, 204],
+  lightBlue: [34, 187, 204],
+  yellow: [238, 187, 17]
+}
+const lightColours = {
+  blue: [],
+  red: [],
+  black: [],
+  magenta: [],
+  green: [],
+  orange: [],
+  brown: [],
+  navy: [],
+  lightBlue: [],
+  yellow: []
+}
+const colours = ['blue', 'red', 'black', 'magenta', 'green', 'orange', 'brown', 'navy', 'lightBlue', 'yellow']
 const funcs = ['x', 'x^2', 'sin(x)', 'sqrt(x)', '-2', '1/x', 'cos(x)-2', 'tan(x)', '-x^2/2-3', 'abs(x)-1']
 let expandedPlot
 for (let i = 0; i < 10; i++) {
   let pp = i === 0 ? new InteractiveFunctionPlot2D() : new FunctionPlot2D()
-  pp.pen.color = rgba(colors[i][0], colors[i][1], colors[i][2])
+  pp.pen.color = rgba(...(theme === 'dark' ? darkColours : lightColours)[colours[i]])
   ps.push(pp)
   if (i === 0) {
     expandedPlot = pp
     expandedPlot.pen.thickness = 4
   } else {
-    plot.add(pp)
-    setFunction(pp, funcs[i], `eq${i+1}`)
+    if (i !== 1) plot.add(pp)
+    setFunction(pp, funcs[i], `eq${i+1}`, i !== 1)
   }
 }
 // HACK: Make the currently selected plot visually on top
 plot.add(expandedPlot)
 
-function setFunction (plot, input, id) {
+function setFunction (plot, input, id, setFunction = true) {
   const fn = parse_string(input)
 
-  plot.setFunction(fn.compile().func)
-  plot.update()
+  if (setFunction) {
+    plot.setFunction(fn.compile().func)
+    plot.update()
+  }
 
   katex.render(fn.latex(false), document.getElementById(id), { throwOnError: false })
 }
@@ -97,8 +120,17 @@ function darkTheme () {
     font: '"Source Sans Pro", sans-serif'
   }
 }
+function lightTheme () {
+  return {
+    text: rgba(255, 255, 255, 0.8 * 255),
+    background: rgba(19, 20, 29),
+    axisColour: rgba(255, 255, 255, 0.5 * 255),
+    gridColour: rgba(255, 255, 255, 0.3 * 255),
+    font: '"Source Sans Pro", sans-serif'
+  }
+}
 
-setTheme(darkTheme())
+setTheme(theme === 'dark' ? darkTheme() : lightTheme())
 render()
 
 const expressionInput = document.getElementById('_temp-equation-input')

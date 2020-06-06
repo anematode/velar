@@ -2,8 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 
 :root {
-  --background: black;
-  --text: white;
   --theme: #a229e0;
 }
 /* Are colours copyrighted?
@@ -30,6 +28,17 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --danger-hover: rgba(221, 68, 101, 0.1);
   --danger-outline: rgba(221, 68, 101, 0.2);
   --shade: rgba(0, 0, 0, 0.8);
+
+  --blue: rgb(85, 136, 204);
+  --red: rgb(221, 68, 101);
+  --black: rgb(187, 187, 204);
+  --magenta: rgb(170, 102, 170);
+  --green: rgb(0, 170, 85);
+  --orange: rgb(238, 119, 51);
+  --brown: rgb(187, 85, 34);
+  --navy: rgb(119, 136, 204);
+  --light-blue: rgb(34, 187, 204);
+  --yellow: rgb(238, 187, 17);
 }
 
 body {
@@ -51,6 +60,17 @@ body {
 .katex .katex-mathml {
   position: fixed;
 }
+
+.colour-blue { --colour: var(--blue); }
+.colour-red { --colour: var(--red); }
+.colour-black { --colour: var(--black); }
+.colour-magenta { --colour: var(--magenta); }
+.colour-green { --colour: var(--green); }
+.colour-orange { --colour: var(--orange); }
+.colour-brown { --colour: var(--brown); }
+.colour-navy { --colour: var(--navy); }
+.colour-light-blue { --colour: var(--light-blue); }
+.colour-yellow { --colour: var(--yellow); }
 
 .icon {
   display: inline-block;
@@ -203,7 +223,7 @@ body {
 }
 .graph-hidden .colour-strip,
 .graph-hidden .katex-preview {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .info {
@@ -250,7 +270,7 @@ body {
   font-size: 0;
   height: 16px;
   box-sizing: content-box;
-  background-color: var(--value);
+  background-color: var(--colour);
 }
 .plot-colour-light:not(.selected) {
   border-color: rgba(0, 0, 0, 0.1);
