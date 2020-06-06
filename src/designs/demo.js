@@ -2,9 +2,11 @@
 const {
   Plot2D,
   Gridlines,
+  FunctionPlot2D,
   InteractiveFunctionPlot2D,
   Color,
-  rgba
+  rgba,
+  parse_string
 } = Grapheme
 
 const wrapper = document.getElementById('_temp-grapheme-wrapper')
@@ -16,37 +18,42 @@ for (const side of Object.keys(plot.padding)) {
 }
 
 const gridlines = new Gridlines()
+gridlines.pens.axis.thickness = 2
 plot.add(gridlines)
 
 // Function plot thicker and on top because "selected"
-let ps = [];
-const colors = [[85, 136, 204], [221, 68, 101], [187, 187, 204], [170, 102, 170], [0, 170, 85], [238, 119, 51], [187, 85, 34], [119, 136, 204], [34, 187, 204], [238, 187, 17]]
+let ps = []
+const colors = [
+  [85, 136, 204],
+  [221, 68, 101],
+  [187, 187, 204],
+  [170, 102, 170],
+  [0, 170, 85],
+  [238, 119, 51],
+  [187, 85, 34],
+  [119, 136, 204],
+  [34, 187, 204],
+  [238, 187, 17]
+]
 const funcs = ['x', 'x^2', 'sin(x)', 'sqrt(x)', '-2', '1/x', 'cos(x)-2', 'tan(x)', '-x^2/2-3', 'abs(x)-1']
+let expandedPlot
 for (let i = 0; i < 10; i++) {
-	let pp = new Grapheme.FunctionPlot2D()
-	pp.pen.color = rgba(colors[i][0], colors[i][1], colors[i][2])
-	plot.add(pp)
-	setFunction(pp, funcs[i], `eq${i+1}`)
+  let pp = i === 0 ? new InteractiveFunctionPlot2D() : new FunctionPlot2D()
+  pp.pen.color = rgba(colors[i][0], colors[i][1], colors[i][2])
+  ps.push(pp)
+  if (i === 0) {
+    expandedPlot = pp
+    expandedPlot.pen.thickness = 4
+  } else {
+    plot.add(pp)
+    setFunction(pp, funcs[i], `eq${i+1}`)
+  }
 }
-/*const p1 = new InteractiveFunctionPlot2D()
-p1.pen.color = rgba(85, 136, 204)
-p1.pen.thickness = 4
-plot.add(p1)
-
-const p2 = new Grapheme.FunctionPlot2D()
-p2.pen.color = rgba(221, 68, 101)
-plot.add(p2)
-
-const p3 = new InteractiveFunctionPlot2D()
-p3.pen.color = rgba(187, 187, 204)
-plot.add(p3)
-
-const p4 = new Grapheme.FunctionPlot2D()
-p4.pen.color = rgba(170, 102, 170)
-plot.add(p4)*/
+// HACK: Make the currently selected plot visually on top
+plot.add(expandedPlot)
 
 function setFunction (plot, input, id) {
-  const fn = Grapheme.parse_string(input)
+  const fn = parse_string(input)
 
   plot.setFunction(fn.compile().func)
   plot.update()
@@ -62,6 +69,7 @@ function render () {
 function setTheme ({
   text,
   background,
+  axisColour,
   gridColour,
   font
 }) {
@@ -69,17 +77,14 @@ function setTheme ({
   gridlines.label_style.shadowColor = background
   gridlines.label_style.fontFamily = font
 
-  //p1.inspectionPointLabelStyle.color = text
-  //p1.inspectionPointLabelStyle.shadowColor = background
-  //p1.inspectionPointLabelStyle.fontFamily = font
+  expandedPlot.inspectionPointLabelStyle.color = text
+  expandedPlot.inspectionPointLabelStyle.shadowColor = background
+  expandedPlot.inspectionPointLabelStyle.fontFamily = font
 
-  for (const [name, pen] of Object.entries(gridlines.pens)) {
-    if (name === 'box') {
-      pen.visible = false
-    } else {
-      pen.color = gridColour
-    }
-  }
+  gridlines.pens.box.visible = false
+  gridlines.pens.axis.color = axisColour
+  gridlines.pens.major.color = gridColour
+  gridlines.pens.minor.color = gridColour
 }
 function darkTheme () {
   // Would like to use the computed CSS properties for these values, I think
@@ -87,6 +92,7 @@ function darkTheme () {
   return {
     text: rgba(255, 255, 255, 0.8 * 255),
     background: rgba(19, 20, 29),
+    axisColour: rgba(255, 255, 255, 0.5 * 255),
     gridColour: rgba(255, 255, 255, 0.3 * 255),
     font: '"Source Sans Pro", sans-serif'
   }
@@ -94,6 +100,19 @@ function darkTheme () {
 
 setTheme(darkTheme())
 render()
+
+const expressionInput = document.getElementById('_temp-equation-input')
+expressionInput.value = 'piecewise(0<x<2,piecewise(abs(x)<1/2,x),2<=x<4,x^2/2)'
+setFunction(expandedPlot, expressionInput.value, 'eq1')
+const expressionWrapper = expressionInput.closest('.equation')
+expressionInput.addEventListener('input', e => {
+  try {
+    setFunction(expandedPlot, expressionInput.value, 'eq1')
+    expressionWrapper.classList.remove('error')
+  } catch (err) {
+    expressionWrapper.classList.add('error')
+  }
+})
 
 function resize () {
   const { width, height } = wrapper.getBoundingClientRect()
@@ -103,6 +122,28 @@ window.requestAnimationFrame(() => {
   resize()
   wrapper.appendChild(plot.domElement)
   window.addEventListener('resize', resize)
+})
+
+document.getElementById('_temp-open-menu-btn').addEventListener('click', e => {
+  document.body.classList.add('menu-showing')
+})
+document.getElementById('_temp-close-menu-btn').addEventListener('click', e => {
+  document.body.classList.remove('menu-showing')
+})
+
+for (const strip of document.getElementsByClassName('colour-strip')) {
+  strip.addEventListener('click', e => {
+    strip.parentNode.classList.toggle('show-quick-actions')
+    e.stopPropagation()
+  })
+  strip.parentNode.addEventListener('click', e => {
+    if (e.target.closest('.quick-action')) return
+    strip.parentNode.classList.remove('show-quick-actions')
+  })
+}
+
+document.getElementById('_temp-settings-btn').addEventListener('click', e => {
+  document.body.classList.toggle('settings-open')
 })
 
 export {

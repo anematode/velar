@@ -17,10 +17,19 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --text: rgba(255, 255, 255, 0.8);
   --text-opaque: white;
   --text-opacity: 0.8;
+  --text-hover: white;
+  --label: rgba(255, 255, 255, 0.5);
   --separator: rgba(255, 255, 255, 0.1);
   --selected: rgba(255, 255, 255, 0.05);
+  --selected-outline: white;
   --button-hover: rgba(255, 255, 255, 0.1);
   --button-big-hover: rgba(255, 255, 255, 0.05);
+  --raised-button: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --danger: rgb(221, 68, 101);
+  --danger-hover: rgba(221, 68, 101, 0.1);
+  --danger-outline: rgba(221, 68, 101, 0.2);
+  --shade: rgba(0, 0, 0, 0.8);
 }
 
 body {
@@ -32,11 +41,37 @@ body {
   line-height: 1;
 }
 
+/* HACK: This is really hard and annoying to explain, but the MathML thing gets
+/* position absoluted and sent to the bottom of the scrolling equations element,
+/* and this for some reason extends so far as to make the page able to scroll
+/* up/down, despite that it's supposed to be cut off by the overflow: auto in
+/* the scrolling equations element. Anyways, this worked, so yay? However, it's
+/* position absoluted to be visually hidden while still accessible to screen
+/* readers. I'm not sure if doing position fixed breaks anything. */
+.katex .katex-mathml {
+  position: fixed;
+}
+
 .icon {
   display: inline-block;
   font-size: 0;
   vertical-align: middle;
   fill: currentColor;
+}
+.custom-icon {
+  width: 16px;
+  height: 16px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.icon-btn {
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 0;
+}
+.icon-btn:hover {
+  background-color: var(--button-hover);
 }
 
 .flex {
@@ -46,7 +81,7 @@ body {
 /* https://a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus),
 .add-equation:not(:hover) .add-equation-wrapper:not(:focus-within) {
-  position: absolute !important;
+  position: absolute;
   height: 1px;
   width: 1px;
   overflow: hidden;
@@ -55,10 +90,24 @@ body {
   white-space: nowrap;
 }
 
+.darken-screen {
+  display: none;
+}
+.menu-showing .darken-screen {
+  display: block;
+  position: fixed;
+  z-index: 11;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--shade);
+}
+
 .main-wrapper {
   flex: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
 }
 
 .main {
@@ -71,21 +120,12 @@ body {
   flex-direction: column;
   border-right: 1px solid var(--separator);
   background-color: var(--equation-background);
+  width: 300px;
 }
 
-.logo-wrapper {
-  display: flex;
-  align-items: center;
-  padding: 10px;
+.logo-space {
+  height: 56px;
   border-bottom: 1px solid var(--separator);
-}
-.menu-btn {
-  padding: 10px;
-  font-size: 0;
-}
-.logo {
-  height: 48px;
-  margin: 0 10px;
 }
 
 .equations {
@@ -99,26 +139,164 @@ body {
 
 .equation {
   border-bottom: 1px solid var(--separator);
+  overflow: hidden;
 }
+
 .preview {
   display: flex;
+  transition: transform .2s;
+}
+.show-quick-actions {
+  transform: translateX(118px);
+}
+
+.quick-actions-wrapper {
   position: relative;
 }
+.quick-actions {
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  align-items: center;
+  z-index: 5;
+  padding: 0 5px;
+}
+.quick-action {
+  margin: 0 5px;
+}
+.quick-action:hover {
+  background-color: var(--button-hover);
+}
+.quick-action.danger {
+  color: var(--danger);
+}
+.quick-action.danger:hover {
+  background-color: var(--danger-hover);
+}
+.graph-hidden .hide-equation {
+  background-color: var(--text);
+  color: var(--equation-background);
+}
+.graph-hidden .hide-equation:hover {
+  background-color: var(--text-hover);
+}
+.quick-action .octicon {
+  width: 24px;
+  height: 24px;
+}
+
 .colour-strip {
   width: 3px;
   background-color: var(--colour);
+  flex: none;
+  cursor: pointer;
 }
 .katex-preview {
   color: var(--text-opaque);
   opacity: var(--text-opacity);
   padding: 10px;
-  padding-bottom: 30px;
+  flex: auto;
+  text-align: left;
+  overflow-y: auto;
 }
-.expand-icon {
+.graph-hidden .colour-strip,
+.graph-hidden .katex-preview {
+  opacity: 0.5;
+}
+
+.info {
+  position: relative;
+  padding: 10px 0;
+}
+.raw-equation-wrapper {
+  padding: 0 10px;
+}
+.raw-equation {
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 30px;
+  resize: vertical;
+  background-color: var(--input);
+  border-radius: 5px;
+}
+.info-select {
+  margin: 10px 5px;
+}
+.select-label {
+  color: var(--label);
+  margin: 0 5px;
+}
+.select-group {
+  display: flex;
+}
+.select-option {
+  flex: 1 0 0;
+  background-color: var(--raised-button);
+  padding: 5px;
+  border-radius: 2px;
+  border: 1px solid var(--separator);
+  margin: 5px;
+}
+.select-option:hover {
+  background-image: linear-gradient(var(--button-hover), var(--button-hover));
+}
+.selected {
+  border-color: var(--selected-outline);
+}
+.plot-colour {
+  font-size: 0;
+  height: 16px;
+  box-sizing: content-box;
+  background-color: var(--value);
+}
+.plot-colour-light:not(.selected) {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+.plot-colour-light:hover {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+}
+.plot-colour-dark:not(.selected) {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.plot-colour-dark:hover {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 5px;
+  margin-top: -10px;
+}
+.action {
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--separator);
+  border-radius: 2px;
+}
+.action .icon {
+  margin-right: 5px;
+}
+.action:hover {
+  background-color: var(--button-hover);
+}
+.action.danger {
+  color: var(--danger);
+  border-color: var(--danger-outline);
+}
+.action.danger:hover {
+  background-color: var(--danger-hover);
+}
+.close-info-btn {
   position: absolute;
   bottom: 0;
   right: 0;
-  margin: 10px;
+  margin: 5px;
 }
 
 .add-equation-line {
@@ -144,6 +322,10 @@ body {
   padding: 20px;
   cursor: pointer;
 }
+.add-equation:hover,
+.add-equation:focus-within {
+  background-color: var(--button-big-hover);
+}
 .add-equation-wrapper {
   position: absolute;
   left: 0;
@@ -157,10 +339,11 @@ body {
   background-color: var(--dialog);
   border-radius: 5px;
   overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 .add-type {
   display: block;
-  padding: 10px 20px;
+  padding: 15px 20px;
   text-align: left;
 }
 .add-type:hover {
@@ -178,18 +361,83 @@ body {
 .grapheme-window {
   position: absolute;
 }
+
 .settings-btn {
   position: absolute;
   top: 0;
   right: 0;
   z-index: 5;
-  padding: 10px;
   margin: 10px;
-  border-radius: 50%;
-  font-size: 0;
 }
-.settings-btn:hover {
-  background-color: var(--button-hover);
+.settings-open .settings-btn {
+  background-color: var(--text);
+  color: var(--equation-background);
+}
+.settings-open .settings-btn:hover {
+  background-color: var(--text-hover);
+}
+.settings-wrapper {
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding: 20px;
+  margin: 20px;
+  margin-top: 56px;
+  border-radius: 10px;
+  background-color: var(--dialog);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  max-width: 300px;
+  max-height: 50%;
+  z-index: 6;
+  overflow: auto;
+  display: none;
+}
+.settings-open .settings-wrapper {
+  display: block;
+}
+
+.logo-wrapper {
+  position: fixed;
+  z-index: 15;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+}
+.menu-btn {
+  margin: 10px;
+}
+.menu-showing .menu-btn {
+  display: none;
+}
+.close-menu-btn {
+  display: none;
+}
+.menu-showing .close-menu-btn {
+  display: inline-block;
+  margin: 10px;
+}
+.logo {
+  height: 48px;
+  margin: 0 10px;
+}
+
+.menu {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  bottom: 0;
+  z-index: 15;
+  background-color: var(--dialog);
+  padding: 20px;
+  margin: 20px;
+  margin-top: 0;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+.menu-showing .menu {
+  display: flex;
 }
 
 .tabs {
@@ -198,13 +446,13 @@ body {
   border-top: 1px solid var(--separator);
 }
 .tab {
-  padding: 5px 15px;
+  padding: 10px 20px;
   border-right: 1px solid var(--separator);
   position: relative;
-  padding-top: 8px;
+  padding-top: 13px;
 }
 .add-tab {
-  padding: 5px 10px;
+  padding: 0 10px;
 }
 .tab:not(.active):hover,
 .add-tab:hover {
@@ -230,23 +478,12 @@ body {
 
   .equations-wrapper {
     height: 50%;
+    width: auto;
     border-top: 1px solid var(--separator);
   }
 
-  .logo-wrapper {
-    position: fixed;
-    top: 100%;
-    z-index: 5;
-  }
-  .menu-btn {
-    position: fixed;
-    top: 0;
-    left: 0;
-    margin: 10px;
-    border-radius: 50%;
-  }
-  .menu-btn:hover {
-    background-color: var(--button-hover);
+  .logo-space {
+    display: none;
   }
 
   .add-equation-label {
@@ -260,7 +497,53 @@ body {
     border-bottom-right-radius: 0;
   }
 
+  .menu-showing .mobile-menu-wrapper {
+    position: fixed;
+    z-index: 15;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .menu-showing .logo-wrapper {
+    position: static;
+    display: flex;
+    align-items: center;
+  }
+  .menu-btn {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 10px;
+  }
+  .close-menu-btn {
+    margin: 10px;
+  }
+  .logo {
+    display: none;
+  }
+  .menu-showing .logo {
+    display: inline-block;
+  }
+
   .tabs {
     display: none;
+  }
+  .menu-showing .tabs {
+    display: flex;
+  }
+
+  .tabs {
+    border-top: none;
+  }
+
+  .menu {
+    flex: auto;
+    position: static;
+    background: none;
+    margin: 0;
+    box-shadow: none;
   }
 }
