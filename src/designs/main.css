@@ -25,9 +25,9 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --button-big-hover: rgba(255, 255, 255, 0.05);
   --raised-button: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.1);
-  --danger: #e82f6d;
-  --danger-hover: rgba(232, 47, 109, 0.1);
-  --danger-outline: rgba(232, 47, 109, 0.2);
+  --danger: rgb(221, 68, 101);
+  --danger-hover: rgba(221, 68, 101, 0.1);
+  --danger-outline: rgba(221, 68, 101, 0.2);
   --shade: rgba(0, 0, 0, 0.8);
 }
 
@@ -119,6 +119,7 @@ body {
   flex-direction: column;
   border-right: 1px solid var(--separator);
   background-color: var(--equation-background);
+  width: 300px;
 }
 
 .logo-space {
@@ -137,19 +138,67 @@ body {
 
 .equation {
   border-bottom: 1px solid var(--separator);
+  overflow: hidden;
 }
 
 .preview {
   display: flex;
+  transition: transform .2s;
 }
+.show-quick-actions {
+  transform: translateX(118px);
+}
+
+.quick-actions-wrapper {
+  position: relative;
+}
+.quick-actions {
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  align-items: center;
+  z-index: 5;
+  padding: 0 5px;
+}
+.quick-action {
+  margin: 0 5px;
+}
+.quick-action:hover {
+  background-color: var(--button-hover);
+}
+.quick-action.danger {
+  color: var(--danger);
+}
+.quick-action.danger:hover {
+  background-color: var(--danger-hover);
+}
+.quick-active:not(:hover) {
+  background-color: currentColor;
+}
+.quick-active:not(:hover) .icon {
+  color: var(--equation-background);
+}
+.quick-action .octicon {
+  width: 24px;
+  height: 24px;
+}
+
 .colour-strip {
   width: 3px;
   background-color: var(--colour);
+  flex: none;
+  cursor: pointer;
 }
+
 .katex-preview {
   color: var(--text-opaque);
   opacity: var(--text-opacity);
   padding: 10px;
+  flex: auto;
+  text-align: left;
+  overflow-y: auto;
 }
 
 .info {
@@ -212,12 +261,15 @@ body {
 }
 .actions {
   display: flex;
+  flex-wrap: wrap;
   margin: 0 5px;
+  margin-top: -10px;
 }
 .action {
   display: flex;
   align-items: center;
   margin: 0 5px;
+  margin-top: 10px;
   padding: 5px 10px;
   border: 1px solid var(--separator);
   border-radius: 2px;
@@ -228,11 +280,11 @@ body {
 .action:hover {
   background-color: var(--button-hover);
 }
-.danger {
+.action.danger {
   color: var(--danger);
   border-color: var(--danger-outline);
 }
-.danger:hover {
+.action.danger:hover {
   background-color: var(--danger-hover);
 }
 .close-info-btn {
@@ -393,6 +445,7 @@ body {
 
   .equations-wrapper {
     height: 50%;
+    width: auto;
     border-top: 1px solid var(--separator);
   }
 

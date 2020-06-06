@@ -131,6 +131,17 @@ document.getElementById('_temp-close-menu-btn').addEventListener('click', e => {
   document.body.classList.remove('menu-showing')
 })
 
+for (const strip of document.getElementsByClassName('colour-strip')) {
+  strip.addEventListener('click', e => {
+    strip.parentNode.classList.toggle('show-quick-actions')
+    e.stopPropagation()
+  })
+  strip.parentNode.addEventListener('click', e => {
+    if (e.target.closest('.quick-action')) return
+    strip.parentNode.classList.remove('show-quick-actions')
+  })
+}
+
 export {
   plot,
   gridlines,
