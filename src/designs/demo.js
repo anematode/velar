@@ -9,12 +9,11 @@ const {
   parse_string
 } = Grapheme
 
-let theme = 'dark'
-
 const params = new URL(window.location).searchParams
-if (params.get('light')) {
-  document.body.classList.replace('dark', 'light')
-  theme = 'light'
+
+let theme = params.get('theme') || 'dark'
+if (theme !== 'dark') {
+  document.body.classList.replace('dark', theme)
 }
 
 const wrapper = document.getElementById('_temp-grapheme-wrapper')
@@ -31,36 +30,28 @@ plot.add(gridlines)
 
 // Function plot thicker and on top because "selected"
 let ps = []
-const darkColours = {
-  blue: [85, 136, 204],
-  red: [221, 68, 101],
-  black: [187, 187, 204],
-  magenta: [170, 102, 170],
-  green: [0, 170, 85],
-  orange: [238, 119, 51],
-  brown: [187, 85, 34],
-  navy: [119, 136, 204],
-  lightBlue: [34, 187, 204],
-  yellow: [238, 187, 17]
-}
-const lightColours = {
-  blue: [],
-  red: [],
-  black: [],
-  magenta: [],
-  green: [],
-  orange: [],
-  brown: [],
-  navy: [],
-  lightBlue: [],
-  yellow: []
+const themeColours = {
+  dark: {
+    blue: [85, 136, 204],
+    red: [221, 68, 101],
+    black: [187, 187, 204],
+    magenta: [170, 102, 170],
+    green: [0, 170, 85],
+    orange: [238, 119, 51],
+    brown: [187, 85, 34],
+    navy: [119, 136, 204],
+    lightBlue: [34, 187, 204],
+    yellow: [238, 187, 17]
+  }
 }
 const colours = ['blue', 'red', 'black', 'magenta', 'green', 'orange', 'brown', 'navy', 'lightBlue', 'yellow']
 const funcs = ['x', 'x^2', 'sin(x)', 'sqrt(x)', '-2', '1/x', 'cos(x)-2', 'tan(x)', '-x^2/2-3', 'abs(x)-1']
 let expandedPlot
 for (let i = 0; i < 10; i++) {
   let pp = i === 0 ? new InteractiveFunctionPlot2D() : new FunctionPlot2D()
-  pp.pen.color = rgba(...(theme === 'dark' ? darkColours : lightColours)[colours[i]])
+  if (themeColours[theme] && themeColours[theme][colours[i]]) {
+    pp.pen.color = rgba(...themeColours[theme][colours[i]])
+  }
   ps.push(pp)
   if (i === 0) {
     expandedPlot = pp
@@ -109,28 +100,21 @@ function setTheme ({
   gridlines.pens.major.color = gridColour
   gridlines.pens.minor.color = gridColour
 }
-function darkTheme () {
-  // Would like to use the computed CSS properties for these values, I think
-  // Might be nice if Grapheme had a helper function for making a Color from a CSS string?
-  return {
-    text: rgba(255, 255, 255, 0.8 * 255),
-    background: rgba(19, 20, 29),
-    axisColour: rgba(255, 255, 255, 0.5 * 255),
-    gridColour: rgba(255, 255, 255, 0.3 * 255),
-    font: '"Source Sans Pro", sans-serif'
-  }
-}
-function lightTheme () {
-  return {
-    text: rgba(255, 255, 255, 0.8 * 255),
-    background: rgba(19, 20, 29),
-    axisColour: rgba(255, 255, 255, 0.5 * 255),
-    gridColour: rgba(255, 255, 255, 0.3 * 255),
-    font: '"Source Sans Pro", sans-serif'
+const themes = {
+  dark () {
+    // Would like to use the computed CSS properties for these values, I think
+    // Might be nice if Grapheme had a helper function for making a Color from a CSS string?
+    return {
+      text: rgba(255, 255, 255, 0.8 * 255),
+      background: rgba(19, 20, 29),
+      axisColour: rgba(255, 255, 255, 0.5 * 255),
+      gridColour: rgba(255, 255, 255, 0.3 * 255),
+      font: '"Source Sans Pro", sans-serif'
+    }
   }
 }
 
-setTheme(theme === 'dark' ? darkTheme() : lightTheme())
+if (themes[theme]) setTheme(themes[theme]())
 render()
 
 const expressionInput = document.getElementById('_temp-equation-input')
