@@ -22,34 +22,38 @@ gridlines.pens.axis.thickness = 2
 plot.add(gridlines)
 
 // Function plot thicker and on top because "selected"
-let ps = [];
-const colors = [[85, 136, 204], [221, 68, 101], [187, 187, 204], [170, 102, 170], [0, 170, 85], [238, 119, 51], [187, 85, 34], [119, 136, 204], [34, 187, 204], [238, 187, 17]]
+let ps = []
+const colors = [
+  [85, 136, 204],
+  [221, 68, 101],
+  [187, 187, 204],
+  [170, 102, 170],
+  [0, 170, 85],
+  [238, 119, 51],
+  [187, 85, 34],
+  [119, 136, 204],
+  [34, 187, 204],
+  [238, 187, 17]
+]
 const funcs = ['x', 'x^2', 'sin(x)', 'sqrt(x)', '-2', '1/x', 'cos(x)-2', 'tan(x)', '-x^2/2-3', 'abs(x)-1']
+let expandedPlot
 for (let i = 0; i < 10; i++) {
-  let pp = new Grapheme.FunctionPlot2D()
+  let pp = i === 0 ? new InteractiveFunctionPlot2D() : new FunctionPlot2D()
   pp.pen.color = rgba(colors[i][0], colors[i][1], colors[i][2])
-  plot.add(pp)
-  setFunction(pp, funcs[i], `eq${i+1}`)
+  ps.push(pp)
+  if (i === 0) {
+    expandedPlot = pp
+    expandedPlot.pen.thickness = 4
+  } else {
+    plot.add(pp)
+    setFunction(pp, funcs[i], `eq${i+1}`)
+  }
 }
-/*const p1 = new InteractiveFunctionPlot2D()
-p1.pen.color = rgba(85, 136, 204)
-p1.pen.thickness = 4
-plot.add(p1)
-
-const p2 = new Grapheme.FunctionPlot2D()
-p2.pen.color = rgba(221, 68, 101)
-plot.add(p2)
-
-const p3 = new InteractiveFunctionPlot2D()
-p3.pen.color = rgba(187, 187, 204)
-plot.add(p3)
-
-const p4 = new Grapheme.FunctionPlot2D()
-p4.pen.color = rgba(170, 102, 170)
-plot.add(p4)*/
+// HACK: Make the currently selected plot visually on top
+plot.add(expandedPlot)
 
 function setFunction (plot, input, id) {
-  const fn = Grapheme.parse_string(input)
+  const fn = parse_string(input)
 
   plot.setFunction(fn.compile().func)
   plot.update()
@@ -73,9 +77,9 @@ function setTheme ({
   gridlines.label_style.shadowColor = background
   gridlines.label_style.fontFamily = font
 
-  //p1.inspectionPointLabelStyle.color = text
-  //p1.inspectionPointLabelStyle.shadowColor = background
-  //p1.inspectionPointLabelStyle.fontFamily = font
+  expandedPlot.inspectionPointLabelStyle.color = text
+  expandedPlot.inspectionPointLabelStyle.shadowColor = background
+  expandedPlot.inspectionPointLabelStyle.fontFamily = font
 
   gridlines.pens.box.visible = false
   gridlines.pens.axis.color = axisColour
@@ -99,21 +103,16 @@ render()
 
 const expressionInput = document.getElementById('_temp-equation-input')
 expressionInput.value = 'piecewise(0<x<2,piecewise(abs(x)<1/2,x),2<=x<4,x^2/2)'
-setFunction(expressionInput.value)
+setFunction(expandedPlot, expressionInput.value, 'eq1')
 const expressionWrapper = expressionInput.closest('.equation')
 expressionInput.addEventListener('input', e => {
   try {
-    setFunction(expressionInput.value)
+    setFunction(expandedPlot, expressionInput.value, 'eq1')
     expressionWrapper.classList.remove('error')
   } catch (err) {
     expressionWrapper.classList.add('error')
   }
 })
-
-const polynomial = parse_string('((x + 1)^2 * (x - 3) * (x - 4) * (x^2 - 10)) / (x^2 * (x - 2) * (x^2 - 25))')
-polyPlot.setFunction(polynomial.compile().func)
-polyPlot.update()
-katex.render(polynomial.latex(false), document.getElementById('_temp-katex-preview3'), { throwOnError: false })
 
 function resize () {
   const { width, height } = wrapper.getBoundingClientRect()

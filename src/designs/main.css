@@ -194,6 +194,8 @@ body {
 }
 .plot-colour {
   font-size: 0;
+  height: 16px;
+  box-sizing: content-box;
   background-color: var(--value);
 }
 .plot-colour-light:not(.selected) {
@@ -394,11 +396,8 @@ body {
     border-top: 1px solid var(--separator);
   }
 
-  .menu-btn {
-    position: fixed;
-    top: 0;
-    left: 0;
-    margin: 10px;
+  .logo-space {
+    display: none;
   }
 
   .add-equation-label {
@@ -411,6 +410,7 @@ body {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
+
   .menu-showing .mobile-menu-wrapper {
     position: fixed;
     z-index: 15;
@@ -425,6 +425,12 @@ body {
     position: static;
     display: flex;
     align-items: center;
+  }
+  .menu-btn {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 10px;
   }
   .close-menu-btn {
     margin: 10px;
