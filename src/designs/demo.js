@@ -21,35 +21,40 @@ const gridlines = new Gridlines()
 gridlines.pens.axis.thickness = 2
 plot.add(gridlines)
 
-// Derivative not interactive because not selected; in reality it should select the function on click but whatever
-const dplot = new FunctionPlot2D()
-dplot.pen.color = rgba(100, 150, 255)
-plot.add(dplot)
-
-const polyPlot = new FunctionPlot2D()
-polyPlot.pen.color = rgba(150, 255, 100)
-plot.add(polyPlot)
-
 // Function plot thicker and on top because "selected"
-const fplot = new InteractiveFunctionPlot2D()
-fplot.pen.color = rgba(255, 100, 100)
-fplot.pen.thickness = 4
-plot.add(fplot)
+let ps = [];
+const colors = [[85, 136, 204], [221, 68, 101], [187, 187, 204], [170, 102, 170], [0, 170, 85], [238, 119, 51], [187, 85, 34], [119, 136, 204], [34, 187, 204], [238, 187, 17]]
+const funcs = ['x', 'x^2', 'sin(x)', 'sqrt(x)', '-2', '1/x', 'cos(x)-2', 'tan(x)', '-x^2/2-3', 'abs(x)-1']
+for (let i = 0; i < 10; i++) {
+  let pp = new Grapheme.FunctionPlot2D()
+  pp.pen.color = rgba(colors[i][0], colors[i][1], colors[i][2])
+  plot.add(pp)
+  setFunction(pp, funcs[i], `eq${i+1}`)
+}
+/*const p1 = new InteractiveFunctionPlot2D()
+p1.pen.color = rgba(85, 136, 204)
+p1.pen.thickness = 4
+plot.add(p1)
 
-function setFunction (input) {
-  const fn = parse_string(input)
+const p2 = new Grapheme.FunctionPlot2D()
+p2.pen.color = rgba(221, 68, 101)
+plot.add(p2)
 
-  fplot.setFunction(fn.compile().func)
-  fplot.update()
+const p3 = new InteractiveFunctionPlot2D()
+p3.pen.color = rgba(187, 187, 204)
+plot.add(p3)
 
-  katex.render(fn.latex(false), document.getElementById('_temp-katex-preview'), { throwOnError: false })
+const p4 = new Grapheme.FunctionPlot2D()
+p4.pen.color = rgba(170, 102, 170)
+plot.add(p4)*/
 
-  const derivative = fn.derivative('x')
+function setFunction (plot, input, id) {
+  const fn = Grapheme.parse_string(input)
 
-  dplot.setFunction(derivative.compile().func)
-  dplot.update()
+  plot.setFunction(fn.compile().func)
+  plot.update()
 
-  katex.render(derivative.latex(false), document.getElementById('_temp-katex-preview2'), { throwOnError: false })
+  katex.render(fn.latex(false), document.getElementById(id), { throwOnError: false })
 }
 
 function render () {
@@ -68,9 +73,9 @@ function setTheme ({
   gridlines.label_style.shadowColor = background
   gridlines.label_style.fontFamily = font
 
-  fplot.inspectionPointLabelStyle.color = text
-  fplot.inspectionPointLabelStyle.shadowColor = background
-  fplot.inspectionPointLabelStyle.fontFamily = font
+  //p1.inspectionPointLabelStyle.color = text
+  //p1.inspectionPointLabelStyle.shadowColor = background
+  //p1.inspectionPointLabelStyle.fontFamily = font
 
   gridlines.pens.box.visible = false
   gridlines.pens.axis.color = axisColour
@@ -130,7 +135,5 @@ document.getElementById('_temp-close-menu-btn').addEventListener('click', e => {
 export {
   plot,
   gridlines,
-  fplot,
-  dplot,
   setFunction
 }
