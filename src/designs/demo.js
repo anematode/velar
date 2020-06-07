@@ -5,6 +5,7 @@ const {
   FunctionPlot2D,
   InteractiveFunctionPlot2D,
   Color,
+  Colors,
   rgba,
   parse_string
 } = Grapheme
@@ -121,6 +122,17 @@ const themes = {
       background: rgba(19, 20, 29),
       axisColour: rgba(255, 255, 255, 0.5 * 255),
       gridColour: rgba(255, 255, 255, 0.3 * 255),
+      font: '"Source Sans Pro", sans-serif'
+    }
+  },
+  paper () {
+    // Would like to use the computed CSS properties for these values, I think
+    // Might be nice if Grapheme had a helper function for making a Color from a CSS string?
+    return {
+      text: Colors.BLACK,
+      background: Colors.WHITE,
+      axisColour: Colors.BLACK,
+      gridColour: rgba(0, 0, 0, 0.2 * 255),
       font: '"Source Sans Pro", sans-serif'
     }
   }
