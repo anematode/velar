@@ -442,6 +442,14 @@ body {
   margin-right: 10px;
 }
 
+.resize-equations {
+  position: relative;
+  z-index: 1;
+  cursor: col-resize;
+  margin: 0 -10px;
+  width: 20px;
+}
+
 .grapheme-wrapper {
   flex: auto;
   position: relative;
@@ -538,10 +546,11 @@ body {
   padding: 10px 20px;
   border-right: 1px solid var(--separator);
   position: relative;
-  padding-top: 13px;
+  padding-bottom: 13px;
 }
 .add-tab {
   padding: 0 10px;
+  padding-bottom: 3px;
 }
 .tab:not(.active):hover,
 .add-tab:hover {
@@ -549,10 +558,11 @@ body {
 }
 .active {
   background-color: var(--selected);
+  cursor: default;
 }
 .active::before {
   content: '';
-  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
   height: 3px;
@@ -563,6 +573,13 @@ body {
 @media (max-width: 600px) {
   .main {
     flex-direction: column-reverse;
+  }
+
+  .resize-equations {
+    cursor: row-resize;
+    width: auto;
+    margin: -10px 0;
+    height: 20px;
   }
 
   .equations-wrapper {
