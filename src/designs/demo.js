@@ -42,6 +42,18 @@ const themeColours = {
     navy: [119, 136, 204],
     lightBlue: [34, 187, 204],
     yellow: [238, 187, 17]
+  },
+  paper: {
+    blue: [0, 0, 255],
+    red: [255, 0, 0],
+    black: [0, 0, 0],
+    magenta: [255, 0, 255],
+    green: [0, 128, 0],
+    orange: [255, 165, 0],
+    brown: [165, 42, 42],
+    navy: [0, 0, 128],
+    lightBlue: [173, 216, 230],
+    yellow: [255, 255, 0]
   }
 }
 const colours = ['blue', 'red', 'black', 'magenta', 'green', 'orange', 'brown', 'navy', 'lightBlue', 'yellow']

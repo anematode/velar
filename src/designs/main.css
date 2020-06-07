@@ -6,6 +6,40 @@
 }
 /* Are colours copyrighted?
 https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.png */
+.template {
+  --background: unset;
+  --equation-background: unset;
+  --graph-background: unset;
+  --tabs-background: unset;
+  --dialog: unset;
+  --text: unset;
+  --text-opaque: unset;
+  --text-opacity: unset;
+  --text-hover: unset;
+  --label: unset;
+  --separator: unset;
+  --selected: unset;
+  --selected-outline: unset;
+  --button-hover: unset;
+  --button-big-hover: unset;
+  --raised-button: unset;
+  --input: unset;
+  --danger: unset;
+  --danger-hover: unset;
+  --danger-outline: unset;
+  --shade: unset;
+
+  --blue: unset;
+  --red: unset;
+  --black: unset;
+  --magenta: unset;
+  --green: unset;
+  --orange: unset;
+  --brown: unset;
+  --navy: unset;
+  --light-blue: unset;
+  --yellow: unset;
+}
 .dark {
   --background: #13141D;
   --equation-background: #101017;
@@ -39,6 +73,40 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --navy: rgb(119, 136, 204);
   --light-blue: rgb(34, 187, 204);
   --yellow: rgb(238, 187, 17);
+}
+.paper {
+  --background: white;
+  --equation-background: white;
+  --graph-background: white;
+  --tabs-background: #F2F2F2;
+  --dialog: white;
+  --text: black;
+  --text-opaque: black;
+  --text-opacity: black;
+  --text-hover: #666;
+  --label: rgba(0, 0, 0, 0.6);
+  --separator: rgba(0, 0, 0, 0.075);
+  --selected: rgba(0, 0, 0, 0.05);
+  --selected-outline: black;
+  --button-hover: rgba(0, 0, 0, 0.075);
+  --button-big-hover: rgba(0, 0, 0, 0.05);
+  --raised-button: rgba(0, 0, 0, 0.02);
+  --input: rgba(0, 0, 0, 0.05);
+  --danger: rgb(212, 10, 71);
+  --danger-hover: rgba(212, 10, 71, 0.1);
+  --danger-outline: rgba(212, 10, 71, 0.5);
+  --shade: rgba(255, 255, 255, 0.8);
+
+  --blue: blue;
+  --red: red;
+  --black: black;
+  --magenta: magenta;
+  --green: green;
+  --orange: orange;
+  --brown: brown;
+  --navy: navy;
+  --light-blue: lightblue;
+  --yellow: yellow;
 }
 
 body {
@@ -265,6 +333,7 @@ body {
 }
 .selected {
   border-color: var(--selected-outline);
+  box-shadow: 0 0 0 1px var(--selected-outline);
 }
 .plot-colour {
   font-size: 0;
