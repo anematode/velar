@@ -2,12 +2,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 
 :root {
-  --background: black;
-  --text: white;
   --theme: #a229e0;
 }
 /* Are colours copyrighted?
 https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.png */
+.template {
+  --background: unset;
+  --equation-background: unset;
+  --graph-background: unset;
+  --tabs-background: unset;
+  --dialog: unset;
+  --text: unset;
+  --text-opaque: unset;
+  --text-opacity: unset;
+  --text-hover: unset;
+  --label: unset;
+  --separator: unset;
+  --selected: unset;
+  --selected-outline: unset;
+  --button-hover: unset;
+  --button-big-hover: unset;
+  --raised-button: unset;
+  --input: unset;
+  --danger: unset;
+  --danger-hover: unset;
+  --danger-outline: unset;
+  --shade: unset;
+
+  --blue: unset;
+  --red: unset;
+  --black: unset;
+  --magenta: unset;
+  --green: unset;
+  --orange: unset;
+  --brown: unset;
+  --navy: unset;
+  --light-blue: unset;
+  --yellow: unset;
+}
 .dark {
   --background: #13141D;
   --equation-background: #101017;
@@ -30,6 +62,51 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --danger-hover: rgba(221, 68, 101, 0.1);
   --danger-outline: rgba(221, 68, 101, 0.2);
   --shade: rgba(0, 0, 0, 0.8);
+
+  --blue: rgb(85, 136, 204);
+  --red: rgb(221, 68, 101);
+  --black: rgb(187, 187, 204);
+  --magenta: rgb(170, 102, 170);
+  --green: rgb(0, 170, 85);
+  --orange: rgb(238, 119, 51);
+  --brown: rgb(187, 85, 34);
+  --navy: rgb(119, 136, 204);
+  --light-blue: rgb(34, 187, 204);
+  --yellow: rgb(238, 187, 17);
+}
+.paper {
+  --background: white;
+  --equation-background: white;
+  --graph-background: white;
+  --tabs-background: #F2F2F2;
+  --dialog: white;
+  --text: rgba(0, 0, 0, 0.8);
+  --text-opaque: black;
+  --text-opacity: 0.8;
+  --text-hover: black;
+  --label: rgba(0, 0, 0, 0.6);
+  --separator: rgba(0, 0, 0, 0.075);
+  --selected: rgba(0, 0, 0, 0.05);
+  --selected-outline: black;
+  --button-hover: rgba(0, 0, 0, 0.075);
+  --button-big-hover: rgba(0, 0, 0, 0.05);
+  --raised-button: rgba(0, 0, 0, 0.02);
+  --input: rgba(0, 0, 0, 0.05);
+  --danger: rgb(212, 10, 71);
+  --danger-hover: rgba(212, 10, 71, 0.1);
+  --danger-outline: rgba(212, 10, 71, 0.5);
+  --shade: rgba(255, 255, 255, 0.8);
+
+  --blue: blue;
+  --red: red;
+  --black: black;
+  --magenta: magenta;
+  --green: green;
+  --orange: orange;
+  --brown: brown;
+  --navy: navy;
+  --light-blue: lightblue;
+  --yellow: yellow;
 }
 
 body {
@@ -51,6 +128,17 @@ body {
 .katex .katex-mathml {
   position: fixed;
 }
+
+.colour-blue { --colour: var(--blue); }
+.colour-red { --colour: var(--red); }
+.colour-black { --colour: var(--black); }
+.colour-magenta { --colour: var(--magenta); }
+.colour-green { --colour: var(--green); }
+.colour-orange { --colour: var(--orange); }
+.colour-brown { --colour: var(--brown); }
+.colour-navy { --colour: var(--navy); }
+.colour-light-blue { --colour: var(--light-blue); }
+.colour-yellow { --colour: var(--yellow); }
 
 .icon {
   display: inline-block;
@@ -203,7 +291,7 @@ body {
 }
 .graph-hidden .colour-strip,
 .graph-hidden .katex-preview {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .info {
@@ -245,12 +333,13 @@ body {
 }
 .selected {
   border-color: var(--selected-outline);
+  box-shadow: 0 0 0 1px var(--selected-outline);
 }
 .plot-colour {
   font-size: 0;
   height: 16px;
   box-sizing: content-box;
-  background-color: var(--value);
+  background-color: var(--colour);
 }
 .plot-colour-light:not(.selected) {
   border-color: rgba(0, 0, 0, 0.1);
@@ -353,6 +442,14 @@ body {
   margin-right: 10px;
 }
 
+.resize-equations {
+  position: relative;
+  z-index: 1;
+  cursor: col-resize;
+  margin: 0 -10px;
+  width: 20px;
+}
+
 .grapheme-wrapper {
   flex: auto;
   position: relative;
@@ -449,10 +546,11 @@ body {
   padding: 10px 20px;
   border-right: 1px solid var(--separator);
   position: relative;
-  padding-top: 13px;
+  padding-bottom: 13px;
 }
 .add-tab {
   padding: 0 10px;
+  padding-bottom: 3px;
 }
 .tab:not(.active):hover,
 .add-tab:hover {
@@ -460,10 +558,11 @@ body {
 }
 .active {
   background-color: var(--selected);
+  cursor: default;
 }
 .active::before {
   content: '';
-  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
   height: 3px;
@@ -474,6 +573,13 @@ body {
 @media (max-width: 600px) {
   .main {
     flex-direction: column-reverse;
+  }
+
+  .resize-equations {
+    cursor: row-resize;
+    width: auto;
+    margin: -10px 0;
+    height: 20px;
   }
 
   .equations-wrapper {
