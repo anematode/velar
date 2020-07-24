@@ -7,7 +7,7 @@ const {
   Color,
   Colors,
   rgba,
-  parse_string
+  parseString
 } = Grapheme
 
 const params = new URL(window.location).searchParams
@@ -60,11 +60,14 @@ const themeColours = {
 const colours = ['blue', 'red', 'black', 'magenta', 'green', 'orange', 'brown', 'navy', 'lightBlue', 'yellow']
 const funcs = ['x', 'x^2', 'sin(x)', 'sqrt(x)', '-2', '1/x', 'cos(x)-2', 'tan(x)', '-x^2/2-3', 'abs(x)-1']
 let expandedPlot
+
 for (let i = 0; i < 10; i++) {
   let pp = i === 0 ? new InteractiveFunctionPlot2D() : new FunctionPlot2D()
+
   if (themeColours[theme] && themeColours[theme][colours[i]]) {
     pp.pen.color = rgba(...themeColours[theme][colours[i]])
   }
+
   ps.push(pp)
   if (i === 0) {
     expandedPlot = pp
@@ -78,14 +81,14 @@ for (let i = 0; i < 10; i++) {
 plot.add(expandedPlot)
 
 function setFunction (plot, input, id, setFunction = true) {
-  const fn = parse_string(input)
+  const fn = parseString(input)
 
   if (setFunction) {
-    plot.setFunction(fn.compile().func)
+    plot.setFunction(fn)
     plot.update()
   }
 
-  katex.render(fn.latex(false), document.getElementById(id), { throwOnError: false })
+  Grapheme.katex.render(fn.latex(), document.getElementById(id), { throwOnError: false })
 }
 
 function render () {
@@ -100,13 +103,15 @@ function setTheme ({
   gridColour,
   font
 }) {
+  console.log(expandedPlot)
+
   gridlines.label_style.color = text
   gridlines.label_style.shadowColor = background
   gridlines.label_style.fontFamily = font
 
-  expandedPlot.inspectionPointLabelStyle.color = text
-  expandedPlot.inspectionPointLabelStyle.shadowColor = background
-  expandedPlot.inspectionPointLabelStyle.fontFamily = font
+  expandedPlot.inspPtLabelStyle.color = text
+  expandedPlot.inspPtLabelStyle.shadowColor = background
+  expandedPlot.inspPtLabelStyle.fontFamily = font
 
   gridlines.pens.box.visible = false
   gridlines.pens.axis.color = axisColour
@@ -142,7 +147,7 @@ if (themes[theme]) setTheme(themes[theme]())
 render()
 
 const expressionInput = document.getElementById('_temp-equation-input')
-expressionInput.value = 'piecewise(0<x<2,piecewise(abs(x)<1/2,x),2<=x<4,x^2/2)'
+expressionInput.value = 'piecewise(piecewise(x, abs(x)<1/2), 0<x<2, x^2/2, 2<=x<4)'
 setFunction(expandedPlot, expressionInput.value, 'eq1')
 const expressionWrapper = expressionInput.closest('.equation')
 expressionInput.addEventListener('input', e => {
