@@ -1,0 +1,5 @@
+.wrapper {
+  flex: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}

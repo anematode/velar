@@ -1,0 +1,8 @@
+.iconBtn {
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 0;
+}
+.iconBtn:hover {
+  background-color: var(--button-hover);
+}
