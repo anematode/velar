@@ -10,6 +10,173 @@ const {
   parseString
 } = Grapheme
 
+class VelarElement {
+  constructor() {
+    const elem = this.domElement = document.createElement("li")
+
+    elem.classList.add("equation")
+
+    const preview = this.preview = document.createElement("div")
+
+    preview.classList.add("preview")
+
+    const colourStrip = this.colourStrip = document.createElement("div")
+
+    colourStrip.classList.add("colour-strip")
+
+    elem.appendChild(preview)
+    preview.appendChild(colourStrip)
+
+    preview.onclick = () => this.toggleSelect()
+
+    this.selected = false
+  }
+
+  toggleSelect() {
+    if (this.selected) {
+      this.deselect()
+    } else {
+      this.select()
+    }
+  }
+
+  setColor(color) {
+    elem.classList.remove(...builtInColors)
+    elem.classList.add("colour-" + color)
+  }
+
+  select() {
+    this.selected = true
+    this.domElement.classList.add("expanded")
+  }
+
+  deselect() {
+    this.selected = false
+    this.domElement.classList.remove("expanded")
+  }
+
+  remove() {
+    this.domElement.remove()
+  }
+}
+
+let builtInColors = "colour-blue, colour-red, colour-black, colour-magenta, colour-green, colour-orange, colour-brown, colour-navy, colour-light-blue, colour-yellow".split(", ")
+
+class VelarFunctionPlot2D extends VelarElement {
+  constructor() {
+    super()
+
+    const latexPreview = this.latexPreview = document.createElement("button")
+
+    latexPreview.classList.add("katex-preview")
+
+    this.preview.appendChild(latexPreview)
+
+    this.preview.onclick
+
+    this.setDisplayedEquation("x")
+
+    this.graphemeElement = new InteractiveFunctionPlot2D()
+
+    plot.add(this.graphemeElement)
+
+    this.graphemeElement.inspPtLabelStyle = inspPtLabelStyle
+
+    this.info = document.createElement("div")
+    this.info.classList.add("info")
+
+    this.info.innerHTML = `
+                <div class="raw-equation-wrapper">
+                  <textarea class="raw-equation" id="_temp-equation-input"></textarea>
+                </div>
+                <div class="info-select">
+                  <label class="select-label">Color</label>
+                  <div class="select-group">
+                    <button class="select-option plot-colour plot-colour-light colour-blue">Blue</button>
+                    <button class="select-option plot-colour plot-colour-light colour-red">Red</button>
+                    <button class="select-option plot-colour plot-colour-light colour-black">Black</button>
+                    <button class="select-option plot-colour plot-colour-light colour-magenta">Magenta</button>
+                    <button class="select-option plot-colour plot-colour-light colour-green">Green</button>
+                  </div>
+                  <div class="select-group">
+                    <button class="select-option plot-colour plot-colour-light colour-orange">Orange</button>
+                    <button class="select-option plot-colour plot-colour-light colour-navy">Navy</button>
+                    <button class="select-option plot-colour plot-colour-light colour-light-blue">Light blue</button>
+                    <button class="select-option plot-colour plot-colour-light colour-yellow">Yellow</button>
+                    <button class="select-option"><span class="icon" data-octicon="pencil">Custom color</span></button>
+                  </div>
+                </div>
+                <div class="info-select">
+                  <label class="select-label">Line style</label>
+                  <div class="select-group">
+                    <button class="select-option plot-line"><span class="icon" data-src="./icons/icon-solid.svg">Solid</span></button>
+                    <button class="select-option plot-line"><span class="icon" data-src="./icons/icon-dashed.svg">Dashed</span></button>
+                    <button class="select-option plot-line"><span class="icon" data-src="./icons/icon-dotted.svg">Dotted</span></button>
+                    <button class="select-option"><span class="icon" data-octicon="pencil">Custom line style</span></button>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="action"><span class="icon" data-octicon="clippy"></span>Duplicate</button>
+                  <button class="action danger"><span class="icon" data-octicon="trashcan"></span>Remove</button>
+                </div>
+                <button class="close-info-btn icon-btn">
+                  <span class="icon expand-icon" data-octicon="chevron-up">Collapse</span>
+                </button>`
+
+    this.domElement.appendChild(this.info)
+
+    this.dom = {
+      equationInput: this.domElement.getElementsByClassName("raw-equation")[0],
+      buttons: {
+        colors: Array.from(this.domElement.getElementsByClassName("plot-colour")),
+        lineStyles: Array.from(this.domElement.getElementsByClassName("plot-line")),
+        duplicate: this.domElement.getElementsByClassName("action")[0],
+        remove: this.domElement.getElementsByClassName("action")[1]
+      }
+    }
+
+    this.setupInfoListeners()
+  }
+
+  setupInfoListeners() {
+    this.dom.equationInput.oninput = () => this.setFunction(this.dom.equationInput.value)
+
+    this.dom.buttons.remove.onclick = () => removeEquation(this)
+  }
+
+  setFunction(str) {
+    try {
+      this.graphemeElement.setFunction(str)
+
+      this.setDisplayedEquation(Grapheme.getFunction(equations[0].graphemeElement.functionName).node.latex())
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  select() {
+    super.select()
+
+    this.info.hidden = false
+  }
+
+  deselect() {
+    super.deselect()
+
+    this.info.hidden = true
+  }
+
+  setDisplayedEquation(latex) {
+    Grapheme.katex.render(latex, this.latexPreview, { throwOnError: false })
+  }
+
+  remove() {
+    super.remove()
+
+    this.graphemeElement.destroy()
+  }
+}
+
 const params = new URL(window.location).searchParams
 
 let theme = params.get('theme') || 'dark'
@@ -29,140 +196,38 @@ const gridlines = new Gridlines()
 gridlines.pens.axis.thickness = 2
 plot.add(gridlines)
 
-// Function plot thicker and on top because "selected"
-let ps = []
-const themeColours = {
-  dark: {
-    blue: [85, 136, 204],
-    red: [221, 68, 101],
-    black: [187, 187, 204],
-    magenta: [170, 102, 170],
-    green: [0, 170, 85],
-    orange: [238, 119, 51],
-    brown: [187, 85, 34],
-    navy: [119, 136, 204],
-    lightBlue: [34, 187, 204],
-    yellow: [238, 187, 17]
-  },
-  paper: {
-    blue: [0, 0, 255],
-    red: [255, 0, 0],
-    black: [0, 0, 0],
-    magenta: [255, 0, 255],
-    green: [0, 128, 0],
-    orange: [255, 165, 0],
-    brown: [165, 42, 42],
-    navy: [0, 0, 128],
-    lightBlue: [173, 216, 230],
-    yellow: [255, 255, 0]
-  }
-}
-const colours = ['blue', 'red', 'black', 'magenta', 'green', 'orange', 'brown', 'navy', 'lightBlue', 'yellow']
-const funcs = ['x', 'x^2', 'sin(x)', 'sqrt(x)', '-2', '1/x', 'cos(x)-2', 'tan(x)', '-x^2/2-3', 'abs(x)-1']
-let expandedPlot
+const equationList = document.getElementsByClassName("equations")[0]
+const equations = []
 
-for (let i = 0; i < 10; i++) {
-  let pp = i === 0 ? new InteractiveFunctionPlot2D() : new FunctionPlot2D()
+function addEquation() {
+  let equation = new VelarFunctionPlot2D()
 
-  if (themeColours[theme] && themeColours[theme][colours[i]]) {
-    pp.pen.color = rgba(...themeColours[theme][colours[i]])
-  }
+  equationList.appendChild(equation.domElement)
 
-  ps.push(pp)
-  if (i === 0) {
-    expandedPlot = pp
-    expandedPlot.pen.thickness = 4
-  } else {
-    if (i !== 1) plot.add(pp)
-    setFunction(pp, funcs[i], `eq${i+1}`, i !== 1)
-  }
-}
-// HACK: Make the currently selected plot visually on top
-plot.add(expandedPlot)
+  equation.select()
 
-function setFunction (plot, input, id, setFunction = true) {
-  const fn = parseString(input)
-
-  if (setFunction) {
-    plot.setFunction(fn)
-    plot.update()
-  }
-
-  Grapheme.katex.render(fn.latex(), document.getElementById(id), { throwOnError: false })
+  equations.push(equation)
 }
 
-function render () {
-  plot.render()
-  window.requestAnimationFrame(render)
-}
+function removeEquation(eq) {
+  let index = equations.indexOf(eq)
 
-function setTheme ({
-  text,
-  background,
-  axisColour,
-  gridColour,
-  font
-}) {
-  console.log(expandedPlot)
+  if (index !== -1) {
+    equations.splice(index, 1)
 
-  gridlines.label_style.color = text
-  gridlines.label_style.shadowColor = background
-  gridlines.label_style.fontFamily = font
-
-  expandedPlot.inspPtLabelStyle.color = text
-  expandedPlot.inspPtLabelStyle.shadowColor = background
-  expandedPlot.inspPtLabelStyle.fontFamily = font
-
-  gridlines.pens.box.visible = false
-  gridlines.pens.axis.color = axisColour
-  gridlines.pens.major.color = gridColour
-  gridlines.pens.minor.color = gridColour
-}
-const themes = {
-  dark () {
-    // Would like to use the computed CSS properties for these values, I think
-    // Might be nice if Grapheme had a helper function for making a Color from a CSS string?
-    return {
-      text: rgba(255, 255, 255, 0.8 * 255),
-      background: rgba(19, 20, 29),
-      axisColour: rgba(255, 255, 255, 0.5 * 255),
-      gridColour: rgba(255, 255, 255, 0.3 * 255),
-      font: '"Source Sans Pro", sans-serif'
-    }
-  },
-  paper () {
-    // Would like to use the computed CSS properties for these values, I think
-    // Might be nice if Grapheme had a helper function for making a Color from a CSS string?
-    return {
-      text: Colors.BLACK,
-      background: Colors.WHITE,
-      axisColour: Colors.BLACK,
-      gridColour: rgba(0, 0, 0, 0.2 * 255),
-      font: '"Source Sans Pro", sans-serif'
-    }
+    eq.remove()
   }
 }
 
-if (themes[theme]) setTheme(themes[theme]())
-render()
+function addNote() {
 
-const expressionInput = document.getElementById('_temp-equation-input')
-expressionInput.value = 'piecewise(piecewise(x, abs(x)<1/2), 0<x<2, x^2/2, 2<=x<4)'
-setFunction(expandedPlot, expressionInput.value, 'eq1')
-const expressionWrapper = expressionInput.closest('.equation')
-expressionInput.addEventListener('input', e => {
-  try {
-    setFunction(expandedPlot, expressionInput.value, 'eq1')
-    expressionWrapper.classList.remove('error')
-  } catch (err) {
-    expressionWrapper.classList.add('error')
-  }
-})
+}
 
 function resize () {
   const { width, height } = wrapper.getBoundingClientRect()
   plot.setSize(width, height)
 }
+
 window.requestAnimationFrame(() => {
   resize()
   wrapper.appendChild(plot.domElement)
@@ -191,8 +256,70 @@ document.getElementById('_temp-settings-btn').addEventListener('click', e => {
   document.body.classList.toggle('settings-open')
 })
 
+function render () {
+  plot.render()
+  window.requestAnimationFrame(render)
+}
+
+let inspPtLabelStyle
+
+function setTheme ({
+                     text,
+                     background,
+                     axisColour,
+                     gridColour,
+                     font
+                   }) {
+
+  gridlines.label_style.color = text
+  gridlines.label_style.shadowColor = background
+  gridlines.label_style.fontFamily = font
+
+  gridlines.pens.box.visible = false
+  gridlines.pens.axis.color = axisColour
+  gridlines.pens.major.color = gridColour
+  gridlines.pens.minor.color = gridColour
+
+  inspPtLabelStyle = new Grapheme.Label2DStyle()
+
+  inspPtLabelStyle.color = text
+  inspPtLabelStyle.shadowColor = background
+  inspPtLabelStyle.fontFamily = font
+}
+
+const themes = {
+  dark () {
+    // Would like to use the computed CSS properties for these values, I think
+    // Might be nice if Grapheme had a helper function for making a Color from a CSS string?
+    return {
+      text: rgba(255, 255, 255, 0.8 * 255),
+      background: rgba(19, 20, 29),
+      axisColour: rgba(255, 255, 255, 0.5 * 255),
+      gridColour: rgba(255, 255, 255, 0.3 * 255),
+      font: '"Source Sans Pro", sans-serif'
+    }
+  },
+  paper () {
+    // Would like to use the computed CSS properties for these values, I think
+    // Might be nice if Grapheme had a helper function for making a Color from a CSS string?
+    return {
+      text: Colors.BLACK,
+      background: Colors.WHITE,
+      axisColour: Colors.BLACK,
+      gridColour: rgba(0, 0, 0, 0.2 * 255),
+      font: '"Source Sans Pro", sans-serif'
+    }
+  }
+}
+
+if (themes[theme]) setTheme(themes[theme]())
+render()
+
 export {
   plot,
   gridlines,
-  setFunction
+  VelarElement,
+    equationList,
+    addEquation,
+    equations
 }
