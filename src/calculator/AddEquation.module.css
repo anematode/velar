@@ -1,0 +1,39 @@
+.addEquation {
+  border-top: 1px solid var(--separator);
+  position: relative;
+}
+.addEquationLabel {
+  display: flex;
+  padding: 20px;
+  cursor: pointer;
+}
+.addEquation:hover,
+.addEquation:focus-within {
+  background-color: var(--button-big-hover);
+}
+.addEquationWrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  padding: 20px;
+}
+.addEquationDialog {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dialog);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+.addType {
+  display: block;
+  padding: 15px 20px;
+  text-align: left;
+}
+.addType:hover {
+  background-color: var(--button-hover);
+}
+.addType .icon {
+  margin-right: 10px;
+}

@@ -459,40 +459,6 @@ body {
   position: absolute;
 }
 
-.settings-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 5;
-  margin: 10px;
-}
-.settings-open .settings-btn {
-  background-color: var(--text);
-  color: var(--equation-background);
-}
-.settings-open .settings-btn:hover {
-  background-color: var(--text-hover);
-}
-.settings-wrapper {
-  position: fixed;
-  right: 0;
-  top: 0;
-  padding: 20px;
-  margin: 20px;
-  margin-top: 56px;
-  border-radius: 10px;
-  background-color: var(--dialog);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-  max-width: 300px;
-  max-height: 50%;
-  z-index: 6;
-  overflow: auto;
-  display: none;
-}
-.settings-open .settings-wrapper {
-  display: block;
-}
-
 .logo-wrapper {
   position: fixed;
   z-index: 15;

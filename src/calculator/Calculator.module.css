@@ -1,0 +1,11 @@
+.main {
+  flex: auto;
+  display: flex;
+}
+.resizeEquations {
+  position: relative;
+  z-index: 1;
+  cursor: col-resize;
+  margin: 0 -10px;
+  width: 20px;
+}

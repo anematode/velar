@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--separator);
+  background-color: var(--equation-background);
+  width: 300px;
+}
+
+.logoSpace {
+  height: 56px;
+  border-bottom: 1px solid var(--separator);
+}
+
+.equations {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: auto;
+  overflow: auto;
+  height: 0;
+}

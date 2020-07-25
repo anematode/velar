@@ -1,0 +1,33 @@
+.settingsBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  margin: 10px;
+}
+.settings-open .settingsBtn {
+  background-color: var(--text);
+  color: var(--equation-background);
+}
+.settings-open .settingsBtn:hover {
+  background-color: var(--text-hover);
+}
+.wrapper {
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding: 20px;
+  margin: 20px;
+  margin-top: 56px;
+  border-radius: 10px;
+  background-color: var(--dialog);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  max-width: 300px;
+  max-height: 50%;
+  z-index: 6;
+  overflow: auto;
+  display: none;
+}
+.settings-open .wrapper {
+  display: block;
+}
