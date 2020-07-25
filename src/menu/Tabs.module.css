@@ -1,0 +1,32 @@
+.tabs {
+  display: flex;
+  background-color: var(--tabs-background);
+  border-top: 1px solid var(--separator);
+}
+.tab {
+  padding: 10px 20px;
+  border-right: 1px solid var(--separator);
+  position: relative;
+  padding-bottom: 13px;
+}
+.add-tab {
+  padding: 0 10px;
+  padding-bottom: 3px;
+}
+.tab:not(.active):hover,
+.add-tab:hover {
+  background-color: var(--button-hover);
+}
+.active {
+  background-color: var(--selected);
+  cursor: default;
+}
+.active::before {
+  content: '';
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  position: absolute;
+  background-color: var(--theme);
+}
