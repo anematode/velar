@@ -8,7 +8,7 @@
 
     <link rel="icon" href="logos/favicon.svg">
 
-    <script src="https://anematode.github.io/grapheme/build/grapheme.js" charset="utf-8"></script>
+    <script src="../grapheme.js" charset="utf-8"></script>
 
     <link rel="stylesheet" href="./you-better-rename-this-later-tim.css">
   </head>
@@ -40,129 +40,7 @@
         <section class="equations-wrapper">
           <div class="logo-space"></div>
           <ul class="equations">
-            <li class="equation expanded colour-blue">
-              <div class="preview">
-                <div class="quick-actions-wrapper">
-                  <div class="quick-actions">
-                    <button class="icon-btn quick-action danger">
-                      <span class="icon" data-octicon="trashcan">Remove</span>
-                    </button>
-                    <button class="icon-btn quick-action">
-                      <span class="icon" data-octicon="eye-closed">Hide</span>
-                    </button>
-                  </div>
-                </div>
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq1"></button>
-              </div>
-              <div class="info">
-                <div class="raw-equation-wrapper">
-                  <textarea class="raw-equation" id="_temp-equation-input"></textarea>
-                </div>
-                <div class="info-select">
-                  <label class="select-label">Color</label>
-                  <div class="select-group">
-                    <button class="select-option plot-colour plot-colour-light colour-blue selected">Blue</button>
-                    <button class="select-option plot-colour plot-colour-light colour-red">Red</button>
-                    <button class="select-option plot-colour plot-colour-light colour-black">Black</button>
-                    <button class="select-option plot-colour plot-colour-light colour-magenta">Magenta</button>
-                    <button class="select-option plot-colour plot-colour-light colour-green">Green</button>
-                  </div>
-                  <div class="select-group">
-                    <button class="select-option plot-colour plot-colour-light colour-orange">Orange</button>
-                    <button class="select-option plot-colour plot-colour-light colour-navy">Navy</button>
-                    <button class="select-option plot-colour plot-colour-light colour-light-blue">Light blue</button>
-                    <button class="select-option plot-colour plot-colour-light colour-yellow">Yellow</button>
-                    <button class="select-option"><span class="icon" data-octicon="pencil">Custom color</span></button>
-                  </div>
-                </div>
-                <div class="info-select">
-                  <label class="select-label">Line style</label>
-                  <div class="select-group">
-                    <button class="select-option plot-line selected"><span class="icon" data-src="./icons/icon-solid.svg">Solid</span></button>
-                    <button class="select-option plot-line"><span class="icon" data-src="./icons/icon-dashed.svg">Dashed</span></button>
-                    <button class="select-option plot-line"><span class="icon" data-src="./icons/icon-dotted.svg">Dotted</span></button>
-                    <button class="select-option"><span class="icon" data-octicon="pencil">Custom line style</span></button>
-                  </div>
-                </div>
-                <div class="actions">
-                  <button class="action"><span class="icon" data-octicon="clippy"></span>Duplicate</button>
-                  <button class="action danger"><span class="icon" data-octicon="trashcan"></span>Remove</button>
-                </div>
-                <button class="close-info-btn icon-btn">
-                  <span class="icon expand-icon" data-octicon="chevron-up">Collapse</span>
-                </button>
-              </div>
-            </li>
-            <li class="equation graph-hidden colour-red">
-              <div class="preview">
-                <div class="quick-actions-wrapper">
-                  <div class="quick-actions">
-                    <button class="icon-btn quick-action danger">
-                      <span class="icon" data-octicon="trashcan">Remove</span>
-                    </button>
-                    <button class="icon-btn quick-action hide-equation">
-                      <span class="icon" data-octicon="eye-closed">Hide</span>
-                    </button>
-                  </div>
-                </div>
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq2"></button>
-              </div>
-            </li>
-            <li class="equation colour-black">
-              <div class="preview">
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq3"></button>
-              </div>
-            </li>
-            <li class="equation colour-magenta">
-              <div class="preview">
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq4"></button>
-              </div>
-            </li>
-            <li class="equation colour-green">
-              <div class="preview">
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq5"></button>
-              </div>
-            </li>
-            <li class="equation colour-orange">
-              <div class="preview">
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq6"></button>
-              </div>
-            </li>
-            <li class="equation colour-brown">
-              <div class="preview">
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq7"></button>
-              </div>
-            </li>
-            <li class="equation colour-navy">
-              <div class="preview">
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq8"></button>
-              </div>
-            </li>
-            <li class="equation colour-light-blue">
-              <div class="preview">
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq9"></button>
-              </div>
-            </li>
-            <li class="equation colour-yellow">
-              <div class="preview">
-                <div class="colour-strip"></div>
-                <button class="katex-preview" id="eq10"></button>
-              </div>
-            </li>
-            <li class="add-equation-line">
-              <button class="add-equation-line-btn">
-                <span class="icon" data-octicon="plus">Add equation</span>
-              </button>
-            </li>
+
           </ul>
           <div class="add-equation">
             <span class="add-equation-label">
@@ -172,12 +50,12 @@
             </span>
             <div class="add-equation-wrapper">
               <div class="add-equation-dialog" role="group">
-                <button class="add-type">
+                <button class="add-type" onclick="addEquation()">
                   <span class="icon" data-octicon="graph"></span>
                   Graph
                 </button>
-                <button class="add-type">
-                  <span class="icon" data-octicon="note"></span>
+                <button class="add-type" onclick="addNote()">
+                  <span class="icon" data-octicon="note" ></span>
                   Note
                 </button>
               </div>
