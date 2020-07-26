@@ -1,5 +1,5 @@
 .wrapper {
-  display: none;
+  display: flex;
   position: fixed;
   top: 56px;
   left: 0;
@@ -12,12 +12,9 @@
   border-radius: 10px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
-.menu-showing .wrapper {
-  display: flex;
-}
 
 @media (max-width: 600px) {
-  .menu {
+  .wrapper {
     flex: auto;
     position: static;
     background: none;

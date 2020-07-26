@@ -5,11 +5,11 @@
   z-index: 5;
   margin: 10px;
 }
-.settings-open .settingsBtn {
+.settingsBtn.open {
   background-color: var(--text);
   color: var(--equation-background);
 }
-.settings-open .settingsBtn:hover {
+.settingsBtn.open:hover {
   background-color: var(--text-hover);
 }
 .wrapper {
@@ -26,8 +26,4 @@
   max-height: 50%;
   z-index: 6;
   overflow: auto;
-  display: none;
-}
-.settings-open .wrapper {
-  display: block;
 }

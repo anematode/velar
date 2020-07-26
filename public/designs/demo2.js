@@ -6,7 +6,6 @@ const {
   InteractiveFunctionPlot2D,
   Color,
   Colors,
-  rgba,
   parseString
 } = Grapheme
 
@@ -65,7 +64,7 @@ for (let i = 0; i < 10; i++) {
   let pp = new InteractiveFunctionPlot2D()
 
   if (themeColours[theme] && themeColours[theme][colours[i]]) {
-    pp.pen.color = rgba(...themeColours[theme][colours[i]])
+    pp.pen.color = Color.rgba(...themeColours[theme][colours[i]])
   }
 
   ps.push(pp)
@@ -105,9 +104,9 @@ function setTheme ({
 }) {
   console.log(expandedPlot)
 
-  gridlines.label_style.color = text
-  gridlines.label_style.shadowColor = background
-  gridlines.label_style.fontFamily = font
+  gridlines.labelStyle.color = text
+  gridlines.labelStyle.shadowColor = background
+  gridlines.labelStyle.fontFamily = font
 
   expandedPlot.inspPtLabelStyle.color = text
   expandedPlot.inspPtLabelStyle.shadowColor = background
@@ -123,10 +122,10 @@ const themes = {
     // Would like to use the computed CSS properties for these values, I think
     // Might be nice if Grapheme had a helper function for making a Color from a CSS string?
     return {
-      text: rgba(255, 255, 255, 0.8 * 255),
-      background: rgba(19, 20, 29),
-      axisColour: rgba(255, 255, 255, 0.5 * 255),
-      gridColour: rgba(255, 255, 255, 0.3 * 255),
+      text: Color.rgba(255, 255, 255, 0.8 * 255),
+      background: Color.rgba(19, 20, 29),
+      axisColour: Color.rgba(255, 255, 255, 0.5 * 255),
+      gridColour: Color.rgba(255, 255, 255, 0.3 * 255),
       font: '"Source Sans Pro", sans-serif'
     }
   },
@@ -137,7 +136,7 @@ const themes = {
       text: Colors.BLACK,
       background: Colors.WHITE,
       axisColour: Colors.BLACK,
-      gridColour: rgba(0, 0, 0, 0.2 * 255),
+      gridColour: Color.rgba(0, 0, 0, 0.2 * 255),
       font: '"Source Sans Pro", sans-serif'
     }
   }
