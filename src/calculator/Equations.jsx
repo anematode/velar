@@ -8,12 +8,12 @@ class Equations extends React.Component {
   render () {
     return (
       <section className={styles.wrapper}>
-        <div className={styles.logoSpace}></div>
+        <div className={styles.logoSpace} />
         <ul className={styles.equations}>
           <Equation />
           <li className={styles.addEquationLine}>
             <button className={styles.addEquationLineBtn}>
-              <PlusIcon aria-label="Add equation" />
+              <PlusIcon aria-label='Add equation' />
             </button>
           </li>
         </ul>

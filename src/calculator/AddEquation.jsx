@@ -8,11 +8,11 @@ class AddEquation extends React.Component {
       <div className={styles.addEquation}>
         <span className={styles.addEquationLabel}>
           Add ...
-          <span className="flex"></span>
+          <span className='flex' />
           <PlusIcon />
         </span>
         <div className={styles.addEquationWrapper}>
-          <div className={styles.addEquationDialog} role="group">
+          <div className={styles.addEquationDialog} role='group'>
             <button className={styles.addType}>
               <GraphIcon className={styles.icon} />
               Graph

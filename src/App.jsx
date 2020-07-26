@@ -17,7 +17,9 @@ class App extends React.Component {
     this.gridlines = new Gridlines()
     this.gridlines.pens.axis.thickness = 2
     this.plot.add(this.gridlines)
-    this.setTheme(graphemeThemes['dark'])
+
+    const theme = 'dark' // TODO: change theme
+    this.setTheme(graphemeThemes[theme])
 
     this.frameId = null
   }
@@ -35,13 +37,7 @@ class App extends React.Component {
     this.frameId = window.requestAnimationFrame(this.draw)
   }
 
-  setTheme ({
-    text,
-    background,
-    axisColor,
-    gridColor,
-    font
-  }) {
+  setTheme ({ text, background, axisColor, gridColor, font }) {
     this.gridlines.labelStyle.color = text
     this.gridlines.labelStyle.shadowColor = background
     this.gridlines.labelStyle.fontFamily = font

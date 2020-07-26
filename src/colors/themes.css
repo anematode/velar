@@ -35,11 +35,11 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --yellow: unset;
 }
 .dark {
-  --background: #13141D;
+  --background: #13141d;
   --equation-background: #101017;
-  --graph-background: #13141D;
+  --graph-background: #13141d;
   --tabs-background: #0c0d10;
-  --dialog: #3C3F59;
+  --dialog: #3c3f59;
   --text: rgba(255, 255, 255, 0.8);
   --text-opaque: white;
   --text-opacity: 0.8;
@@ -72,7 +72,7 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --background: white;
   --equation-background: white;
   --graph-background: white;
-  --tabs-background: #F2F2F2;
+  --tabs-background: #f2f2f2;
   --dialog: white;
   --text: rgba(0, 0, 0, 0.8);
   --text-opaque: black;
@@ -104,13 +104,33 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --yellow: yellow;
 }
 
-.color-blue { --color: var(--blue); }
-.color-red { --color: var(--red); }
-.color-black { --color: var(--black); }
-.color-magenta { --color: var(--magenta); }
-.color-green { --color: var(--green); }
-.color-orange { --color: var(--orange); }
-.color-brown { --color: var(--brown); }
-.color-navy { --color: var(--navy); }
-.color-lightBlue { --color: var(--light-blue); }
-.color-yellow { --color: var(--yellow); }
+.color-blue {
+  --color: var(--blue);
+}
+.color-red {
+  --color: var(--red);
+}
+.color-black {
+  --color: var(--black);
+}
+.color-magenta {
+  --color: var(--magenta);
+}
+.color-green {
+  --color: var(--green);
+}
+.color-orange {
+  --color: var(--orange);
+}
+.color-brown {
+  --color: var(--brown);
+}
+.color-navy {
+  --color: var(--navy);
+}
+.color-lightBlue {
+  --color: var(--light-blue);
+}
+.color-yellow {
+  --color: var(--yellow);
+}

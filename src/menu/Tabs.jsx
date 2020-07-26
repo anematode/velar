@@ -10,7 +10,7 @@ class Tabs extends React.Component {
         <button className={classNames(styles.tab, styles.active)}>Graph</button>
         <button className={styles.tab}>Data</button>
         <button className={styles.addTab}>
-          <PlusIcon aria-label="Add tab" />
+          <PlusIcon aria-label='Add tab' />
         </button>
       </nav>
     )

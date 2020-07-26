@@ -7,11 +7,13 @@ import Info from './Info.jsx'
 class Equation extends React.Component {
   render () {
     return (
-      <li className={classNames(styles.equation, styles.expanded, 'color-blue')}>
+      <li
+        className={classNames(styles.equation, styles.expanded, 'color-blue')}
+      >
         <div className={styles.preview}>
           <QuickActions />
-          <div className={styles.colorStrip}></div>
-          <button className={styles.katexPreview}></button>
+          <div className={styles.colorStrip} />
+          <button className={styles.katexPreview} />
         </div>
         <Info />
       </li>

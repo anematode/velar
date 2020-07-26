@@ -2,7 +2,14 @@ import React from 'react'
 import styles from './GraphemeWrapper.module.css'
 import GraphemeSettings from './GraphemeSettings.jsx'
 
+import PropTypes from 'prop-types'
+import { Plot2D } from 'grapheme'
+
 class GraphemeWrapper extends React.Component {
+  static propTypes = {
+    plot: PropTypes.instanceOf(Plot2D).isRequired
+  }
+
   // Refers to GraphemeWrapper's DOM element
   ref = null
 

@@ -1,3 +1,5 @@
+/* global fetch */
+
 // rollup -c src/designs/octicons/rollup.config.js
 
 import * as octicons from '@primer/octicons-v2'
@@ -7,7 +9,7 @@ function getCustomIcon (url) {
   if (customIcons.has(url)) {
     return customIcons.get(url)
   } else {
-    const promise = fetch(url).then(r => r.ok ? r.text() : Promise.reject(r))
+    const promise = fetch(url).then(r => (r.ok ? r.text() : Promise.reject(r)))
     customIcons.set(url, promise)
     return promise
   }
@@ -26,13 +28,12 @@ export default function load () {
         console.warn(`${iconType} is not an octicon.`, icon)
       }
     } else if (icon.dataset.src) {
-      getCustomIcon(icon.dataset.src)
-        .then(svg => {
-          icon.innerHTML = svg
-          const elem = icon.querySelector('svg')
-          elem.setAttributeNS(null, 'aria-label', label)
-          elem.classList.add('custom-icon')
-        })
+      getCustomIcon(icon.dataset.src).then(svg => {
+        icon.innerHTML = svg
+        const elem = icon.querySelector('svg')
+        elem.setAttributeNS(null, 'aria-label', label)
+        elem.classList.add('custom-icon')
+      })
     }
   }
 }
