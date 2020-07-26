@@ -2,8 +2,8 @@ import React from 'react'
 import styles from './App.module.css'
 import MenuWrapper from './menu/MenuWrapper.jsx'
 import Calculator from './calculator/Calculator.jsx'
-import { Plot2D, Gridlines } from 'grapheme'
-import { graphemeThemes } from './colors/themes.js'
+import { Plot2D, Gridlines, InteractiveFunctionPlot2D, Color } from 'grapheme'
+import { themeColors, graphemeThemes } from './colors/themes.js'
 
 class App extends React.Component {
   constructor (props) {
@@ -18,9 +18,6 @@ class App extends React.Component {
     this.gridlines.pens.axis.thickness = 2
     this.plot.add(this.gridlines)
 
-    const theme = 'dark' // TODO: change theme
-    this.setTheme(graphemeThemes[theme])
-
     this.frameId = null
 
     this.state = {
@@ -29,6 +26,7 @@ class App extends React.Component {
   }
 
   componentDidMount () {
+    this.setTheme(graphemeThemes[this.props.theme])
     this.draw()
   }
 
@@ -52,23 +50,39 @@ class App extends React.Component {
     this.gridlines.pens.minor.color = gridColor
   }
 
-  handleAddEquation () {
-    console.log('add equation')
+  handleAddEquation = () => {
+    const fnPlot = new InteractiveFunctionPlot2D()
+    const color = 'blue'
+    fnPlot.pen.color = Color.rgba(...themeColors[this.props.theme][color])
+    // TODO: Set `inspPtLabelStyle`
+    this.plot.add(fnPlot)
+    this.setState({
+      equations: [
+        ...this.state.equations,
+        {
+          fnPlot,
+          equation: '',
+          latex: '',
+          color,
+          lineStyle: 'solid'
+        }
+      ]
+    })
   }
 
-  handleEquationUpdate (index, changes) {
+  handleEquationUpdate = (index, changes) => {
     console.log('update', this.state.equations[index], changes)
   }
 
-  handleToggleEquationVisibility (index) {
+  handleToggleEquationVisibility = (index) => {
     console.log('toggle visib', this.state.equations[index])
   }
 
-  handleDuplicateEquation (index) {
+  handleDuplicateEquation = (index) => {
     console.log('dupe', this.state.equations[index])
   }
 
-  handleRemoveEquation (index) {
+  handleRemoveEquation = (index) => {
     console.log('del', this.state.equations[index])
   }
 
@@ -79,7 +93,7 @@ class App extends React.Component {
         <MenuWrapper />
         <Calculator
           plot={this.plot}
-          equations={equations}
+          equations={equations.map(({ equation, latex, color, lineStyle }) => ({ equation, latex, color, lineStyle }))}
           onAddEquation={this.handleAddEquation}
           onEquationUpdate={this.handleEquationUpdate}
           onToggleEquationVisibility={this.handleToggleEquationVisibility}
