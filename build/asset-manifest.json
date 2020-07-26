@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/velar/build/static/css/main.f9870833.chunk.css",
+    "main.js": "/velar/build/static/js/main.fe599c97.chunk.js",
+    "main.js.map": "/velar/build/static/js/main.fe599c97.chunk.js.map",
+    "runtime-main.js": "/velar/build/static/js/runtime-main.e7e5f4b3.js",
+    "runtime-main.js.map": "/velar/build/static/js/runtime-main.e7e5f4b3.js.map",
+    "static/js/2.cb549baa.chunk.js": "/velar/build/static/js/2.cb549baa.chunk.js",
+    "static/js/2.cb549baa.chunk.js.map": "/velar/build/static/js/2.cb549baa.chunk.js.map",
+    "index.html": "/velar/build/index.html",
+    "precache-manifest.ac0746fbec9b901ad33553764139848b.js": "/velar/build/precache-manifest.ac0746fbec9b901ad33553764139848b.js",
+    "service-worker.js": "/velar/build/service-worker.js",
+    "static/css/main.f9870833.chunk.css.map": "/velar/build/static/css/main.f9870833.chunk.css.map",
+    "static/js/2.cb549baa.chunk.js.LICENSE.txt": "/velar/build/static/js/2.cb549baa.chunk.js.LICENSE.txt",
+    "static/media/icon-dashed.4ad0f0a0.svg": "/velar/build/static/media/icon-dashed.4ad0f0a0.svg",
+    "static/media/icon-dotted.0c85f864.svg": "/velar/build/static/media/icon-dotted.0c85f864.svg",
+    "static/media/icon-solid.f0541a42.svg": "/velar/build/static/media/icon-solid.f0541a42.svg",
+    "static/media/logo.svg": "/velar/build/static/media/logo.0d833d86.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e7e5f4b3.js",
+    "static/js/2.cb549baa.chunk.js",
+    "static/css/main.f9870833.chunk.css",
+    "static/js/main.fe599c97.chunk.js"
+  ]
+}

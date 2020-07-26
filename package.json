@@ -20,6 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://anematode.github.io/velar/build/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anematode/velar.git"

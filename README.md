@@ -11,10 +11,12 @@ npm start
 
 This should automatically open http://localhost:3000/ in your browser.
 
-You can make Standard scream at you if you use semicolons:
+Use [`npm install -g prettier-standard`](https://www.npmjs.com/package/prettier-standard) then `prettier-standard --format --lint` to format the code per Standard's style guide.
+
+To build, run
 
 ```sh
-EXTEND_ESLINT=true npm start
+npm run build
 ```
 
-(This doesn't work because it won't accept the Babel parser or something. Use [`npm install -g prettier-standard`](https://www.npmjs.com/package/prettier-standard) then `prettier-standard --format --lint` instead, maybe?)
+This minifies everything.
