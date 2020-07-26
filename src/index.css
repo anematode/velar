@@ -1,8 +1,6 @@
 /* https://fonts.google.com/specimen/Source+Sans+Pro?selection.family=Source+Sans+Pro&sidebar.open */
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 
-@import url('./themes.css');
-
 :root {
   --theme: #a229e0;
 }
