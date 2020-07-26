@@ -10,10 +10,10 @@ class QuickActions extends React.Component {
       <div className={styles.wrapper}>
         <div className={styles.quickActions}>
           <IconBtn className={classNames(styles.quickAction, styles.danger)}>
-            <TrashcanIcon aria-label="Remove" />
+            <TrashcanIcon aria-label='Remove' />
           </IconBtn>
           <IconBtn className={styles.quickAction}>
-            <EyeClosedIcon aria-label="Hide" />
+            <EyeClosedIcon aria-label='Hide' />
           </IconBtn>
         </div>
       </div>

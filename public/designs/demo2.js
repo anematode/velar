@@ -1,8 +1,9 @@
+/* global Grapheme */
+
 // It'd be ideal if this could be imported as a module
 const {
   Plot2D,
   Gridlines,
-  FunctionPlot2D,
   InteractiveFunctionPlot2D,
   Color,
   Colors,
@@ -11,7 +12,7 @@ const {
 
 const params = new URL(window.location).searchParams
 
-let theme = params.get('theme') || 'dark'
+const theme = params.get('theme') || 'dark'
 if (theme !== 'dark') {
   document.body.classList.replace('dark', theme)
 }
@@ -29,7 +30,7 @@ gridlines.pens.axis.thickness = 2
 plot.add(gridlines)
 
 // Function plot thicker and on top because "selected"
-let ps = []
+const ps = []
 const themeColours = {
   dark: {
     blue: [85, 136, 204],
@@ -56,12 +57,34 @@ const themeColours = {
     yellow: [255, 255, 0]
   }
 }
-const colours = ['blue', 'red', 'black', 'magenta', 'green', 'orange', 'brown', 'navy', 'lightBlue', 'yellow']
-const funcs = ['x', 'x^2', 'sin(x)', 'sqrt(x)', '-2', '1/x', 'cos(x)-2', 'tan(x)', '-x^2/2-3', 'abs(x)-1']
+const colours = [
+  'blue',
+  'red',
+  'black',
+  'magenta',
+  'green',
+  'orange',
+  'brown',
+  'navy',
+  'lightBlue',
+  'yellow'
+]
+const funcs = [
+  'x',
+  'x^2',
+  'sin(x)',
+  'sqrt(x)',
+  '-2',
+  '1/x',
+  'cos(x)-2',
+  'tan(x)',
+  '-x^2/2-3',
+  'abs(x)-1'
+]
 let expandedPlot
 
 for (let i = 0; i < 10; i++) {
-  let pp = new InteractiveFunctionPlot2D()
+  const pp = new InteractiveFunctionPlot2D()
 
   if (themeColours[theme] && themeColours[theme][colours[i]]) {
     pp.pen.color = Color.rgba(...themeColours[theme][colours[i]])
@@ -73,7 +96,7 @@ for (let i = 0; i < 10; i++) {
     expandedPlot.pen.thickness = 4
   } else {
     if (i !== 1) plot.add(pp)
-    setFunction(pp, funcs[i], `eq${i+1}`, i !== 1)
+    setFunction(pp, funcs[i], `eq${i + 1}`, i !== 1)
   }
 }
 // HACK: Make the currently selected plot visually on top
@@ -87,7 +110,9 @@ function setFunction (plot, input, id, setFunction = true) {
     plot.update()
   }
 
-  Grapheme.katex.render(fn.latex(), document.getElementById(id), { throwOnError: false })
+  Grapheme.katex.render(fn.latex(), document.getElementById(id), {
+    throwOnError: false
+  })
 }
 
 function render () {
@@ -95,13 +120,7 @@ function render () {
   window.requestAnimationFrame(render)
 }
 
-function setTheme ({
-  text,
-  background,
-  axisColour,
-  gridColour,
-  font
-}) {
+function setTheme ({ text, background, axisColour, gridColour, font }) {
   console.log(expandedPlot)
 
   gridlines.labelStyle.color = text
@@ -146,7 +165,8 @@ if (themes[theme]) setTheme(themes[theme]())
 render()
 
 const expressionInput = document.getElementById('_temp-equation-input')
-expressionInput.value = 'piecewise(piecewise(x, abs(x)<1/2), 0<x<2, x^2/2, 2<=x<4)'
+expressionInput.value =
+  'piecewise(piecewise(x, abs(x)<1/2), 0<x<2, x^2/2, 2<=x<4)'
 setFunction(expandedPlot, expressionInput.value, 'eq1')
 const expressionWrapper = expressionInput.closest('.equation')
 expressionInput.addEventListener('input', e => {
@@ -190,8 +210,4 @@ document.getElementById('_temp-settings-btn').addEventListener('click', e => {
   document.body.classList.toggle('settings-open')
 })
 
-export {
-  plot,
-  gridlines,
-  setFunction
-}
+export { plot, gridlines, setFunction }

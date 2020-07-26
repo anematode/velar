@@ -9,7 +9,7 @@ class GraphemeSettings extends React.Component {
     open: false
   }
 
-  toggleOpen = () => {
+  handleToggleOpen = () => {
     this.setState({
       open: !this.state.open
     })
@@ -17,19 +17,28 @@ class GraphemeSettings extends React.Component {
 
   render () {
     const { open } = this.state
-    return <>
-      <IconBtn
-        className={classNames(styles.settingsBtn, open && styles.open)}
-        onClick={this.toggleOpen}
-      >
-        <GearIcon aria-label="Graphing settings" />
-      </IconBtn>
-      {open && <div className={styles.wrapper}>
-        What settings should Grapheme have here? Can't have too many, or it'll be overwhelming.<br />
-        Actually, what'd be cool is if there could be a demo for each option, so students can learn what each option does and is meant for.<br />
-        Not sure how helpful that'd be.
-      </div>}
-    </>
+    return (
+      <>
+        <IconBtn
+          className={classNames(styles.settingsBtn, open && styles.open)}
+          onClick={this.handleToggleOpen}
+        >
+          <GearIcon aria-label='Graphing settings' />
+        </IconBtn>
+        {open && (
+          <div className={styles.wrapper}>
+            What settings should Grapheme have here? Can't have too many, or
+            it'll be overwhelming.
+            <br />
+            Actually, what'd be cool is if there could be a demo for each
+            option, so students can learn what each option does and is meant
+            for.
+            <br />
+            Not sure how helpful that'd be.
+          </div>
+        )}
+      </>
+    )
   }
 }
 

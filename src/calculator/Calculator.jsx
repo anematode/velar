@@ -9,7 +9,7 @@ class Calculator extends React.Component {
     return (
       <main className={styles.main}>
         <Equations />
-        <div className={styles.resizeEquations}></div>
+        <div className={styles.resizeEquations} />
         {plot && <GraphemeWrapper plot={plot} />}
       </main>
     )

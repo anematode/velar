@@ -60,8 +60,4 @@ const graphemeThemes = {
   }
 }
 
-export {
-  COLORS,
-  themeColors,
-  graphemeThemes
-}
+export { COLORS, themeColors, graphemeThemes }

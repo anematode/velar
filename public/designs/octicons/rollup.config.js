@@ -10,7 +10,8 @@ export default {
   input: path.resolve(__dirname, './load-icons.js'),
   output: {
     file: path.resolve(__dirname, './load-icons-built.js'),
-    format: 'es'
+    format: 'es',
+    banner: '/* eslint-ignore */'
   },
   plugins: [
     resolve({

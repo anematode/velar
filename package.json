@@ -28,6 +28,7 @@
     "url": "https://github.com/anematode/velar/issues"
   },
   "eslintConfig": {
+    "parser": "babel-eslint",
     "extends": [
       "standard",
       "standard-react"

@@ -1,6 +1,11 @@
 import React from 'react'
 import styles from './Info.module.css'
-import { TrashcanIcon, PencilIcon, ClippyIcon, ChevronUpIcon } from '@primer/octicons-react'
+import {
+  TrashcanIcon,
+  PencilIcon,
+  ClippyIcon,
+  ChevronUpIcon
+} from '@primer/octicons-react'
 import IconBtn from '../components/IconBtn.jsx'
 import { ReactComponent as SolidIcon } from './icon-solid.svg'
 import { ReactComponent as DashedIcon } from './icon-dashed.svg'
@@ -13,9 +18,11 @@ function SelectGroup ({ label, children }) {
     <div className={styles.infoSelect}>
       <label className={styles.selectLabel}>{label}</label>
       <div className={styles.selectGroup}>
-        {React.Children.map(children, option => React.cloneElement(option, {
-          className: classNames(option.props.className, styles.selectOption)
-        }))}
+        {React.Children.map(children, option =>
+          React.cloneElement(option, {
+            className: classNames(option.props.className, styles.selectOption)
+          })
+        )}
       </div>
     </div>
   )
@@ -26,9 +33,9 @@ class Info extends React.Component {
     return (
       <div className={styles.info}>
         <div className={styles.rawEquationWrapper}>
-          <textarea className={styles.rawEquation}></textarea>
+          <textarea className={styles.rawEquation} />
         </div>
-        <SelectGroup label="Color">
+        <SelectGroup label='Color'>
           {Object.entries(COLORS).map(([colorId, colorName]) => (
             // TODO: determine plotColorDark/plotColorLight
             <button
@@ -38,19 +45,23 @@ class Info extends React.Component {
               {colorName}
             </button>
           ))}
-          <button><PencilIcon aria-label="Custom color" /></button>
+          <button>
+            <PencilIcon aria-label='Custom color' />
+          </button>
         </SelectGroup>
-        <SelectGroup label="Line style">
+        <SelectGroup label='Line style'>
           <button className={styles.plotLine}>
-            <SolidIcon aria-label="Solid" className={styles.customIcon} />
+            <SolidIcon aria-label='Solid' className={styles.customIcon} />
           </button>
           <button className={styles.plotLine}>
-            <DashedIcon aria-label="Dashed" className={styles.customIcon} />
+            <DashedIcon aria-label='Dashed' className={styles.customIcon} />
           </button>
           <button className={styles.plotLine}>
-            <DottedIcon aria-label="Dotted" className={styles.customIcon} />
+            <DottedIcon aria-label='Dotted' className={styles.customIcon} />
           </button>
-          <button><PencilIcon aria-label="Custom line style" /></button>
+          <button>
+            <PencilIcon aria-label='Custom line style' />
+          </button>
         </SelectGroup>
         <div className={styles.actions}>
           <button className={styles.action}>
@@ -63,7 +74,7 @@ class Info extends React.Component {
           </button>
         </div>
         <IconBtn className={styles.closeInfoBtn}>
-          <ChevronUpIcon aria-label="Collapse" className={styles.expandIcon} />
+          <ChevronUpIcon aria-label='Collapse' className={styles.expandIcon} />
         </IconBtn>
       </div>
     )

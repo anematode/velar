@@ -12,11 +12,11 @@ class MenuWrapper extends React.Component {
     open: false
   }
 
-  openMenu = () => {
+  handleOpenMenu = () => {
     this.setState({ open: true })
   }
 
-  closeMenu = () => {
+  handleCloseMenu = () => {
     this.setState({ open: false })
   }
 
@@ -26,15 +26,18 @@ class MenuWrapper extends React.Component {
       <div className={classNames(styles.wrapper, open && styles.open)}>
         <div className={styles.logoWrapper}>
           {open ? (
-            <IconBtn className={styles.closeMenuBtn} onClick={this.closeMenu}>
-              <XIcon aria-label="Close menu" />
+            <IconBtn
+              className={styles.closeMenuBtn}
+              onClick={this.handleCloseMenu}
+            >
+              <XIcon aria-label='Close menu' />
             </IconBtn>
           ) : (
-            <IconBtn className={styles.menuBtn} onClick={this.openMenu}>
-              <ThreeBarsIcon aria-label="Open menu" />
+            <IconBtn className={styles.menuBtn} onClick={this.handleOpenMenu}>
+              <ThreeBarsIcon aria-label='Open menu' />
             </IconBtn>
           )}
-          <img src={logo} alt="Velar logo" className={styles.logo} />
+          <img src={logo} alt='Velar logo' className={styles.logo} />
         </div>
         {open && <Menu />}
         <Tabs />

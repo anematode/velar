@@ -1,28 +1,22 @@
+/* global Grapheme */
+
 // It'd be ideal if this could be imported as a module
-const {
-  Plot2D,
-  Gridlines,
-  FunctionPlot2D,
-  InteractiveFunctionPlot2D,
-  Color,
-  Colors,
-  rgba,
-  parseString
-} = Grapheme
+const { Plot2D, Gridlines, InteractiveFunctionPlot2D, Colors, rgba } = Grapheme
 
 class VelarElement {
-  constructor() {
-    const elem = this.domElement = document.createElement("li")
+  constructor () {
+    const elem = (this.domElement = document.createElement('li'))
+    this.elem = elem
 
-    elem.classList.add("equation")
+    elem.classList.add('equation')
 
-    const preview = this.preview = document.createElement("div")
+    const preview = (this.preview = document.createElement('div'))
 
-    preview.classList.add("preview")
+    preview.classList.add('preview')
 
-    const colourStrip = this.colourStrip = document.createElement("div")
+    const colourStrip = (this.colourStrip = document.createElement('div'))
 
-    colourStrip.classList.add("colour-strip")
+    colourStrip.classList.add('colour-strip')
 
     elem.appendChild(preview)
     preview.appendChild(colourStrip)
@@ -32,7 +26,7 @@ class VelarElement {
     this.selected = false
   }
 
-  toggleSelect() {
+  toggleSelect () {
     if (this.selected) {
       this.deselect()
     } else {
@@ -40,41 +34,41 @@ class VelarElement {
     }
   }
 
-  setColor(color) {
-    elem.classList.remove(...builtInColors)
-    elem.classList.add("colour-" + color)
+  setColor (color) {
+    this.elem.classList.remove(...builtInColors)
+    this.elem.classList.add('colour-' + color)
   }
 
-  select() {
+  select () {
     this.selected = true
-    this.domElement.classList.add("expanded")
+    this.domElement.classList.add('expanded')
   }
 
-  deselect() {
+  deselect () {
     this.selected = false
-    this.domElement.classList.remove("expanded")
+    this.domElement.classList.remove('expanded')
   }
 
-  remove() {
+  remove () {
     this.domElement.remove()
   }
 }
 
-let builtInColors = "colour-blue, colour-red, colour-black, colour-magenta, colour-green, colour-orange, colour-brown, colour-navy, colour-light-blue, colour-yellow".split(", ")
+const builtInColors = 'colour-blue, colour-red, colour-black, colour-magenta, colour-green, colour-orange, colour-brown, colour-navy, colour-light-blue, colour-yellow'.split(
+  ', '
+)
 
 class VelarFunctionPlot2D extends VelarElement {
-  constructor() {
+  constructor () {
     super()
 
-    const latexPreview = this.latexPreview = document.createElement("button")
+    const latexPreview = (this.latexPreview = document.createElement('button'))
 
-    latexPreview.classList.add("katex-preview")
+    latexPreview.classList.add('katex-preview')
 
     this.preview.appendChild(latexPreview)
 
-    this.preview.onclick
-
-    this.setDisplayedEquation("x")
+    this.setDisplayedEquation('x')
 
     this.graphemeElement = new InteractiveFunctionPlot2D()
 
@@ -82,8 +76,8 @@ class VelarFunctionPlot2D extends VelarElement {
 
     this.graphemeElement.inspPtLabelStyle = inspPtLabelStyle
 
-    this.info = document.createElement("div")
-    this.info.classList.add("info")
+    this.info = document.createElement('div')
+    this.info.classList.add('info')
 
     this.info.innerHTML = `
                 <div class="raw-equation-wrapper">
@@ -126,51 +120,60 @@ class VelarFunctionPlot2D extends VelarElement {
     this.domElement.appendChild(this.info)
 
     this.dom = {
-      equationInput: this.domElement.getElementsByClassName("raw-equation")[0],
+      equationInput: this.domElement.getElementsByClassName('raw-equation')[0],
       buttons: {
-        colors: Array.from(this.domElement.getElementsByClassName("plot-colour")),
-        lineStyles: Array.from(this.domElement.getElementsByClassName("plot-line")),
-        duplicate: this.domElement.getElementsByClassName("action")[0],
-        remove: this.domElement.getElementsByClassName("action")[1]
+        colors: Array.from(
+          this.domElement.getElementsByClassName('plot-colour')
+        ),
+        lineStyles: Array.from(
+          this.domElement.getElementsByClassName('plot-line')
+        ),
+        duplicate: this.domElement.getElementsByClassName('action')[0],
+        remove: this.domElement.getElementsByClassName('action')[1]
       }
     }
 
     this.setupInfoListeners()
   }
 
-  setupInfoListeners() {
-    this.dom.equationInput.oninput = () => this.setFunction(this.dom.equationInput.value)
+  setupInfoListeners () {
+    this.dom.equationInput.oninput = () =>
+      this.setFunction(this.dom.equationInput.value)
 
     this.dom.buttons.remove.onclick = () => removeEquation(this)
   }
 
-  setFunction(str) {
+  setFunction (str) {
     try {
       this.graphemeElement.setFunction(str)
 
-      this.setDisplayedEquation(Grapheme.getFunction(equations[0].graphemeElement.functionName).node.latex())
+      this.setDisplayedEquation(
+        Grapheme.getFunction(
+          equations[0].graphemeElement.functionName
+        ).node.latex()
+      )
     } catch (e) {
       console.log(e)
     }
   }
 
-  select() {
+  select () {
     super.select()
 
     this.info.hidden = false
   }
 
-  deselect() {
+  deselect () {
     super.deselect()
 
     this.info.hidden = true
   }
 
-  setDisplayedEquation(latex) {
+  setDisplayedEquation (latex) {
     Grapheme.katex.render(latex, this.latexPreview, { throwOnError: false })
   }
 
-  remove() {
+  remove () {
     super.remove()
 
     this.graphemeElement.destroy()
@@ -179,7 +182,7 @@ class VelarFunctionPlot2D extends VelarElement {
 
 const params = new URL(window.location).searchParams
 
-let theme = params.get('theme') || 'dark'
+const theme = params.get('theme') || 'dark'
 if (theme !== 'dark') {
   document.body.classList.replace('dark', theme)
 }
@@ -196,11 +199,11 @@ const gridlines = new Gridlines()
 gridlines.pens.axis.thickness = 2
 plot.add(gridlines)
 
-const equationList = document.getElementsByClassName("equations")[0]
+const equationList = document.getElementsByClassName('equations')[0]
 const equations = []
 
-function addEquation() {
-  let equation = new VelarFunctionPlot2D()
+function addEquation () {
+  const equation = new VelarFunctionPlot2D()
 
   equationList.appendChild(equation.domElement)
 
@@ -209,18 +212,14 @@ function addEquation() {
   equations.push(equation)
 }
 
-function removeEquation(eq) {
-  let index = equations.indexOf(eq)
+function removeEquation (eq) {
+  const index = equations.indexOf(eq)
 
   if (index !== -1) {
     equations.splice(index, 1)
 
     eq.remove()
   }
-}
-
-function addNote() {
-
 }
 
 function resize () {
@@ -263,14 +262,7 @@ function render () {
 
 let inspPtLabelStyle
 
-function setTheme ({
-                     text,
-                     background,
-                     axisColour,
-                     gridColour,
-                     font
-                   }) {
-
+function setTheme ({ text, background, axisColour, gridColour, font }) {
   gridlines.label_style.color = text
   gridlines.label_style.shadowColor = background
   gridlines.label_style.fontFamily = font
@@ -315,11 +307,4 @@ const themes = {
 if (themes[theme]) setTheme(themes[theme]())
 render()
 
-export {
-  plot,
-  gridlines,
-  VelarElement,
-    equationList,
-    addEquation,
-    equations
-}
+export { plot, gridlines, VelarElement, equationList, addEquation, equations }
