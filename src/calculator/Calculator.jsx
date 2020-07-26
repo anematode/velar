@@ -8,14 +8,45 @@ import { Plot2D } from 'grapheme'
 
 class Calculator extends React.Component {
   static propTypes = {
-    plot: PropTypes.instanceOf(Plot2D)
+    plot: PropTypes.instanceOf(Plot2D),
+    equations: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        equation: PropTypes.string.isRequired,
+        latex: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+        lineStyle: PropTypes.string.isRequired,
+        visible: PropTypes.bool.isRequired,
+        error: PropTypes.bool
+      })
+    ).isRequired,
+    onAddEquation: PropTypes.func.isRequired,
+    onEquationUpdate: PropTypes.func.isRequired,
+    onToggleEquationVisibility: PropTypes.func.isRequired,
+    onDuplicateEquation: PropTypes.func.isRequired,
+    onRemoveEquation: PropTypes.func.isRequired
   }
 
   render () {
-    const { plot } = this.props
+    const {
+      plot,
+      equations,
+      onAddEquation,
+      onEquationUpdate,
+      onToggleEquationVisibility,
+      onDuplicateEquation,
+      onRemoveEquation
+    } = this.props
     return (
       <main className={styles.main}>
-        <Equations />
+        <Equations
+          equations={equations}
+          onAddEquation={onAddEquation}
+          onEquationUpdate={onEquationUpdate}
+          onToggleVisibility={onToggleEquationVisibility}
+          onDuplicate={onDuplicateEquation}
+          onRemove={onRemoveEquation}
+        />
         <div className={styles.resizeEquations} />
         {plot && <GraphemeWrapper plot={plot} />}
       </main>

@@ -6,6 +6,10 @@
 .preview {
   display: flex;
   transition: transform 0.2s;
+  min-height: 44px;
+}
+.showQuickActions {
+  transform: translateX(118px);
 }
 
 .colorStrip {
@@ -22,7 +26,7 @@
   text-align: left;
   overflow-y: auto;
 }
-.graphHidden .colorStrip,
-.graphHidden .katexPreview {
+.hidden .colorStrip,
+.hidden .katexPreview {
   opacity: 0.3;
 }

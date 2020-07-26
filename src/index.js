@@ -5,7 +5,11 @@ import App from './App.jsx'
 import * as serviceWorker from './serviceWorker.js'
 
 ReactDOM.render(
-  React.createElement(React.StrictMode, null, React.createElement(App)),
+  React.createElement(
+    React.StrictMode,
+    null,
+    React.createElement(App, { theme: 'dark' })
+  ),
   document.getElementById('root')
 )
 

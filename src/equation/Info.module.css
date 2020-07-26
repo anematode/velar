@@ -13,6 +13,10 @@
   resize: vertical;
   background-color: var(--input);
   border-radius: 5px;
+  border: 1px solid transparent;
+}
+.error {
+  border-color: var(--danger);
 }
 .infoSelect {
   margin: 10px 5px;

@@ -7,11 +7,9 @@ import {
   ChevronUpIcon
 } from '@primer/octicons-react'
 import IconBtn from '../components/IconBtn.jsx'
-import { ReactComponent as SolidIcon } from './icon-solid.svg'
-import { ReactComponent as DashedIcon } from './icon-dashed.svg'
-import { ReactComponent as DottedIcon } from './icon-dotted.svg'
 import { classNames } from '../utils/class-names.js'
 import { COLORS } from '../colors/themes.js'
+import { lineStyles } from '../utils/line-styles.js'
 
 import PropTypes from 'prop-types'
 
@@ -36,51 +34,100 @@ SelectGroup.propTypes = {
 }
 
 class Info extends React.Component {
+  static propTypes = {
+    equation: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    lineStyle: PropTypes.string.isRequired,
+    error: PropTypes.bool,
+    onEquationUpdate: PropTypes.func.isRequired,
+    onDuplicate: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired,
+    onCollapse: PropTypes.func.isRequired
+  }
+
+  handleEquationChange = e => {
+    this.props.onEquationUpdate('setFunction', e.target.value)
+  }
+
+  handleColorChange (color) {
+    this.props.onEquationUpdate('setColor', color)
+  }
+
+  handleLineStyleChange (lineStyle) {
+    this.props.onEquationUpdate('setLineStyle', lineStyle)
+  }
+
   render () {
+    const {
+      equation,
+      color,
+      lineStyle,
+      error,
+      onDuplicate,
+      onRemove,
+      onCollapse
+    } = this.props
     return (
       <div className={styles.info}>
         <div className={styles.rawEquationWrapper}>
-          <textarea className={styles.rawEquation} />
+          <textarea
+            className={classNames(styles.rawEquation, error && styles.error)}
+            onChange={this.handleEquationChange}
+            value={equation}
+          />
         </div>
         <SelectGroup label='Color'>
           {Object.entries(COLORS).map(([colorId, colorName]) => (
             // TODO: determine plotColorDark/plotColorLight
             <button
               key={colorId}
-              className={classNames(styles.plotColor, `color-${colorId}`)}
+              className={classNames(
+                styles.plotColor,
+                `color-${colorId}`,
+                color === colorId && styles.selected
+              )}
+              title={colorName}
+              onClick={() => this.handleColorChange(colorId)}
             >
               {colorName}
             </button>
           ))}
-          <button>
+          <button className={!COLORS[color] && styles.selected}>
             <PencilIcon aria-label='Custom color' />
           </button>
         </SelectGroup>
         <SelectGroup label='Line style'>
-          <button className={styles.plotLine}>
-            <SolidIcon aria-label='Solid' className={styles.customIcon} />
-          </button>
-          <button className={styles.plotLine}>
-            <DashedIcon aria-label='Dashed' className={styles.customIcon} />
-          </button>
-          <button className={styles.plotLine}>
-            <DottedIcon aria-label='Dotted' className={styles.customIcon} />
-          </button>
-          <button>
+          {Object.entries(lineStyles).map(([id, { Icon, name }]) => (
+            <button
+              key={id}
+              className={classNames(
+                styles.plotLine,
+                lineStyle === id && styles.selected
+              )}
+              title={name}
+              onClick={() => this.handleLineStyleChange(id)}
+            >
+              <Icon aria-label={name} className={styles.customIcon} />
+            </button>
+          ))}
+          <button className={!lineStyles[lineStyle] && styles.selected}>
             <PencilIcon aria-label='Custom line style' />
           </button>
         </SelectGroup>
         <div className={styles.actions}>
-          <button className={styles.action}>
+          <button className={styles.action} onClick={onDuplicate}>
             <ClippyIcon className={styles.icon} />
             Duplicate
           </button>
-          <button className={classNames(styles.action, styles.danger)}>
+          <button
+            className={classNames(styles.action, styles.danger)}
+            onClick={onRemove}
+          >
             <TrashcanIcon className={styles.icon} />
             Remove
           </button>
         </div>
-        <IconBtn className={styles.closeInfoBtn}>
+        <IconBtn className={styles.closeInfoBtn} onClick={onCollapse}>
           <ChevronUpIcon aria-label='Collapse' className={styles.expandIcon} />
         </IconBtn>
       </div>
