@@ -10,6 +10,7 @@ class Equations extends React.Component {
   static propTypes = {
     equations: PropTypes.arrayOf(
       PropTypes.shape({
+        id: PropTypes.string.isRequired,
         equation: PropTypes.string.isRequired,
         latex: PropTypes.string.isRequired,
         color: PropTypes.string.isRequired,
@@ -39,10 +40,10 @@ class Equations extends React.Component {
         <div className={styles.logoSpace} />
         <ul className={styles.equations}>
           {equations.map(
-            ({ equation, latex, color, lineStyle, visible, error }, i) => (
+            ({ id, equation, latex, color, lineStyle, visible, error }) => (
               <Equation
-                key={i}
-                index={i}
+                key={id}
+                id={id}
                 equation={equation}
                 latex={latex}
                 color={color}

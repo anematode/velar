@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 class Equation extends React.Component {
   static propTypes = {
-    index: PropTypes.number,
+    id: PropTypes.string,
     equation: PropTypes.string.isRequired,
     latex: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
@@ -25,6 +25,10 @@ class Equation extends React.Component {
   state = {
     showQuickActions: false,
     showInfo: false
+  }
+
+  componentDidMount () {
+    katex.render(this.props.latex, this.previewRef, { throwOnError: false })
   }
 
   componentDidUpdate () {
@@ -45,23 +49,22 @@ class Equation extends React.Component {
   }
 
   handleEquationUpdate = (...changes) => {
-    this.props.onEquationUpdate(this.props.index, ...changes)
+    this.props.onEquationUpdate(this.props.id, ...changes)
   }
 
   handleTogglePlotVisibility = () => {
-    this.props.onToggleVisibility(this.props.index)
+    this.props.onToggleVisibility(this.props.id)
   }
 
   handleDuplicate = () => {
-    this.props.onDuplicate(this.props.index)
+    this.props.onDuplicate(this.props.id)
   }
 
   handleRemove = () => {
-    this.props.onRemove(this.props.index)
+    this.props.onRemove(this.props.id)
   }
 
   setPreviewRef = ref => {
-    console.log('ref', ref)
     this.previewRef = ref
   }
 
@@ -73,7 +76,7 @@ class Equation extends React.Component {
         className={classNames(
           styles.equation,
           styles.expanded,
-          'color-blue' /* TEMP */
+          `color-${color}`
         )}
       >
         <div

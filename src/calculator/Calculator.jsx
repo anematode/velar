@@ -11,6 +11,7 @@ class Calculator extends React.Component {
     plot: PropTypes.instanceOf(Plot2D),
     equations: PropTypes.arrayOf(
       PropTypes.shape({
+        id: PropTypes.string.isRequired,
         equation: PropTypes.string.isRequired,
         latex: PropTypes.string.isRequired,
         color: PropTypes.string.isRequired,

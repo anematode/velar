@@ -7,7 +7,8 @@ import {
   Gridlines,
   InteractiveFunctionPlot2D,
   Color,
-  parseString
+  parseString,
+  utils
 } from 'grapheme'
 import { themeColors, graphemeThemes } from './colors/themes.js'
 import { lineStyles } from './utils/line-styles.js'
@@ -63,13 +64,11 @@ class App extends React.Component {
     this.gridlines.pens.minor.color = gridColor
   }
 
-  newEquation () {
+  newEquation ({ equation = 'x', color = 'blue', lineStyle = 'SOLID' } = {}) {
     const fnPlot = new InteractiveFunctionPlot2D()
 
-    const color = 'blue'
     fnPlot.pen.color = Color.rgba(...themeColors[this.props.theme][color])
 
-    const lineStyle = 'SOLID'
     const { thickness, dashPattern } = lineStyles[lineStyle]
     fnPlot.pen.thickness = thickness
     fnPlot.pen.dashPattern = dashPattern
@@ -79,14 +78,25 @@ class App extends React.Component {
     fnPlot.inspPtLabelStyle.shadowColor = background
     fnPlot.inspPtLabelStyle.fontFamily = font
 
+    let latex = ''
+    let error = false
+    try {
+      const fn = parseString(equation)
+      fnPlot.setFunction(fn)
+      latex = fn.latex()
+    } catch (err) {
+      error = true
+    }
+
     return {
+      id: utils.generateUUID(),
       fnPlot,
-      equation: '',
-      latex: '',
+      equation,
+      latex,
       color,
       lineStyle,
       visible: true,
-      error: false
+      error
     }
   }
 
@@ -98,10 +108,10 @@ class App extends React.Component {
     })
   }
 
-  handleEquationUpdate = (index, type, value) => {
+  handleEquationUpdate = (id, type, value) => {
     this.setState({
-      equations: this.state.equations.map((equation, i) => {
-        if (i === index) {
+      equations: this.state.equations.map(equation => {
+        if (id === equation.id) {
           const { fnPlot } = equation
           switch (type) {
             case 'setFunction': {
@@ -129,7 +139,7 @@ class App extends React.Component {
               const { thickness, dashPattern } = lineStyles[value]
               fnPlot.pen.thickness = thickness
               fnPlot.pen.dashPattern = dashPattern
-              fnPlot.needsUpdate = true
+              fnPlot.markUpdate()
               return { ...equation, lineStyle: value }
             }
             default: {
@@ -144,13 +154,13 @@ class App extends React.Component {
     })
   }
 
-  handleToggleEquationVisibility = index => {
+  handleToggleEquationVisibility = id => {
     this.setState({
-      equations: this.state.equations.map((equation, i) => {
-        if (i === index) {
+      equations: this.state.equations.map(equation => {
+        if (id === equation.id) {
           const { fnPlot } = equation
           fnPlot.visible = !fnPlot.visible
-          // fnPlot.needsUpdate = true
+          // fnPlot.markUpdate()
           return { ...equation, visible: fnPlot.visible }
         } else {
           return equation
@@ -159,14 +169,23 @@ class App extends React.Component {
     })
   }
 
-  handleDuplicateEquation = index => {
-    console.log('dupe', this.state.equations[index])
+  handleDuplicateEquation = id => {
+    const index = this.state.equations.findIndex(eq => eq.id === id)
+    const equation = this.newEquation(this.state.equations[index])
+    this.plot.add(equation.fnPlot)
+    this.setState({
+      equations: [
+        ...this.state.equations.slice(0, index + 1),
+        equation,
+        ...this.state.equations.slice(index + 1)
+      ]
+    })
   }
 
-  handleRemoveEquation = index => {
+  handleRemoveEquation = id => {
     this.setState({
-      equations: this.state.equations.filter(({ fnPlot }, i) => {
-        if (i === index) {
+      equations: this.state.equations.filter(({ fnPlot, id: eqId }) => {
+        if (id === eqId) {
           fnPlot.destroy()
           return false
         } else {
@@ -184,7 +203,8 @@ class App extends React.Component {
         <Calculator
           plot={this.plot}
           equations={equations.map(
-            ({ equation, latex, color, lineStyle, visible, error }) => ({
+            ({ id, equation, latex, color, lineStyle, visible, error }) => ({
+              id,
               equation,
               latex,
               color,
