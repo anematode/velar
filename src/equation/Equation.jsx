@@ -7,6 +7,7 @@ import { katex } from 'grapheme'
 
 class Equation extends React.Component {
   state = {
+    showQuickActions: false,
     showInfo: false
   }
 
@@ -14,12 +15,21 @@ class Equation extends React.Component {
     katex.render(this.props.latex, this.previewRef, { throwOnError: false })
   }
 
+  handleHideQuickActions = () => {
+    this.setState({ showQuickActions: false })
+  }
+
+  handleShowQuickActions = e => {
+    e.stopPropagation()
+    this.setState({ showQuickActions: true })
+  }
+
   handleToggleInfoVisibility = () => {
     this.setState({ showInfo: !this.state.showInfo })
   }
 
-  handleEquationUpdate = changes => {
-    this.props.onEquationUpdate(this.props.index, changes)
+  handleEquationUpdate = (...changes) => {
+    this.props.onEquationUpdate(this.props.index, ...changes)
   }
 
   handleTogglePlotVisibility = () => {
@@ -40,22 +50,25 @@ class Equation extends React.Component {
   }
 
   render () {
-    const { showInfo } = this.state
+    const { showInfo, showQuickActions } = this.state
     const {
       equation,
       color,
-      lineStyle
+      lineStyle,
+      hidden,
+      error
     } = this.props
     return (
       <li
-        className={classNames(styles.equation, styles.expanded, 'color-blue')}
+        className={classNames(styles.equation, styles.expanded, 'color-blue' /* TEMP */)}
       >
-        <div className={styles.preview}>
+        <div className={classNames(styles.preview, hidden && styles.hidden, showQuickActions && styles.showQuickActions)} onClick={this.handleHideQuickActions}>
           <QuickActions
             onToggleVisibility={this.handleTogglePlotVisibility}
             onRemove={this.handleRemove}
+            hidden={hidden}
           />
-          <div className={styles.colorStrip} />
+          <div className={styles.colorStrip} onClick={this.handleShowQuickActions} />
           <button
             ref={this.setPreviewRef}
             className={styles.katexPreview}
@@ -66,6 +79,7 @@ class Equation extends React.Component {
           equation={equation}
           color={color}
           lineStyle={lineStyle}
+          error={error}
           onEquationUpdate={this.handleEquationUpdate}
           onDuplicate={this.handleDuplicate}
           onRemove={this.handleRemove}

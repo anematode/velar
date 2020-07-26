@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './App.module.css'
 import MenuWrapper from './menu/MenuWrapper.jsx'
 import Calculator from './calculator/Calculator.jsx'
-import { Plot2D, Gridlines, InteractiveFunctionPlot2D, Color } from 'grapheme'
+import { Plot2D, Gridlines, InteractiveFunctionPlot2D, Color, parseString } from 'grapheme'
 import { themeColors, graphemeThemes } from './colors/themes.js'
 
 class App extends React.Component {
@@ -50,32 +50,80 @@ class App extends React.Component {
     this.gridlines.pens.minor.color = gridColor
   }
 
-  handleAddEquation = () => {
+  newEquation () {
     const fnPlot = new InteractiveFunctionPlot2D()
+    console.log(this.plot);
     const color = 'blue'
     fnPlot.pen.color = Color.rgba(...themeColors[this.props.theme][color])
-    // TODO: Set `inspPtLabelStyle`
-    this.plot.add(fnPlot)
+    const { text, background, font } = graphemeThemes[this.props.theme]
+    fnPlot.inspPtLabelStyle.color = text
+    fnPlot.inspPtLabelStyle.shadowColor = background
+    fnPlot.inspPtLabelStyle.fontFamily = font
+    return {
+      fnPlot,
+      equation: '',
+      latex: '',
+      color,
+      lineStyle: 'solid',
+      visible: true,
+      error: false
+    }
+  }
+
+  handleAddEquation = () => {
+    const equation = this.newEquation()
+    this.plot.add(equation.fnPlot)
     this.setState({
-      equations: [
-        ...this.state.equations,
-        {
-          fnPlot,
-          equation: '',
-          latex: '',
-          color,
-          lineStyle: 'solid'
-        }
-      ]
+      equations: [...this.state.equations, equation]
     })
   }
 
-  handleEquationUpdate = (index, changes) => {
-    console.log('update', this.state.equations[index], changes)
+  handleEquationUpdate = (index, type, value) => {
+    this.setState({
+      equations: this.state.equations.map((equation, i) => {
+        if (i === index) {
+          const { fnPlot } = equation
+          switch (type) {
+            case 'setFunction': {
+              try {
+                const fn = parseString(value)
+                fnPlot.setFunction(fn)
+                fnPlot.update()
+                return {
+                  ...equation,
+                  equation: value,
+                  latex: fn.latex(),
+                  error: false
+                }
+              } catch (_) {
+                return { ...equation, equation: value, error: true }
+              }
+            }
+            default: {
+              console.warn(`What is this equation update of type ${type}??`)
+              return equation
+            }
+          }
+        } else {
+          return equation
+        }
+      })
+    })
   }
 
   handleToggleEquationVisibility = (index) => {
-    console.log('toggle visib', this.state.equations[index])
+    this.setState({
+      equations: this.state.equations.map((equation, i) => {
+        if (i === index) {
+          const { fnPlot } = equation
+          fnPlot.visible = !fnPlot.visible
+          fnPlot.needsUpdate = true
+          return { ...equation, visible: fnPlot.visible }
+        } else {
+          return equation
+        }
+      })
+    })
   }
 
   handleDuplicateEquation = (index) => {
@@ -83,7 +131,10 @@ class App extends React.Component {
   }
 
   handleRemoveEquation = (index) => {
-    console.log('del', this.state.equations[index])
+    const toRemove = this.state.equations[index]
+    this.setState({
+      equations: this.state.equations.filter((_, i) => i !== index)
+    })
   }
 
   render () {
@@ -93,7 +144,21 @@ class App extends React.Component {
         <MenuWrapper />
         <Calculator
           plot={this.plot}
-          equations={equations.map(({ equation, latex, color, lineStyle }) => ({ equation, latex, color, lineStyle }))}
+          equations={equations.map(({
+            equation,
+            latex,
+            color,
+            lineStyle,
+            visible,
+            error
+          }) => ({
+            equation,
+            latex,
+            color,
+            lineStyle,
+            visible,
+            error
+          }))}
           onAddEquation={this.handleAddEquation}
           onEquationUpdate={this.handleEquationUpdate}
           onToggleEquationVisibility={this.handleToggleEquationVisibility}

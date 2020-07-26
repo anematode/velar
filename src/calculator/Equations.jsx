@@ -18,13 +18,15 @@ class Equations extends React.Component {
       <section className={styles.wrapper}>
         <div className={styles.logoSpace} />
         <ul className={styles.equations}>
-          {equations.map(({ equation, latex, color, lineStyle }, i) => <Equation
+          {equations.map(({ equation, latex, color, lineStyle, visible, error }, i) => <Equation
             key={i}
             index={i}
             equation={equation}
             latex={latex}
             color={color}
             lineStyle={lineStyle}
+            hidden={!visible}
+            error={error}
             onEquationUpdate={onEquationUpdate}
             onToggleVisibility={onToggleVisibility}
             onDuplicate={onDuplicate}

@@ -23,14 +23,14 @@
 .quickAction.danger:hover {
   background-color: var(--danger-hover);
 }
-.graphHidden .hideEquation {
+.equationHidden {
   background-color: var(--text);
   color: var(--equation-background);
 }
-.graphHidden .hideEquation:hover {
+.equationHidden:hover {
   background-color: var(--text-hover);
 }
-.quickAction .octicon {
+.quickAction .icon {
   width: 24px;
   height: 24px;
 }

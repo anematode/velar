@@ -36,11 +36,24 @@ SelectGroup.propTypes = {
 }
 
 class Info extends React.Component {
+  handleEquationChange = e => {
+    this.props.onEquationUpdate('setFunction', e.target.value)
+  }
+
   render () {
+    const {
+      equation,
+      color,
+      lineStyle,
+      error,
+      onDuplicate,
+      onRemove,
+      onCollapse
+    } = this.props
     return (
       <div className={styles.info}>
         <div className={styles.rawEquationWrapper}>
-          <textarea className={styles.rawEquation} />
+          <textarea className={classNames(styles.rawEquation, error && styles.error)} onChange={this.handleEquationChange} value={equation} />
         </div>
         <SelectGroup label='Color'>
           {Object.entries(COLORS).map(([colorId, colorName]) => (
@@ -71,16 +84,16 @@ class Info extends React.Component {
           </button>
         </SelectGroup>
         <div className={styles.actions}>
-          <button className={styles.action}>
+          <button className={styles.action} onClick={onDuplicate}>
             <ClippyIcon className={styles.icon} />
             Duplicate
           </button>
-          <button className={classNames(styles.action, styles.danger)}>
+          <button className={classNames(styles.action, styles.danger)} onClick={onRemove}>
             <TrashcanIcon className={styles.icon} />
             Remove
           </button>
         </div>
-        <IconBtn className={styles.closeInfoBtn}>
+        <IconBtn className={styles.closeInfoBtn} onClick={onCollapse}>
           <ChevronUpIcon aria-label='Collapse' className={styles.expandIcon} />
         </IconBtn>
       </div>
