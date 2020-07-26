@@ -14,8 +14,8 @@ class Equations extends React.Component {
         latex: PropTypes.string.isRequired,
         color: PropTypes.string.isRequired,
         lineStyle: PropTypes.string.isRequired,
-        visible: PropTypes.boolean.isRequired,
-        error: PropTypes.boolean
+        visible: PropTypes.bool.isRequired,
+        error: PropTypes.bool
       })
     ).isRequired,
     onAddEquation: PropTypes.func.isRequired,

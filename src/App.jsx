@@ -10,6 +10,7 @@ import {
   parseString
 } from 'grapheme'
 import { themeColors, graphemeThemes } from './colors/themes.js'
+import { lineStyles } from './utils/line-styles.js'
 
 import PropTypes from 'prop-types'
 
@@ -64,19 +65,26 @@ class App extends React.Component {
 
   newEquation () {
     const fnPlot = new InteractiveFunctionPlot2D()
-    console.log(this.plot)
+
     const color = 'blue'
     fnPlot.pen.color = Color.rgba(...themeColors[this.props.theme][color])
+
+    const lineStyle = 'SOLID'
+    const { thickness, dashPattern } = lineStyles[lineStyle]
+    fnPlot.pen.thickness = thickness
+    fnPlot.pen.dashPattern = dashPattern
+
     const { text, background, font } = graphemeThemes[this.props.theme]
     fnPlot.inspPtLabelStyle.color = text
     fnPlot.inspPtLabelStyle.shadowColor = background
     fnPlot.inspPtLabelStyle.fontFamily = font
+
     return {
       fnPlot,
       equation: '',
       latex: '',
       color,
-      lineStyle: 'solid',
+      lineStyle,
       visible: true,
       error: false
     }
@@ -111,6 +119,19 @@ class App extends React.Component {
                 return { ...equation, equation: value, error: true }
               }
             }
+            case 'setColor': {
+              fnPlot.pen.color = Color.rgba(
+                ...themeColors[this.props.theme][value]
+              )
+              return { ...equation, color: value }
+            }
+            case 'setLineStyle': {
+              const { thickness, dashPattern } = lineStyles[value]
+              fnPlot.pen.thickness = thickness
+              fnPlot.pen.dashPattern = dashPattern
+              fnPlot.needsUpdate = true
+              return { ...equation, lineStyle: value }
+            }
             default: {
               console.warn(`What is this equation update of type ${type}??`)
               return equation
@@ -129,7 +150,7 @@ class App extends React.Component {
         if (i === index) {
           const { fnPlot } = equation
           fnPlot.visible = !fnPlot.visible
-          fnPlot.needsUpdate = true
+          // fnPlot.needsUpdate = true
           return { ...equation, visible: fnPlot.visible }
         } else {
           return equation
@@ -144,7 +165,14 @@ class App extends React.Component {
 
   handleRemoveEquation = index => {
     this.setState({
-      equations: this.state.equations.filter((_, i) => i !== index)
+      equations: this.state.equations.filter(({ fnPlot }, i) => {
+        if (i === index) {
+          fnPlot.destroy()
+          return false
+        } else {
+          return true
+        }
+      })
     })
   }
 

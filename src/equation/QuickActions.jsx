@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 
 class QuickActions extends React.Component {
   static propTypes = {
-    hidden: PropTypes.boolean,
+    hidden: PropTypes.bool,
     onToggleVisibility: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired
   }

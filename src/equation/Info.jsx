@@ -7,11 +7,9 @@ import {
   ChevronUpIcon
 } from '@primer/octicons-react'
 import IconBtn from '../components/IconBtn.jsx'
-import { ReactComponent as SolidIcon } from './icon-solid.svg'
-import { ReactComponent as DashedIcon } from './icon-dashed.svg'
-import { ReactComponent as DottedIcon } from './icon-dotted.svg'
 import { classNames } from '../utils/class-names.js'
 import { COLORS } from '../colors/themes.js'
+import { lineStyles } from '../utils/line-styles.js'
 
 import PropTypes from 'prop-types'
 
@@ -40,7 +38,7 @@ class Info extends React.Component {
     equation: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
     lineStyle: PropTypes.string.isRequired,
-    error: PropTypes.boolean,
+    error: PropTypes.bool,
     onEquationUpdate: PropTypes.func.isRequired,
     onDuplicate: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
@@ -49,6 +47,14 @@ class Info extends React.Component {
 
   handleEquationChange = e => {
     this.props.onEquationUpdate('setFunction', e.target.value)
+  }
+
+  handleColorChange (color) {
+    this.props.onEquationUpdate('setColor', color)
+  }
+
+  handleLineStyleChange (lineStyle) {
+    this.props.onEquationUpdate('setLineStyle', lineStyle)
   }
 
   render () {
@@ -75,26 +81,34 @@ class Info extends React.Component {
             // TODO: determine plotColorDark/plotColorLight
             <button
               key={colorId}
-              className={classNames(styles.plotColor, `color-${colorId}`)}
+              className={classNames(
+                styles.plotColor,
+                `color-${colorId}`,
+                color === colorId && styles.selected
+              )}
+              onClick={() => this.handleColorChange(colorId)}
             >
               {colorName}
             </button>
           ))}
-          <button>
+          <button className={!COLORS[color] && styles.selected}>
             <PencilIcon aria-label='Custom color' />
           </button>
         </SelectGroup>
         <SelectGroup label='Line style'>
-          <button className={styles.plotLine}>
-            <SolidIcon aria-label='Solid' className={styles.customIcon} />
-          </button>
-          <button className={styles.plotLine}>
-            <DashedIcon aria-label='Dashed' className={styles.customIcon} />
-          </button>
-          <button className={styles.plotLine}>
-            <DottedIcon aria-label='Dotted' className={styles.customIcon} />
-          </button>
-          <button>
+          {Object.entries(lineStyles).map(([id, { Icon, name }]) => (
+            <button
+              key={id}
+              className={classNames(
+                styles.plotLine,
+                lineStyle === id && styles.selected
+              )}
+              onClick={() => this.handleLineStyleChange(id)}
+            >
+              <Icon aria-label={name} className={styles.customIcon} />
+            </button>
+          ))}
+          <button className={!lineStyles[lineStyle] && styles.selected}>
             <PencilIcon aria-label='Custom line style' />
           </button>
         </SelectGroup>
