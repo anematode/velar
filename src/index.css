@@ -48,6 +48,10 @@ a {
   text-decoration: none;
 }
 
+.flex {
+  flex: auto;
+}
+
 :disabled {
   opacity: 0.5;
 }

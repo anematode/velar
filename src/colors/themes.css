@@ -91,6 +91,7 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --danger-outline: rgba(212, 10, 71, 0.5);
   --shade: rgba(255, 255, 255, 0.8);
 
+  /* TEMP */
   --blue: blue;
   --red: red;
   --black: black;
@@ -102,3 +103,14 @@ https://cdn.dribbble.com/users/1486402/screenshots/4129144/daily_ui_3_thumbnail.
   --light-blue: lightblue;
   --yellow: yellow;
 }
+
+.color-blue { --color: var(--blue); }
+.color-red { --color: var(--red); }
+.color-black { --color: var(--black); }
+.color-magenta { --color: var(--magenta); }
+.color-green { --color: var(--green); }
+.color-orange { --color: var(--orange); }
+.color-brown { --color: var(--brown); }
+.color-navy { --color: var(--navy); }
+.color-lightBlue { --color: var(--light-blue); }
+.color-yellow { --color: var(--yellow); }

@@ -14,11 +14,11 @@ class AddEquation extends React.Component {
         <div className={styles.addEquationWrapper}>
           <div className={styles.addEquationDialog} role="group">
             <button className={styles.addType}>
-              <GraphIcon />
+              <GraphIcon className={styles.icon} />
               Graph
             </button>
             <button className={styles.addType}>
-              <NoteIcon />
+              <NoteIcon className={styles.icon} />
               Note
             </button>
           </div>

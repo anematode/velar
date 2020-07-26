@@ -15,3 +15,13 @@
 .menu-showing .wrapper {
   display: flex;
 }
+
+@media (max-width: 600px) {
+  .menu {
+    flex: auto;
+    position: static;
+    background: none;
+    margin: 0;
+    box-shadow: none;
+  }
+}

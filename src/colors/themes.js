@@ -1,7 +1,17 @@
 import './themes.css'
 import { Color, Colors } from 'grapheme'
 
-const COLORS = ['blue', 'red', 'black', 'magenta', 'green', 'orange', 'brown', 'navy', 'lightBlue', 'yellow']
+const COLORS = {
+  blue: 'Blue',
+  red: 'Red',
+  black: 'Black',
+  magenta: 'Magenta',
+  green: 'Green',
+  orange: 'Orange',
+  navy: 'Navy',
+  lightBlue: 'Light blue',
+  yellow: 'Yellow'
+}
 
 const themeColors = {
   dark: {
@@ -37,15 +47,15 @@ const graphemeThemes = {
   dark: {
     text: Color.rgba(255, 255, 255, 0.8 * 255),
     background: Color.rgba(19, 20, 29),
-    axisColour: Color.rgba(255, 255, 255, 0.5 * 255),
-    gridColour: Color.rgba(255, 255, 255, 0.3 * 255),
+    axisColor: Color.rgba(255, 255, 255, 0.5 * 255),
+    gridColor: Color.rgba(255, 255, 255, 0.3 * 255),
     ...baseGraphemeTheme
   },
   paper: {
     text: Colors.BLACK,
     background: Colors.WHITE,
-    axisColour: Colors.BLACK,
-    gridColour: Color.rgba(0, 0, 0, 0.2 * 255),
+    axisColor: Colors.BLACK,
+    gridColor: Color.rgba(0, 0, 0, 0.2 * 255),
     ...baseGraphemeTheme
   }
 }

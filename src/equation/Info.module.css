@@ -1,0 +1,101 @@
+.info {
+  position: relative;
+  padding: 10px 0;
+}
+.rawEquationWrapper {
+  padding: 0 10px;
+}
+.rawEquation {
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 30px;
+  resize: vertical;
+  background-color: var(--input);
+  border-radius: 5px;
+}
+.infoSelect {
+  margin: 10px 5px;
+}
+.selectLabel {
+  color: var(--label);
+  margin: 0 5px;
+}
+.selectGroup {
+  display: flex;
+  flex-wrap: wrap;
+}
+.selectOption {
+  flex: 1 0 0;
+  background-color: var(--raised-button);
+  padding: 5px;
+  border-radius: 2px;
+  border: 1px solid var(--separator);
+  margin: 5px;
+  min-width: 10%; /* TODO: consider using CSS grid? */
+}
+.selectOption:hover {
+  background-image: linear-gradient(var(--button-hover), var(--button-hover));
+}
+.selected {
+  border-color: var(--selected-outline);
+  box-shadow: 0 0 0 1px var(--selected-outline);
+}
+.plotColor {
+  font-size: 0;
+  height: 16px;
+  box-sizing: content-box;
+  background-color: var(--color);
+}
+.plotColorLight:not(.selected) {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+.plotColorLight:hover {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+}
+.plotColorDark:not(.selected) {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.plotColorDark:hover {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+}
+.customIcon {
+  width: 16px;
+  height: 16px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 5px;
+  margin-top: -10px;
+}
+.action {
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--separator);
+  border-radius: 2px;
+}
+.action .icon {
+  margin-right: 5px;
+}
+.action:hover {
+  background-color: var(--button-hover);
+}
+.action.danger {
+  color: var(--danger);
+  border-color: var(--danger-outline);
+}
+.action.danger:hover {
+  background-color: var(--danger-hover);
+}
+.closeInfoBtn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 5px;
+}

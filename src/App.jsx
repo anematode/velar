@@ -38,8 +38,8 @@ class App extends React.Component {
   setTheme ({
     text,
     background,
-    axisColour,
-    gridColour,
+    axisColor,
+    gridColor,
     font
   }) {
     this.gridlines.labelStyle.color = text
@@ -47,9 +47,9 @@ class App extends React.Component {
     this.gridlines.labelStyle.fontFamily = font
 
     this.gridlines.pens.box.visible = false
-    this.gridlines.pens.axis.color = axisColour
-    this.gridlines.pens.major.color = gridColour
-    this.gridlines.pens.minor.color = gridColour
+    this.gridlines.pens.axis.color = axisColor
+    this.gridlines.pens.major.color = gridColor
+    this.gridlines.pens.minor.color = gridColor
   }
 
   render () {

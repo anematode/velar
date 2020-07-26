@@ -1,0 +1,28 @@
+.equation {
+  border-bottom: 1px solid var(--separator);
+  overflow: hidden;
+}
+
+.preview {
+  display: flex;
+  transition: transform .2s;
+}
+
+.colorStrip {
+  width: 3px;
+  background-color: var(--color);
+  flex: none;
+  cursor: pointer;
+}
+.katexPreview {
+  color: var(--text-opaque);
+  opacity: var(--text-opacity);
+  padding: 10px;
+  flex: auto;
+  text-align: left;
+  overflow-y: auto;
+}
+.graphHidden .colorStrip,
+.graphHidden .katexPreview {
+  opacity: 0.3;
+}

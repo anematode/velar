@@ -30,3 +30,16 @@
   position: absolute;
   background-color: var(--theme);
 }
+
+@media (max-width: 600px) {
+  .tabs {
+    display: none;
+  }
+  .menu-showing .tabs {
+    display: flex;
+  }
+
+  .tabs {
+    border-top: none;
+  }
+}

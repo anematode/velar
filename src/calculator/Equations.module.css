@@ -19,3 +19,26 @@
   overflow: auto;
   height: 0;
 }
+
+.addEquationLineBtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+.addEquationLineBtn:hover {
+  background-color: var(--button-big-hover);
+}
+
+@media (max-width: 600px) {
+  .wrapper {
+    height: 50%;
+    width: auto;
+    border-top: 1px solid var(--separator);
+  }
+
+  .logoSpace {
+    display: none;
+  }
+}
