@@ -5,11 +5,12 @@ import GraphemeWrapper from './GraphemeWrapper.jsx'
 
 class Calculator extends React.Component {
   render () {
+    const { plot } = this.props
     return (
       <main className={styles.main}>
         <Equations />
         <div className={styles.resizeEquations}></div>
-        <GraphemeWrapper />
+        {plot && <GraphemeWrapper plot={plot} />}
       </main>
     )
   }

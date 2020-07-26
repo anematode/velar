@@ -2,4 +2,5 @@
   flex: auto;
   position: relative;
   background-color: var(--graph-background);
+  overflow: hidden;
 }

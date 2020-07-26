@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Equation.module.css'
-import { TrashcanIcon, EyeClosedIcon, PencilIcon, ClippyIcon, ChevronUpIcon } from '@primer/octicons-react'
+import { TrashcanIcon, PencilIcon, ClippyIcon, ChevronUpIcon } from '@primer/octicons-react'
 import IconBtn from '../components/IconBtn.jsx'
 import { classNames } from '../utils/class-names.js'
 import { ReactComponent as SolidIcon } from './icon-solid.svg'
@@ -12,22 +12,13 @@ class Equation extends React.Component {
     return (
       <li className={classNames(styles.equation, styles.expanded, 'colour-blue')}>
         <div className={styles.preview}>
-          <div className={styles.quickActionsWrapper}>
-            <div className={styles.quickActions}>
-              <IconBtn className={classNames(styles.quickAction, 'danger')}>
-                <TrashcanIcon aria-label="Remove" />
-              </IconBtn>
-              <IconBtn className={styles.quickAction}>
-                <EyeClosedIcon aria-label="Hide" />
-              </IconBtn>
-            </div>
-          </div>
+          {/* <QuickActions /> */}
           <div className={styles.colorStrip}></div>
           <button className={styles.katexPreview}></button>
         </div>
         <div className={styles.info}>
           <div className={styles.rawEquationWrapper}>
-            <textarea className={styles.rawEquation} id="_temp-equation-input"></textarea>
+            <textarea className={styles.rawEquation}></textarea>
           </div>
           <div className={styles.infoSelect}>
             <label className={styles.selectLabel}>Color</label>
@@ -60,7 +51,7 @@ class Equation extends React.Component {
             <button className={classNames(styles.action, 'danger')}><TrashcanIcon />Remove</button>
           </div>
           <IconBtn className={styles.closeInfoBtn}>
-            <EyeClosedIcon aria-label="Collapse" className={styles.expandIcon} />
+            <ChevronUpIcon aria-label="Collapse" className={styles.expandIcon} />
           </IconBtn>
         </div>
       </li>
