@@ -24,7 +24,7 @@ class Equation extends React.Component {
 
   state = {
     showQuickActions: false,
-    showInfo: false
+    showInfo: true
   }
 
   componentDidMount () {

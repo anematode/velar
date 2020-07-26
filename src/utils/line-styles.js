@@ -11,10 +11,9 @@ const DASHED = {
   Icon: DashedIcon
 }
 
-// HACK: Dotted dash patterns are a bit broken atm, so using 0.0001
 const DOTTED = {
   thickness: 4,
-  dashPattern: [0.0001, 8],
+  dashPattern: [0, 8],
   name: 'Dotted',
   Icon: DottedIcon
 }

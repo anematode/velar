@@ -10,7 +10,7 @@ import {
   parseString,
   utils
 } from 'grapheme'
-import { themeColors, graphemeThemes } from './colors/themes.js'
+import { COLORS, themeColors, graphemeThemes } from './colors/themes.js'
 import { lineStyles } from './utils/line-styles.js'
 
 import PropTypes from 'prop-types'
@@ -27,6 +27,7 @@ class App extends React.Component {
     for (const side of Object.keys(this.plot.padding)) {
       this.plot.padding[side] = 0
     }
+    this.plot.setSize(1, 1)
 
     this.gridlines = new Gridlines()
     this.gridlines.pens.axis.thickness = 2
@@ -34,8 +35,12 @@ class App extends React.Component {
 
     this.frameId = null
 
+    this.colors = Object.keys(COLORS)
+    const equation = this.newEquation({ color: this.colors[0] })
+    this.plot.add(equation.fnPlot)
     this.state = {
-      equations: []
+      nextColor: 1,
+      equations: [equation]
     }
   }
 
@@ -101,9 +106,12 @@ class App extends React.Component {
   }
 
   handleAddEquation = () => {
-    const equation = this.newEquation()
+    const equation = this.newEquation({
+      color: this.colors[this.state.nextColor]
+    })
     this.plot.add(equation.fnPlot)
     this.setState({
+      nextColor: (this.state.nextColor + 1) % this.colors.length,
       equations: [...this.state.equations, equation]
     })
   }
@@ -160,7 +168,6 @@ class App extends React.Component {
         if (id === equation.id) {
           const { fnPlot } = equation
           fnPlot.visible = !fnPlot.visible
-          // fnPlot.markUpdate()
           return { ...equation, visible: fnPlot.visible }
         } else {
           return equation

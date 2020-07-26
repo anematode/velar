@@ -86,6 +86,7 @@ class Info extends React.Component {
                 `color-${colorId}`,
                 color === colorId && styles.selected
               )}
+              title={colorName}
               onClick={() => this.handleColorChange(colorId)}
             >
               {colorName}
@@ -103,6 +104,7 @@ class Info extends React.Component {
                 styles.plotLine,
                 lineStyle === id && styles.selected
               )}
+              title={name}
               onClick={() => this.handleLineStyleChange(id)}
             >
               <Icon aria-label={name} className={styles.customIcon} />
