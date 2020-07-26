@@ -8,7 +8,22 @@ import { Plot2D } from 'grapheme'
 
 class Calculator extends React.Component {
   static propTypes = {
-    plot: PropTypes.instanceOf(Plot2D)
+    plot: PropTypes.instanceOf(Plot2D),
+    equations: PropTypes.arrayOf(
+      PropTypes.shape({
+        equation: PropTypes.string.isRequired,
+        latex: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+        lineStyle: PropTypes.string.isRequired,
+        visible: PropTypes.boolean.isRequired,
+        error: PropTypes.boolean
+      })
+    ).isRequired,
+    onAddEquation: PropTypes.func.isRequired,
+    onEquationUpdate: PropTypes.func.isRequired,
+    onToggleEquationVisibility: PropTypes.func.isRequired,
+    onDuplicateEquation: PropTypes.func.isRequired,
+    onRemoveEquation: PropTypes.func.isRequired
   }
 
   render () {

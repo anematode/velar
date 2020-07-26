@@ -5,7 +5,23 @@ import QuickActions from './QuickActions.jsx'
 import Info from './Info.jsx'
 import { katex } from 'grapheme'
 
+import PropTypes from 'prop-types'
+
 class Equation extends React.Component {
+  static propTypes = {
+    index: PropTypes.number,
+    equation: PropTypes.string.isRequired,
+    latex: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    lineStyle: PropTypes.string.isRequired,
+    hidden: PropTypes.boolean,
+    error: PropTypes.boolean,
+    onEquationUpdate: PropTypes.func.isRequired,
+    onToggleVisibility: PropTypes.func.isRequired,
+    onDuplicate: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired
+  }
+
   state = {
     showQuickActions: false,
     showInfo: false
@@ -45,46 +61,56 @@ class Equation extends React.Component {
   }
 
   setPreviewRef = ref => {
-    console.log('ref', ref);
+    console.log('ref', ref)
     this.previewRef = ref
   }
 
   render () {
     const { showInfo, showQuickActions } = this.state
-    const {
-      equation,
-      color,
-      lineStyle,
-      hidden,
-      error
-    } = this.props
+    const { equation, color, lineStyle, hidden, error } = this.props
     return (
       <li
-        className={classNames(styles.equation, styles.expanded, 'color-blue' /* TEMP */)}
+        className={classNames(
+          styles.equation,
+          styles.expanded,
+          'color-blue' /* TEMP */
+        )}
       >
-        <div className={classNames(styles.preview, hidden && styles.hidden, showQuickActions && styles.showQuickActions)} onClick={this.handleHideQuickActions}>
+        <div
+          className={classNames(
+            styles.preview,
+            hidden && styles.hidden,
+            showQuickActions && styles.showQuickActions
+          )}
+          onClick={this.handleHideQuickActions}
+        >
           <QuickActions
             onToggleVisibility={this.handleTogglePlotVisibility}
             onRemove={this.handleRemove}
             hidden={hidden}
           />
-          <div className={styles.colorStrip} onClick={this.handleShowQuickActions} />
+          <div
+            className={styles.colorStrip}
+            onClick={this.handleShowQuickActions}
+          />
           <button
             ref={this.setPreviewRef}
             className={styles.katexPreview}
             onClick={this.handleToggleInfoVisibility}
           />
         </div>
-        {showInfo && <Info
-          equation={equation}
-          color={color}
-          lineStyle={lineStyle}
-          error={error}
-          onEquationUpdate={this.handleEquationUpdate}
-          onDuplicate={this.handleDuplicate}
-          onRemove={this.handleRemove}
-          onCollapse={this.handleToggleInfoVisibility}
-        />}
+        {showInfo && (
+          <Info
+            equation={equation}
+            color={color}
+            lineStyle={lineStyle}
+            error={error}
+            onEquationUpdate={this.handleEquationUpdate}
+            onDuplicate={this.handleDuplicate}
+            onRemove={this.handleRemove}
+            onCollapse={this.handleToggleInfoVisibility}
+          />
+        )}
       </li>
     )
   }

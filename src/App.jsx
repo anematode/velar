@@ -2,10 +2,22 @@ import React from 'react'
 import styles from './App.module.css'
 import MenuWrapper from './menu/MenuWrapper.jsx'
 import Calculator from './calculator/Calculator.jsx'
-import { Plot2D, Gridlines, InteractiveFunctionPlot2D, Color, parseString } from 'grapheme'
+import {
+  Plot2D,
+  Gridlines,
+  InteractiveFunctionPlot2D,
+  Color,
+  parseString
+} from 'grapheme'
 import { themeColors, graphemeThemes } from './colors/themes.js'
 
+import PropTypes from 'prop-types'
+
 class App extends React.Component {
+  static propTypes = {
+    theme: PropTypes.oneOf(['dark', 'paper'])
+  }
+
   constructor (props) {
     super(props)
 
@@ -52,7 +64,7 @@ class App extends React.Component {
 
   newEquation () {
     const fnPlot = new InteractiveFunctionPlot2D()
-    console.log(this.plot);
+    console.log(this.plot)
     const color = 'blue'
     fnPlot.pen.color = Color.rgba(...themeColors[this.props.theme][color])
     const { text, background, font } = graphemeThemes[this.props.theme]
@@ -111,7 +123,7 @@ class App extends React.Component {
     })
   }
 
-  handleToggleEquationVisibility = (index) => {
+  handleToggleEquationVisibility = index => {
     this.setState({
       equations: this.state.equations.map((equation, i) => {
         if (i === index) {
@@ -126,12 +138,11 @@ class App extends React.Component {
     })
   }
 
-  handleDuplicateEquation = (index) => {
+  handleDuplicateEquation = index => {
     console.log('dupe', this.state.equations[index])
   }
 
-  handleRemoveEquation = (index) => {
-    const toRemove = this.state.equations[index]
+  handleRemoveEquation = index => {
     this.setState({
       equations: this.state.equations.filter((_, i) => i !== index)
     })
@@ -144,21 +155,16 @@ class App extends React.Component {
         <MenuWrapper />
         <Calculator
           plot={this.plot}
-          equations={equations.map(({
-            equation,
-            latex,
-            color,
-            lineStyle,
-            visible,
-            error
-          }) => ({
-            equation,
-            latex,
-            color,
-            lineStyle,
-            visible,
-            error
-          }))}
+          equations={equations.map(
+            ({ equation, latex, color, lineStyle, visible, error }) => ({
+              equation,
+              latex,
+              color,
+              lineStyle,
+              visible,
+              error
+            })
+          )}
           onAddEquation={this.handleAddEquation}
           onEquationUpdate={this.handleEquationUpdate}
           onToggleEquationVisibility={this.handleToggleEquationVisibility}

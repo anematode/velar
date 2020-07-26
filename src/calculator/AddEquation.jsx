@@ -2,11 +2,15 @@ import React from 'react'
 import styles from './AddEquation.module.css'
 import { PlusIcon, GraphIcon, NoteIcon } from '@primer/octicons-react'
 
+import PropTypes from 'prop-types'
+
 class AddEquation extends React.Component {
+  static propTypes = {
+    onAddEquation: PropTypes.func
+  }
+
   render () {
-    const {
-      onAddEquation
-    } = this.props
+    const { onAddEquation } = this.props
     return (
       <div className={styles.addEquation}>
         <span className={styles.addEquationLabel}>
