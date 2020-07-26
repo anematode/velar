@@ -16,3 +16,5 @@ You can make Standard scream at you if you use semicolons:
 ```sh
 EXTEND_ESLINT=true npm start
 ```
+
+(This doesn't work because it won't accept the Babel parser or something. Use [`npm install -g prettier-standard`](https://www.npmjs.com/package/prettier-standard) then `prettier-standard --format --lint` instead, maybe?)

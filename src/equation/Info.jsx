@@ -13,6 +13,8 @@ import { ReactComponent as DottedIcon } from './icon-dotted.svg'
 import { classNames } from '../utils/class-names.js'
 import { COLORS } from '../colors/themes.js'
 
+import PropTypes from 'prop-types'
+
 function SelectGroup ({ label, children }) {
   return (
     <div className={styles.infoSelect}>
@@ -26,6 +28,11 @@ function SelectGroup ({ label, children }) {
       </div>
     </div>
   )
+}
+
+SelectGroup.propTypes = {
+  label: PropTypes.string.isRequired,
+  children: PropTypes.node
 }
 
 class Info extends React.Component {
