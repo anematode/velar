@@ -6,6 +6,7 @@
 .preview {
   display: flex;
   transition: transform 0.2s;
+  min-height: 44px;
 }
 
 .colorStrip {

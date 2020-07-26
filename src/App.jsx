@@ -22,6 +22,10 @@ class App extends React.Component {
     this.setTheme(graphemeThemes[theme])
 
     this.frameId = null
+
+    this.state = {
+      equations: []
+    }
   }
 
   componentDidMount () {
@@ -48,11 +52,40 @@ class App extends React.Component {
     this.gridlines.pens.minor.color = gridColor
   }
 
+  handleAddEquation () {
+    console.log('add equation')
+  }
+
+  handleEquationUpdate (index, changes) {
+    console.log('update', this.state.equations[index], changes)
+  }
+
+  handleToggleEquationVisibility (index) {
+    console.log('toggle visib', this.state.equations[index])
+  }
+
+  handleDuplicateEquation (index) {
+    console.log('dupe', this.state.equations[index])
+  }
+
+  handleRemoveEquation (index) {
+    console.log('del', this.state.equations[index])
+  }
+
   render () {
+    const { equations } = this.state
     return (
       <div className={styles.wrapper}>
         <MenuWrapper />
-        <Calculator plot={this.plot} />
+        <Calculator
+          plot={this.plot}
+          equations={equations}
+          onAddEquation={this.handleAddEquation}
+          onEquationUpdate={this.handleEquationUpdate}
+          onToggleEquationVisibility={this.handleToggleEquationVisibility}
+          onDuplicateEquation={this.handleDuplicateEquation}
+          onRemoveEquation={this.handleRemoveEquation}
+        />
       </div>
     )
   }

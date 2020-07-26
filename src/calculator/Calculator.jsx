@@ -12,10 +12,25 @@ class Calculator extends React.Component {
   }
 
   render () {
-    const { plot } = this.props
+    const {
+      plot,
+      equations,
+      onAddEquation,
+      onEquationUpdate,
+      onToggleEquationVisibility,
+      onDuplicateEquation,
+      onRemoveEquation
+    } = this.props
     return (
       <main className={styles.main}>
-        <Equations />
+        <Equations
+          equations={equations}
+          onAddEquation={onAddEquation}
+          onEquationUpdate={onEquationUpdate}
+          onToggleVisibility={onToggleEquationVisibility}
+          onDuplicate={onDuplicateEquation}
+          onRemove={onRemoveEquation}
+        />
         <div className={styles.resizeEquations} />
         {plot && <GraphemeWrapper plot={plot} />}
       </main>
