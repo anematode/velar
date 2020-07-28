@@ -23,7 +23,6 @@
   flex-direction: column;
   background-color: var(--dialog);
   border-radius: 5px;
-  overflow: hidden;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 .addType {
@@ -33,6 +32,14 @@
 }
 .addType:hover {
   background-color: var(--button-hover);
+}
+.addType:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.addType:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .addType .icon {
   margin-right: 10px;

@@ -8,9 +8,6 @@
   transition: transform 0.2s;
   min-height: 44px;
 }
-.showQuickActions {
-  transform: translateX(118px);
-}
 
 .colorStrip {
   width: 3px;

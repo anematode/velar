@@ -23,7 +23,6 @@ class Equation extends React.Component {
   }
 
   state = {
-    showQuickActions: false,
     showInfo: true
   }
 
@@ -33,15 +32,6 @@ class Equation extends React.Component {
 
   componentDidUpdate () {
     katex.render(this.props.latex, this.previewRef, { throwOnError: false })
-  }
-
-  handleHideQuickActions = () => {
-    this.setState({ showQuickActions: false })
-  }
-
-  handleShowQuickActions = e => {
-    e.stopPropagation()
-    this.setState({ showQuickActions: true })
   }
 
   handleToggleInfoVisibility = () => {
@@ -69,7 +59,7 @@ class Equation extends React.Component {
   }
 
   render () {
-    const { showInfo, showQuickActions } = this.state
+    const { showInfo } = this.state
     const { equation, color, lineStyle, hidden, error } = this.props
     return (
       <li
@@ -79,27 +69,18 @@ class Equation extends React.Component {
           `color-${color}`
         )}
       >
-        <div
-          className={classNames(
-            styles.preview,
-            hidden && styles.hidden,
-            showQuickActions && styles.showQuickActions
-          )}
-          onClick={this.handleHideQuickActions}
-        >
-          <QuickActions
-            onToggleVisibility={this.handleTogglePlotVisibility}
-            onRemove={this.handleRemove}
-            hidden={hidden}
-          />
-          <div
-            className={styles.colorStrip}
-            onClick={this.handleShowQuickActions}
-          />
+        <div className={classNames(styles.preview, hidden && styles.hidden)}>
+          <div className={styles.colorStrip} />
           <button
             ref={this.setPreviewRef}
             className={styles.katexPreview}
             onClick={this.handleToggleInfoVisibility}
+          />
+          <QuickActions
+            hidden={hidden}
+            showingInfo={showInfo}
+            onToggleVisibility={this.handleTogglePlotVisibility}
+            onRemove={this.handleRemove}
           />
         </div>
         {showInfo && (

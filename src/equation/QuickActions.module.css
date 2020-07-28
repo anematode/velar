@@ -1,36 +1,32 @@
-.wrapper {
-  position: relative;
-}
 .quickActions {
   display: flex;
-  position: absolute;
+  flex-direction: column;
   top: 0;
   bottom: 0;
   right: 0;
   align-items: center;
   z-index: 5;
-  padding: 0 5px;
+  padding: 5px;
 }
 .quickAction {
-  margin: 0 5px;
+  padding: 5px;
+  transition: opacity 0.2s, color 0.2s;
 }
 .quickAction:hover {
   background-color: var(--button-hover);
 }
-.quickAction.danger {
+.showingInfo .removeBtn,
+.removeBtn:hover {
   color: var(--danger);
 }
-.quickAction.danger:hover {
+.removeBtn:hover {
   background-color: var(--danger-hover);
 }
-.equationHidden {
-  background-color: var(--text);
-  color: var(--equation-background);
+.visibilityBtn {
+  opacity: 0;
 }
-.equationHidden:hover {
-  background-color: var(--text-hover);
-}
-.quickAction .icon {
-  width: 24px;
-  height: 24px;
+.showingInfo .visibilityBtn,
+.visibilityBtn:hover,
+.visibilityBtn:focus {
+  opacity: 1;
 }
